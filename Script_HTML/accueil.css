@@ -1,0 +1,28 @@
+,ffbody{
+background-image: url("../Images/fond.gif");
+background-repeat: no-repeat;
+background-size: 100%;
+}
+
+h1{
+	background-color:#6C6C6C;
+	color:#FFFFFF;
+	font-weight: bold;
+	text-align: center;
+}
+p{
+	
+}
+
+#logo_accueil{
+	width: 10%;
+	
+}
+.fond_accueil{
+	background-color: white;
+	border-width: 0;
+	border-spacing: inherit;
+	border-style: none;
+	
+	
+}
