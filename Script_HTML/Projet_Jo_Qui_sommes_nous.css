@@ -1,0 +1,47 @@
+table{
+	display: flex;
+	justify-content: center ;
+	 border-spacing: 40px;
+}
+
+.logo{
+  width : 150px; height : 150px;
+  border: none;
+  -moz-border-radius : 75px;
+  -webkit-border-radius : 75px;
+  border-radius : 75px;
+  }
+  
+td{
+ text-align: center;
+
+}
+.nom_dev{
+		font-style: italic;
+		font-size: 18px;
+		font-family: serif;
+}
+.description_role{
+	font-family: serif;
+}
+
+div{
+margin-left: 20%;
+margin-right: 20%;
+font-style: normal;
+}
+
+body{
+	margin-top :100 px;
+   margin-left :100 px;
+   font-style: italic;
+   font-family: serif;}
+   
+ h2{
+	text-align: center; 
+ }
+ h1{
+ 	text-align: center;
+ }
+ 
+ 
