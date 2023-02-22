@@ -138,6 +138,42 @@
 </div>
 
 
+<script>
+      // Get the timeline and navbar elements
+var timeline = document.getElementById("timeline");
+var navbar = document.getElementById("navbar");
+
+// Update the timeline position when the navbar value changes
+navbar.addEventListener("input", function() {
+  timeline.scrollLeft = navbar.value / 100 * (timeline.scrollWidth - timeline.clientWidth);
+});
+
+    </script>
+
+
+<div id="timeline">
+  <div class="event">
+    <img src="olympic1.jfif" alt="Olympic 1">
+    <p>Olympic 1</p>
+  </div>
+  <div class="event">
+    <img src="olympic1.jfif" alt="Olympic 2">
+    <p>Olympic 2</p>
+  </div>
+  <div class="event">
+    <img src="olympic1.jfif" alt="Olympic 3">
+    <p>Olympic 3</p>
+  </div>
+  <!-- Add more events -->
+</div>
+
+<input type="range" min="0" max="100" value="0" id="navbar">
+
+
+
+
+
+
 
 	
 	</body>
