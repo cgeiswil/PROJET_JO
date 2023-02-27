@@ -1,40 +1,46 @@
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <title>Les JO Autrement</title>
-        <meta charset="utf-8">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
-        <link rel="stylesheet" href="./accueil.css" type="text/css" media="screen" >
-    </head>
+	<head>
+    <title>Les JO Autrement</title>
+    <meta charset="utf-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap @5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="accueil.css" type="text/css">        
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <?php
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.cycle2/2.1.6/jquery.cycle2.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script>
+	$(document).ready(function() {
+   	 $('.cycle-slideshow').cycle({
+      	  fx: 'scrollVert', // effet de transition vertical
+      	  speed: 500, // durée de la transition en ms
+      	  timeout: 5000 // temps d'affichage de chaque élément en ms
+   	 });
+	});
+	</script>
+	?>
+	</head>
     <body>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#"><img id="logo_accueil"src="../Images/logo_projet.png" alt="logo"></a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavDropdown">
-    <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Features</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Pricing</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown link
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li>
-    </ul>
+    
+
+	<object data="Navbar.html" width="100%" height="100%">
+	</object>
+	
+	
+    <h1><strong>Explorons les jeux olympiques différemment !</strong></h1>
+    
+   <div class="cycle-slideshow">
+  <div class="cycle-slide">
+    <p>Le Saviez-vous ?</p>
   </div>
-</nav>
+</div>
+
+	
+        
+	<div class="footer">
+	<object  data="pied_de_page.html" width="100%" height="100%">
+	</object>
+	</div>
+	
     </body>
 </html>

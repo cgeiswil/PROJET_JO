@@ -9,7 +9,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
-<body class="d-flex flex-column">
+<body class="d-flex flex-column" >
+
 <p><em>&ensp;« L’important dans la vie n'est point le triomphe mais le combat, <br>&ensp; l’essentiel ce n'est pas d’avoir vaincu, mais de s’être bien battu »</em> &ensp; Maxime de l'Olympisme.</p>
 <!-- Footer -->
 <footer class="page-footer font-small indigo">
@@ -24,7 +25,7 @@
       <div class="col-md-3 mx-auto">
 
         <!-- Links -->
-        <h5 class="font-weight-bold mt-3 mb-4"><a href="./Accueil.html" > Accueil</a></h5>
+        <h5 class="font-weight-bold mt-3 mb-4"><a href="Accueil.html" > Accueil</a></h5>
 
     
 
@@ -37,7 +38,7 @@
       <div class="col-md-3 mx-auto">
 
         <!-- Links -->
-        <h5 class="font-weight-bold  mt-3 mb-4"><a href="./Bibliographie" > Bibliographie</a></h5>
+        <h5 class="font-weight-bold  mt-3 mb-4"><a href="Qui_sommes_nous.html" > Bibliographie</a></h5>
 
       </div>
       <!-- Grid column -->

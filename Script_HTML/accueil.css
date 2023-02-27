@@ -1,5 +1,5 @@
-,ffbody{
-background-image: url("../Images/fond.gif");
+body{
+background-image: url("../Images/General/fond.gif");
 background-repeat: no-repeat;
 background-size: 100%;
 }
@@ -14,8 +14,6 @@ p{
 	
 }
 
-#logo_accueil{
-	width: 10%;
 	
 }
 .fond_accueil{
@@ -25,4 +23,13 @@ p{
 	border-style: none;
 	
 	
+}
+
+.footer {position: absolute; bottom: 0; left: 0; right: 0}
+
+.cycle-slideshow {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
