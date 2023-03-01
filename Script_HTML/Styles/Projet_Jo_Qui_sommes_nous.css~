@@ -1,7 +1,7 @@
 table{
 	display: flex;
 	justify-content: center ;
-	border-spacing: 40px;
+	 border-spacing: 40px;
 }
 
 .logo{
