@@ -44,4 +44,8 @@ body{
  	text-align: center;
  }
  
+<<<<<<< HEAD
+=======
+ .footer {position: absolute; bottom: 0; left: 0; right: 0}
+>>>>>>> 3893652 (ajout pied de page et menu dans les pages deja creer)
  
