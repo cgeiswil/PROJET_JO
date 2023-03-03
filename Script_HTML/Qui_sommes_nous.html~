@@ -8,7 +8,11 @@
     </head>
     <body>
         <div><h1>Pourquoi ce projet?</h1></div>
+<<<<<<< HEAD
  <br>
+=======
+ 		<br>
+>>>>>>> 3893652 (ajout pied de page et menu dans les pages deja creer)
 
         <h2>« Du retour des Jeux Olympiques, aux plus grands athlètes <br>
             de leurs disciplines » est un projet universitaire.</h2>
@@ -18,12 +22,22 @@
         56 éditions ont été organisées, passant de 14 à plus de 200 délégations différentes, avec des centaines jusqu'aux milliers d'athlètes à chaque édition. 
         Nous voulons mettre un peu de lumière sur des données riches et abondantes apportant une analyse accessible à tous, des spécialistes aux plus novices. 
         D'autant plus que dans moins de 2 ans maintenant, en 2024, Paris accueillera les Jeux Olympiques d'été, et à cette occasion la francophonie se saisira certainement de ce sujet.<br>
+<<<<<<< HEAD
+=======
+        <br>
+>>>>>>> 3893652 (ajout pied de page et menu dans les pages deja creer)
 ​
         <strong>L'Olympisme : de belles valeurs qui rassemblent.</strong> Sachant certaines belligérances et les différentes crises actuelles, 
         le fait que chaque athlète de chaque pays peuvent concourir ensemble en oubliant le reste est sublime. En fait, le Comité Internationnal Olympique souhaite que l'Excellence,
          l'Amitié et le Respect soient la base du développement de ses activités (Source).<br>
+<<<<<<< HEAD
 ​
         <strong>Une approche différente des classements des médailles.</strong>x Ces derniers temps, ces classements édités par le CIO sont fortement critiqués, 
+=======
+         <br>
+​
+        <strong>Une approche différente des classements des médailles.</strong> Ces derniers temps, ces classements édités par le CIO sont fortement critiqués, 
+>>>>>>> 3893652 (ajout pied de page et menu dans les pages deja creer)
         pour des raisons de mauvaise représentativité. En effet, c’est assez problématique, de classer les pays qu’avec leur nombre de médailles d’or. 
         Dès lors, la Chine (1,4 milliards d’habitants et 413 athlètes présentés dans 30 disciplines en 2020) est comparée, par exemple, avec le Pérou 
         (34 millions d’habitants et 35 athlètes présentés dans 17 disciplines en 2020). Ou si une nation ne gagne à une olympiade que des médailles de bronze ou d’argent, 
@@ -55,6 +69,14 @@
         </tr>
         
         </table>
+<<<<<<< HEAD
+=======
+        
+        <div class="footer">
+			<object  data="Pied_de_page.html" width="100%" height="100%">
+			</object>
+		  </div>
+>>>>>>> 3893652 (ajout pied de page et menu dans les pages deja creer)
      
 
         
