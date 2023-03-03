@@ -1,0 +1,36 @@
+body{
+    background-image: url("../Images/General/fond.gif");
+    
+    background-image: url("../Images/fond.gif");
+    1cb68be (ajout fichier)
+    background-repeat: no-repeat;
+    background-size: 100%;
+    }
+    
+    h1{
+        color:#1c1c1c;
+        font-weight: bold;
+        text-align: center;
+    }
+    p{
+        
+    }
+    table{
+        text-align: center;
+    }
+    button{
+        size: 20%;
+    }
+    img{
+        width : 150px;
+        height : 150px;
+    }  
+    }
+    .fond_accueil{
+        background-color: white;
+        border-width: 0;
+        border-spacing: inherit;
+        border-style: none;
+        
+        
+    }
