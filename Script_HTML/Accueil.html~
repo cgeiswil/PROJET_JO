@@ -17,21 +17,25 @@
    	 });
 	});
 	</script>
-	?>
 	</head>
     <body>
+    <header>
     
 
 	<object data="Barre_de_navigation.html" width="100%" height="100%">
 	</object>
 	
 	
-    <h1><strong>Explorons les jeux olympiques différemment !</strong></h1>
+    <h1>Explorons les jeux olympiques <br> différemment !</h1>
+    </header>
+    
+   <div class="gif">
     
    <div class="cycle-slideshow">
   <div class="cycle-slide">
     <p>Le Saviez-vous ?</p>
   </div>
+</div>
 </div>
 
 	

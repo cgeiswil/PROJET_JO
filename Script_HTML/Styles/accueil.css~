@@ -3,18 +3,28 @@ background-image: url("../../Images/General/fond.gif");
 1cb68be (ajout fichier)
 background-repeat: no-repeat;
 background-size: 100%;
+margin-top: -165px;
+
 }
 
 h1{
 	background-color:#6C6C6C;
 	color:#FFFFFF;
-	font-weight: bold;
+	font-weight: 900;
 	text-align: center;
-}
-p{
-	
+	position: relative; top: 0; left: 0; right: 0;
+	padding: 20px;
+	margin-top: -45px;
+	font-family: Andale Mono, monospace;
+	text-shadow: 1px 1px 2px black;
+	font-variant: small-caps;
+	font-size: 50px;
 }
 
+p{
+	opacity: 0,7;
+
+}
 	
 }
 .fond_accueil{
