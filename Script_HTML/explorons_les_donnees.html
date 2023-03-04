@@ -15,27 +15,65 @@
 		<object data="Barre_de_navigation.html" width="100%" height="100%">
 	</object>
 
-	<h1><strong><center>Explorons par</center></strong></h1>
+	<h1>Explorons par </h1>
+	setIterval("Medailles","Athletes",10ms)
+	<br>
+	<br>
 
 	
-	  <table>
+	  <table class="rounded-4">
 		<tr>
-			<th>Classement historique <br>par Delegations</th>
+			<th><center>Classement historique <br>par Delegations</center></th>
 			<th>Vision par editions</th>
 			<th>Vision par athletes</th>
 			<th>Vision par disciplines</th>
 		</tr>
 		<tr>
-			<th><button> <img src="../Images/Boutons/podium_drapeau.png"></button></th>
-			<th><button> <img src="../Images/Boutons/planisphere.png"></button></th>
-			<th><button> <img src="../Images/Boutons/athlete.jpg"></button></th>
-			<th><button> <img src="../Images/Boutons/discipline.png"></button></th>
+			<th><button> <img alt="Survol" 
+				onmouseout="this.src='../Images/Boutons/podium_drapeau.png';" 
+				onmouseover="this.src='../Images/Boutons/podium_drapeau_survol.png';" 
+				src="../Images/Boutons/podium_drapeau.png" /></button></th>
+			<th><button> <img alt="Survol" 
+				onmouseout="this.src='../Images/Boutons/planisphere.png';" 
+				onmouseover="this.src='../Images/Boutons/planisphere_survol.png';" 
+				src="../Images/Boutons/planisphere.png" /></button></th>
+			<th><button> <img alt="Survol" 
+				onmouseout="this.src='../Images/Boutons/athlete.png';" 
+				onmouseover="this.src='../Images/Boutons/athlete_survol.png';" 
+				src="../Images/Boutons/athlete.png" /></button></th>
+			<th><button> <img alt="Survol" 
+				onmouseout="this.src='../Images/Boutons/discipline.png';" 
+				onmouseover="this.src='../Images/Boutons/discipline_survol.png';" 
+				src="../Images/Boutons/discipline.png" /></button></th>
 		</tr>
 		<tr>
 			<th></th>
-			<th><button> <img src="../Images/Boutons/frise.png"></th>
+			<th><button> <img alt="Survol" 
+				onmouseout="this.src='../Images/Boutons/frise.png';" 
+				onmouseover="this.src='../Images/Boutons/frise_survol.png';" 
+				src="../Images/Boutons/frise.png" /></button></th>
 			
 	  </table>
+	  
+	  <button type="button" class="btn btn-primary"><center>Comparer...</center></button>
+	  <br>
+	  <table>
+		<tr>
+			<th>
+				Bibliographie et sources <br>de données utilisées
+			</th>
+	</th>
+	</tr>
+		<tr>
+			<th>
+	  			<button> <img alt="Survol" 
+				onmouseout="this.src='../Images/Boutons/b.png';" 
+				onmouseover="this.src='../Images/Boutons/b_survol.png';" 
+				src="../Images/Boutons/b.png" /></button>
+			</th>
+	</th>
+	</tr>
+	</table>
 		
 	</body>
 </html>
