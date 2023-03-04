@@ -1,0 +1,78 @@
+h1{
+	
+	font-size : 65px;
+	text-align:center;
+	font-family:helvetica-w01-roman,helvetica-w02-roman,helvetica-lt-w10-roman,sans-serif;
+	padding-top : 100px;
+	
+}
+
+span {
+	
+	 color:#00968D;
+	
+	
+	
+}
+
+
+
+table {
+	 
+display: flex;
+justify-content: center ;
+border-spacing: 40px;
+border-bottom:-200px;
+
+
+
+}
+
+td{
+ text-align: center;
+
+}
+
+
+
+
+
+button{
+	
+background-color : white;
+	
+	
+}
+
+
+
+
+img{
+	
+
+width : 250px;
+height : 300px;
+ 
+	
+}
+
+
+.imageclassement{
+
+width : 30px;
+height : 50px;
+}
+
+
+.drapeaufr{
+
+	width : 60px;
+	height : 50px;
+
+}
+
+.celluletab{
+
+padding-left: 30px;
+margin:auto;
+}
