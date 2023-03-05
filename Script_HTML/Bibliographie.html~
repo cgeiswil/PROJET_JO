@@ -7,6 +7,9 @@
 				<link rel="stylesheet" href ="Styles/Bibliographie.css" type = "text/css" media = "screen">
 		</head>
 		<body>
+		
+		<object data="Barre_de_navigation.html" width="100%" height="100%">
+	</object>
     
 <div><h1>Bibliographie <br>et ressources utilisées </h1>
 <p>Pour la réalisation de ce site, nous avons utilisé de nombreuses données et ressources. 
