@@ -6,15 +6,29 @@
 
 <head>
 <meta charset="utf-8">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="vision_par_délégation.css" rel="stylesheet" type = "text/css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+  <link href="./Styles/Vision_par_delegations.css" rel="stylesheet" type = "text/css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <link rel="shortcut icon" href="../Images/Anneaux/officiel.png" type="image/png">
 
 <title>  Médailles/délégation  </title>
+<style>
+	html{
+	background-color: #F5F5F5;
+	}
+	body{
+	 background-color: #F5F5F5;
+	}
+	</style>
 </head>
 
 
-<body>
+<body  class="d-flex flex-column">
 
+
+	<object data="Barre_de_navigation.html" width="100%" height="100%">
+    </object>
 <h1>  Comparons par <span> délégations </span>  </h1> 
 <br>
 <br>
@@ -24,17 +38,17 @@
 <div class="container">
 
 
-<table class = "table" >
+<table class = "rounded-4" >
 
- <tr> <th>  <button type=submit onclick = "document.getElementById('disciplines').style.display='block'">
+ <tr> <td>  <button type=submit onclick = "document.getElementById('disciplines').style.display='block'">
 
 <img  src = "../Images/Boutons/discipline.png"  alt = "erreur" >
-</button>  </th>   
+</button>  </td>   
  
 
-<th> <button type=submit  onclick = "document.getElementById('médailleCIO').style.display='block'">  <img  src = "../Images/Boutons/medaille_or.png"> </button>  </th>   
+<td> <button type=submit  onclick = "document.getElementById('médailleCIO').style.display='block'">  <img  src = "../Images/Boutons/medaille_or.png"> </button>  </td>   
 
- <th>  <button type=submit  onclick = "document.getElementById('records').style.display='block'">    <img src = "../Images/Boutons/record_(podium,couronne).png">  </button> </th> 
+ <td>  <button type=submit  onclick = "document.getElementById('records').style.display='block'">    <img src = "../Images/Boutons/record_(podium,couronne).png">  </button> </td> 
 
 </table>
 
@@ -451,8 +465,16 @@
 
 
 	</div>
+
+
 </body>
 
+<footer >
+
+	<object data="pied_de_page.html" width="100%" height="100%">
+	</object>
+ </footer>
 
 
-<html>
+
+</html>

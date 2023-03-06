@@ -15,25 +15,27 @@ span {
 	
 }
 
-
-
-table {
-	 
-display: flex;
-justify-content: center ;
-border-spacing: 40px;
-border-bottom:-200px;
-
-
-
+img{
+	object-fit: contain;
+	width : 150px;
+	height : 150px;
 }
 
-td{
- text-align: center;
+table,td{
+        border: 1px 1px 1px 1px;
+        padding: 20px;
+    }
 
+
+table{
+
+	
+	display : flex;
+        justify-content: center;
+        border :rgb(59, 56, 56);
+        object-fit: contain;
+		
 }
-
-
 
 
 
@@ -47,14 +49,6 @@ background-color : white;
 
 
 
-img{
-	
-
-width : 250px;
-height : 300px;
- 
-	
-}
 
 
 .imageclassement{
@@ -71,8 +65,3 @@ height : 50px;
 
 }
 
-.celluletab{
-
-padding-left: 30px;
-margin:auto;
-}
