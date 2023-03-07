@@ -42,6 +42,20 @@
 	<object  data="Pied_de_page.html" width="100%" height="100%">
 	</object>
 	</div>
+	<footer>
+	<?php
+		session_start();
+		if(isset($_SESSION['utilisateur'])) {
+			echo "~   <a>Bonjour ".$_SESSION['utilisateur']["nom"]." !</a> ";
+			echo "   |   <a href='deconnexion.php'>Se déconnecter</a>   ~";
+		}
+		else {
+			echo "~   <a href='contact/contact.php'>Page de Contact</a>";
+			echo "   |   <a href='nouveau.php'>Nouveau Client</a>";
+			echo "   |   <a href='connection.php'>Se connecter</a>   ~";
+		}
+	?>
+	</footer>  
 
     </body>
 </html>
