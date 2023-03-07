@@ -69,7 +69,34 @@
 			
 	  </table>
 	  
-	  <table><td><button type="button" href="./Comparer.html" class="btn btn-primary"><center>Comparer...</center></button></td></table>
+	  <table>
+<<<<<<< HEAD:Script_HTML/Explorons_les_donnees.html
+	  <tr>
+	    <td>
+	      <a href="./Comparer.html">
+		<button type="button" class="btn btn-primary">
+		  <center>Comparer...</center>
+		</button>
+	      </a>
+	    </td>
+	  </tr>
+	</table>
+	<br>
+
+=======
+      <tr>
+        <td>
+          <a href="./Comparer.html">
+        <button type="button" class="btn btn-primary">
+          <center>Comparer...</center>
+        </button>
+          </a>
+        </td>
+      </tr>
+    </table>
+    <br> 
+    
+>>>>>>> b779397 (MaJ):Script_HTML/explorons_les_donnees.html
 	  <br>
 	  <table>
 		<tr>
