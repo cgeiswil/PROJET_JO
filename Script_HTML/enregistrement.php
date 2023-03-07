@@ -7,15 +7,21 @@
 
 
 		<?php
-		/*require("fonction.php"); 
+		require("fonction.php");
 
-		function enregistrer($ps, $mail, $mdp){
-			$bdd = getBDD();
-			$mdpH = md5($mdp);
+		function enregistrer($ps, $mail, $mdp) {
 			
-			$bdd -> query("insert into Clients (Pseudo, email, mot_de_passe)
-						Values('$ps', '$mail','$mdpH')";	
-		}*/
+    		$bdd = getBDD();
+    		
+    		$mdpH = md5($mdp);
+    		
+    		echo 'avant la requete';
+    		$bdd->query("insert into utilisateurs (pseudo, email, mot_de_passe)Values ('$ps', '$mail', '$mdpH')");
+    		//$stmt->execute([$ps, $mail, $mdpH]);
+
+
+    		echo 'valeurs ajoutees';
+		}
 
 		if((isset($_GET['ps']) and empty($_GET['ps']))
 			or (isset($_GET['mail']) and empty($_GET['mail']))
@@ -32,14 +38,16 @@
 
 				echo "mdp egaux";
 
-				echo '<meta http-equiv="refresh" content="3; url=Accueil.html>';
+				echo '<meta http-equiv="refresh" content="3; url=Accueil.php">';
+
+
 
 				echo $_GET['ps']."</br>";
 				echo $_GET['mail']."</br>";
 				echo $_GET['mdp']."</br>";
 
 
-				//enregistrer($_GET['ps'], $_GET['mail'], $_GET['mdp']);
+				enregistrer($_GET['ps'], $_GET['mail'], $_GET['mdp']);
 				
 				echo "voici les informations que vous avez rentrée, vous serez redirigé vers la page d'accueil d'ici quelques secondes"; 
 				echo "<br>";

@@ -10,7 +10,9 @@
 
 		<?php
 
-		echo "Bonjour";
+		//echo "<object data="Barre_de_navigation.html" width="100%" height="100%"></object>";
+
+		echo "Bonjour, veuillez entrer les informations necessaire à votre inscription.";
 		echo "<ol>";
 
 		echo "<form method=get action = enregistrement.php autocomplete= on>";
@@ -23,6 +25,10 @@
 
 
 		echo "<INPUT type = 'submit' value = 'Envoyer'>";
+
+		echo "</br></br></br>";
+		echo "Si vous avez deja un compte vous pouvez vous connecter via ce lien :";
+		echo "<a href = connection.php> Se connecter";
 		
 
 		?>

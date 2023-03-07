@@ -8,23 +8,36 @@
 	<body>
 
 		<?php
-		require ("fonction.php");
+	include("bd.php");
+	$bdd = getBD();
 
-		$con = getBDD();
-
-		$verifP = $con -> query("Select mot_de_passe from utilisateurs
-								Where mot_de_passe = '".$_GET['mdp']."'");
-		$nbL = $verifP->rowCount();
-
-
-
-		if($nbL = 0){
-			echo 'mot de passe incorrect';
-
+	if(isset($_POST['pseudo']) and $_POST['pseudo'] != '' and isset($_POST['mdp']) and $_POST['mdp'] != '') {
+		
+		$requete = $bdd->prepare('SELECT * FROM clients WHERE pseudo= ? AND mdp = ?');
+		$requete->execute(array($_POST['pseudo'], md5($_POST['mdp'])) );
+		
+		if ($result = $requete->fetch()) {
+			session_start();
+			$_SESSION['client'] = array(
+				id_utilisateur => $result['id_utilisateur'],
+				pseudo => $result['pseudo'],
+				MDP => $result['mdp'],
+				email => $result['mail'],
+				photo => $result['photo'],
+				nb_heure => $result['nb_heure']);
+			header('Location: Accueil.php');
+			exit();
 		}
+	}
+	else {
+		$email = isset($_POST['email']) ? $_POST['email'] : '';
+		header('Location: connexion.php?email='.urlencode($email));
+		exit();
+	}
+	?>
 
-		?>
 
+		
 	</body>
 
 </html>

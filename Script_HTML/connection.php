@@ -9,9 +9,7 @@
 
 		<?php
 
-		echo "Si vous n'avez pas encore créé votre compte, vous pouvez en créer un ici : <a href = nouveau.php> Nouveau utilisateur </a> ";
-
-		echo "</br>";
+		
 
 		echo "<form action='enConnection.php' method='post' autocomplete='off'>";
 
@@ -24,7 +22,19 @@
 
 		?>
 
- 
+ 		<footer>
+	<?php
+		session_start();
+		if(isset($_SESSION['utilisateur'])) {
+			echo "~   <a>Bonjour ".$_SESSION['utilisateur']["pseudo"]." !</a> ";
+			echo "   |   <a href='deconnexion.php'>Se déconnecter</a>   ~";
+		}
+		else {
+			echo "   |   <a href='nouveau.php'>Nouveau Utilisateur</a>";
+			echo "   |   <a href='connection.php'>Se connecter</a>   ~";
+		}
+	?> 
+	</footer>  
 
 	</body>
 </html>
