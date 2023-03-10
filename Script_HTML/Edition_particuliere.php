@@ -53,10 +53,10 @@ echo'</head>
 			
 			 echo '<div class="mb-3">';
 				if($olympiade_avant != "") {
-					echo '<a class="badge badge-pill badge-secondary" href="Edition_particuliere.php?id='.$olympiade_avant['id_olympiade'].'">'.($olympiade['saison'] == 'Summer ' ? 'Été' : 'Hiver ').$olympiade_avant["ville_hote"]." ".$olympiade_avant["annee_o"].' &lt;</a>';
+					echo '<a class="badge badge-pill badge-secondary" href="Edition_particuliere.php?id='.$olympiade_avant['id_olympiade'].'">'.($olympiade_avant['saison'] == 'Summer' ? 'Été ' : 'Hiver ').$olympiade_avant["ville_hote"]." ".$olympiade_avant["annee_o"].' &lt;</a>';
 				} 
 				if($olympiade_apres != "") {
-					echo '<a class="badge badge-pill badge-secondary" href="Edition_particuliere.php?id='.$olympiade_apres['id_olympiade'].'">&gt; '.($olympiade['saison'] == 'Summer ' ? 'Été' : 'Hiver ').$olympiade_apres["ville_hote"]." ".$olympiade_apres["annee_o"].'</a>';
+					echo '<a class="badge badge-pill badge-secondary" href="Edition_particuliere.php?id='.$olympiade_apres['id_olympiade'].'">&gt; '.($olympiade_apres['saison'] == 'Summer' ? 'Été ' : 'Hiver ').$olympiade_apres["ville_hote"]." ".$olympiade_apres["annee_o"].'</a>';
 				}
 			 echo "</div>";
 
@@ -196,7 +196,7 @@ if ($nb_ath['nb']!=0) {
 				  <p class="card-text">Description du classement.</p>
 							  <p class="card-text">';
 					
-					$classement_or_pop = $bdd->query('SELECT (count(DISTINCT lier_m.id_epreuves) * (pays_participants.population/10000000)) as nb, etre_nationalite.id_pays, pays_participants.nom_pays, pays_participants.I_drapeau FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade AND lier_m.id_med = 1 AND lier_m.id_olympiade = "'.$olympiade['id_olympiade'].'" GROUP BY etre_nationalite.id_pays ORDER BY `nb`  ASC LIMIT 3');	
+					$classement_or_pop = $bdd->query('SELECT (count(DISTINCT lier_m.id_epreuves) / (pays_participants.population)) as nb, etre_nationalite.id_pays, pays_participants.nom_pays, pays_participants.I_drapeau FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade and pays_participants.population != -1 AND lier_m.id_med = 1 AND lier_m.id_olympiade = "'.$olympiade['id_olympiade'].'" GROUP BY etre_nationalite.id_pays ORDER BY `nb`  ASC LIMIT 3');	
 					
 					 echo '<div class="row">
 						<div class="col-12">
