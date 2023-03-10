@@ -129,7 +129,7 @@ if ($nb_ath['nb']!=0) {
 	echo '<center><h2><strong>Classement des médailles CIO</strong></h2></center>';
 	echo '<br>';
 	
-	$classement = $bdd->query('SELECT COUNT(id_med) as nb, pays_participants.nom_pays, pays_participants.I_drapeau, etre_nationalite.id_pays FROM lier_M, athletes, etre_nationalite, medailles, pays_participants, olympiades WHERE id_med = 1 AND lier_M.ID_athletes = athletes.ID_athletes AND etre_nationalite.ID_athletes = athletes.ID_athletes AND etre_nationalite.id_pays = pays_participants.Code_CIO AND lier_M.id_olympiade = olympiades.id_olympiade AND olympiades.id_olympiade ="'.$olympiade['id_olympiade'].'" GROUP BY etre_nationalite.id_pays ORDER BY nb DESC LIMIT 5');	
+	$classement_or = $bdd->query('SELECT count(DISTINCT lier_m.id_epreuves) as nb, etre_nationalite.id_pays, pays_participants.nom_pays, pays_participants.I_drapeau FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade AND lier_m.id_med = 1 AND lier_m.id_olympiade = "'.$olympiade['id_olympiade'].'" GROUP BY etre_nationalite.id_pays ORDER BY nb DESC LIMIT 5');	
   
 	echo '<div class="container card">';
 	echo '<div class="card-body">';
@@ -142,24 +142,17 @@ if ($nb_ath['nb']!=0) {
 				echo '<tbody>';
 					
 					$i = 0;
-					while ($ligne_classement = $classement ->fetch()) {
-						$medailles = $bdd->query('SELECT lier_M.id_med, COUNT(lier_M.id_med) as nb FROM lier_M, athletes, etre_nationalite, medailles, pays_participants, olympiades WHERE lier_M.ID_athletes = athletes.ID_athletes AND etre_nationalite.ID_athletes = athletes.ID_athletes AND etre_nationalite.id_pays = pays_participants.Code_CIO AND lier_M.id_olympiade = olympiades.id_olympiade AND olympiades.id_olympiade = "'.$olympiade['id_olympiade'].'" AND etre_nationalite.id_pays = "'.$ligne_classement['id_pays'].'" GROUP BY lier_M.id_med');
-						while ($ligne_medailles = $medailles ->fetch()) {
-							if ($ligne_medailles['id_med'] == 2) {
-								$argent = $ligne_medailles['nb'];
-							}
-							elseif ($ligne_medailles['id_med'] == 3) {
-								$bronze = $ligne_medailles['nb'];
-							}
-						}
-						
+					while ($ligne_classement_or = $classement_or ->fetch()) {
+						$argent = $bdd->query('SELECT count(DISTINCT lier_m.id_epreuves) as nb FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade AND lier_m.id_med = 2 AND lier_m.id_olympiade = "'.$olympiade['id_olympiade'].'" AND etre_nationalite.id_pays = "'.$ligne_classement_or['id_pays'].'"')->fetch();
+						$bronze = $bdd->query('SELECT count(DISTINCT lier_m.id_epreuves) as nb, etre_nationalite.id_pays, pays_participants.nom_pays, pays_participants.I_drapeau FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade AND lier_m.id_med = 3 AND lier_m.id_olympiade = "'.$olympiade['id_olympiade'].'" AND etre_nationalite.id_pays = "'.$ligne_classement_or['id_pays'].'"')->fetch();
+
 						echo '<tr>
 							<td>'.++$i.'</td>
-							<th scope="row"><img src="'.$ligne_classement['I_drapeau'].'" alt="Drapeau '.$ligne_classement['nom_pays'].'" class="img-thumbnail border-0" width="40px"> '.$ligne_classement['nom_pays'].'</th>
-							<td><img src="../Images/Boutons/medaille_or.png" alt="Médaille d\'or" width="20px"> <span>'.$ligne_classement['nb'].'</span></td>
-							<td><img src="../Images/Boutons/medaille_argent.png" alt="Médaille d\'argent" width="20px"> <span>'.$argent.'</span></td>
-							<td><img src="../Images/Boutons/medaille_bronze.png" alt="Médaille de bronze" width="20px"> <span>'.$bronze.'</span></td>
-							<td>= '.($ligne_classement['nb']+$argent+$bronze).'</td>
+							<th scope="row"><img src="'.$ligne_classement_or['I_drapeau'].'" alt="Drapeau '.$ligne_classement_or['nom_pays'].'" class="img-thumbnail border-0" width="40px"> '.$ligne_classement_or['nom_pays'].'</th>
+							<td><img src="../Images/Boutons/medaille_or.png" alt="Médaille d\'or" width="20px"> <span>'.$ligne_classement_or['nb'].'</span></td>
+							<td><img src="../Images/Boutons/medaille_argent.png" alt="Médaille d\'argent" width="20px"> <span>'.$argent['nb'].'</span></td>
+							<td><img src="../Images/Boutons/medaille_bronze.png" alt="Médaille de bronze" width="20px"> <span>'.$bronze["nb"].'</span></td>
+							<td>= '.($ligne_classement_or['nb']+$argent['nb']+$bronze['nb']).'</td>
 						</tr>';
 					}
 				
@@ -186,22 +179,7 @@ if ($nb_ath['nb']!=0) {
 						<div class="col-12">
 						  <table class="table">
 							<tbody>
-							  <tr>
-								<td>1</td>
-								<th scope="row"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Flag_of_France_%281794%E2%80%931815%2C_1830%E2%80%931974%2C_2020%E2%80%93present%29.svg/1200px-Flag_of_France_%281794%E2%80%931815%2C_1830%E2%80%931974%2C_2020%E2%80%93present%29.svg.png?20230102180422" alt="Drapeau France" class="img-thumbnail border-0" width="40px"> France</th>
-								<td><img src="../Images/Boutons/medaille_or.png" alt="Médaille d\'or" width="20px"> <span>31</span></td>
-								<td><img src="../Images/Boutons/medaille_argent.png" alt="Médaille d\'argent" width="20px"> <span>40</span></td>
-								<td><img src="../Images/Boutons/medaille_bronze.png" alt="Médaille de bronze" width="20px"> <span>40</span></td>
-								<td>= 111</td>
-							  </tr>
-							  <tr>
-								<td>2</td>
-								<th scope="row"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Flag_of_France_%281794%E2%80%931815%2C_1830%E2%80%931974%2C_2020%E2%80%93present%29.svg/1200px-Flag_of_France_%281794%E2%80%931815%2C_1830%E2%80%931974%2C_2020%E2%80%93present%29.svg.png?20230102180422" alt="Drapeau France" class="img-thumbnail border-0" width="40px"> Etats-Unis</th>
-								<td><img src="../Images/Boutons/medaille_or.png" alt="Médaille d\'or" width="20px"> <span>31</span></td>
-								<td><img src="../Images/Boutons/medaille_argent.png" alt="Médaille d\'argent" width="20px"> <span>40</span></td>
-								<td><img src="../Images/Boutons/medaille_bronze.png" alt="Médaille de bronze" width="20px"> <span>35</span></td>
-								<td>= 111</td>
-							  </tr>
+							 
 							</tbody>
 						  </table>
 						</div>
@@ -216,30 +194,30 @@ if ($nb_ath['nb']!=0) {
 				<div class="card-body">
 				  <h5 class="card-title">Par population des délégations</h5>
 				  <p class="card-text">Description du classement.</p>
-							  <p class="card-text">
-				  
+							  <p class="card-text">';
 					
-					 <div class="row">
+					$classement_or_pop = $bdd->query('SELECT (count(DISTINCT lier_m.id_epreuves) * (pays_participants.population/10000000)) as nb, etre_nationalite.id_pays, pays_participants.nom_pays, pays_participants.I_drapeau FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade AND lier_m.id_med = 1 AND lier_m.id_olympiade = "'.$olympiade['id_olympiade'].'" GROUP BY etre_nationalite.id_pays ORDER BY `nb`  ASC LIMIT 3');	
+					
+					 echo '<div class="row">
 						<div class="col-12">
 						  <table class="table">
-							<tbody>
-							  <tr>
-								<td>1</td>
-								<th scope="row"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Flag_of_France_%281794%E2%80%931815%2C_1830%E2%80%931974%2C_2020%E2%80%93present%29.svg/1200px-Flag_of_France_%281794%E2%80%931815%2C_1830%E2%80%931974%2C_2020%E2%80%93present%29.svg.png?20230102180422" alt="Drapeau France" class="img-thumbnail border-0" width="40px"> France</th>
-								<td><img src="../Images/Boutons/medaille_or.png" alt="Médaille d\'or" width="20px"> <span>31</span></td>
-								<td><img src="../Images/Boutons/medaille_argent.png" alt="Médaille d\'argent" width="20px"> <span>40</span></td>
-								<td><img src="../Images/Boutons/medaille_bronze.png" alt="Médaille de bronze" width="20px"> <span>40</span></td>
-								<td>= 111</td>
-							  </tr>
-							  <tr>
-								<td>2</td>
-								<th scope="row"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Flag_of_France_%281794%E2%80%931815%2C_1830%E2%80%931974%2C_2020%E2%80%93present%29.svg/1200px-Flag_of_France_%281794%E2%80%931815%2C_1830%E2%80%931974%2C_2020%E2%80%93present%29.svg.png?20230102180422" alt="Drapeau France" class="img-thumbnail border-0" width="40px"> Etats-Unis</th>
-								<td><img src="../Images/Boutons/medaille_or.png" alt="Médaille d\'or" width="20px"> <span>31</span></td>
-								<td><img src="../Images/Boutons/medaille_argent.png" alt="Médaille d\'argent" width="20px"> <span>40</span></td>
-								<td><img src="../Images/Boutons/medaille_bronze.png" alt="Médaille de bronze" width="20px"> <span>35</span></td>
-								<td>= 111</td>
-							  </tr>
-							</tbody>
+							<tbody>';
+							$i = 0;
+							while ($ligne_classement_or_pop = $classement_or_pop ->fetch()) {
+								$or = $bdd->query('SELECT count(DISTINCT lier_m.id_epreuves) as nb FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade AND lier_m.id_med = 1 AND lier_m.id_olympiade = "'.$olympiade['id_olympiade'].'" AND etre_nationalite.id_pays = "'.$ligne_classement_or_pop['id_pays'].'"')->fetch();
+								$argent = $bdd->query('SELECT count(DISTINCT lier_m.id_epreuves) as nb FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade AND lier_m.id_med = 2 AND lier_m.id_olympiade = "'.$olympiade['id_olympiade'].'" AND etre_nationalite.id_pays = "'.$ligne_classement_or_pop['id_pays'].'"')->fetch();
+								$bronze = $bdd->query('SELECT count(DISTINCT lier_m.id_epreuves) as nb, etre_nationalite.id_pays, pays_participants.nom_pays, pays_participants.I_drapeau FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade AND lier_m.id_med = 3 AND lier_m.id_olympiade = "'.$olympiade['id_olympiade'].'" AND etre_nationalite.id_pays = "'.$ligne_classement_or_pop['id_pays'].'"')->fetch();
+
+								echo '<tr>
+									<td>'.++$i.'</td>
+									<th scope="row"><img src="'.$ligne_classement_or_pop['I_drapeau'].'" alt="Drapeau '.$ligne_classement_or_pop['nom_pays'].'" class="img-thumbnail border-0" width="40px"> '.$ligne_classement_or_pop['nom_pays'].'</th>
+									<td><img src="../Images/Boutons/medaille_or.png" alt="Médaille d\'or" width="20px"> <span>'.$or['nb'].'</span></td>
+									<td><img src="../Images/Boutons/medaille_argent.png" alt="Médaille d\'argent" width="20px"> <span>'.$argent['nb'].'</span></td>
+									<td><img src="../Images/Boutons/medaille_bronze.png" alt="Médaille de bronze" width="20px"> <span>'.$bronze["nb"].'</span></td>
+									<td>= '.($or['nb']+$argent['nb']+$bronze['nb']).'</td>
+								</tr>';
+							}
+							echo'</tbody>
 						  </table>
 						</div>
 					  </div>
@@ -261,22 +239,7 @@ if ($nb_ath['nb']!=0) {
 						<div class="col-12">
 						  <table class="table">
 							<tbody>
-							  <tr>
-								<td>1</td>
-								<th scope="row"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Flag_of_France_%281794%E2%80%931815%2C_1830%E2%80%931974%2C_2020%E2%80%93present%29.svg/1200px-Flag_of_France_%281794%E2%80%931815%2C_1830%E2%80%931974%2C_2020%E2%80%93present%29.svg.png?20230102180422" alt="Drapeau France" class="img-thumbnail border-0" width="40px"> France</th>
-								<td><img src="../Images/Boutons/medaille_or.png" alt="Médaille d\'or" width="20px"> <span>31</span></td>
-								<td><img src="../Images/Boutons/medaille_argent.png" alt="Médaille d\'argent" width="20px"> <span>40</span></td>
-								<td><img src="../Images/Boutons/medaille_bronze.png" alt="Médaille de bronze" width="20px"> <span>40</span></td>
-								<td>= 111</td>
-							  </tr>
-							  <tr>
-								<td>2</td>
-								<th scope="row"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Flag_of_France_%281794%E2%80%931815%2C_1830%E2%80%931974%2C_2020%E2%80%93present%29.svg/1200px-Flag_of_France_%281794%E2%80%931815%2C_1830%E2%80%931974%2C_2020%E2%80%93present%29.svg.png?20230102180422" alt="Drapeau France" class="img-thumbnail border-0" width="40px"> Etats-Unis</th>
-								<td><img src="../Images/Boutons/medaille_or.png" alt="Médaille d\'or" width="20px"> <span>31</span></td>
-								<td><img src="../Images/Boutons/medaille_argent.png" alt="Médaille d\'argent" width="20px"> <span>40</span></td>
-								<td><img src="../Images/Boutons/medaille_bronze.png" alt="Médaille de bronze" width="20px"> <span>35</span></td>
-								<td>= 111</td>
-							  </tr>
+							  
 							</tbody>
 						  </table>
 						</div>
