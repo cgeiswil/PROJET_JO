@@ -18,14 +18,9 @@
 	</object>
 	
 	
-    <h1>Quiz</h1>
-    <h2>Choisissez le niveau de difficulté :</h2>
+    <h1>Quiz de Niveau Facile </h1>
+    <button type="button" class="btn btn-success">Lancer le Quiz</button>
     
- 	<table>
- 	<td><a href="QuizFacile.php?niveau=facile"><button type="button" class="btn btn-success">Facile</button></a></td>
- 	<td><a href="QuizFacile.php?niveau=moyen"><button type="button" class="btn btn-warning">Moyen</button></a></td>
- 	<td><a href="QuizFacile.php?niveau=difficile"><button type="button" class="btn btn-danger">Difficile</button></a></td>
- 	</table>
 
 	
         
