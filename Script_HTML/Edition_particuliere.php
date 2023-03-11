@@ -16,7 +16,7 @@
 		exit;
 	}
 
-	$stmt = $bdd->prepare('SELECT * FROM olympiades, villes_hotes WHERE id_olympiade = ? AND villes_hotes.id_ville = olympiades.id_ville_hote');
+	$stmt = $bdd->prepare('SELECT * FROM olympiades, villes_hotes, pays_participants WHERE id_olympiade = ? AND villes_hotes.id_ville = olympiades.id_ville_hote AND olympiades.Code_CIO = pays_participants.Code_CIO');
 	$stmt->execute([$id_olympiade]);
 	$olympiade = $stmt->fetch();
 
@@ -67,7 +67,7 @@ echo'</head>
 					$nb_pays = $bdd->query('SELECT COUNT(olympiades.pays_hote) as olymp FROM olympiades WHERE olympiades.pays_hote = "'.$olympiade['pays_hote'].'" GROUP BY olympiades.pays_hote')->fetch();
 					$pays = $bdd->query("SELECT * FROM pays_participants WHERE pays_participants.Code_CIO = '".$olympiade['Code_CIO']."'")->fetch();
 					
-					   echo '<p><img src="'.$pays['I_drapeau'].'" alt="Drapeau '.$olympiade['pays_hote'].'" class="img-thumbnail border-0" width="35px"> <a href="http://localhost/PROJET_JO/Script_HTML/Carte_des_editions.php?lat='.$olympiade['latitude'].'&lon='.$olympiade['longitude'].'#ancre" class="text-primary">'.$olympiade['pays_hote'].'</a> ('.$nb_pays['olymp'].($nb_pays['olymp'] > 1 ? ' &eacute;ditions' : ' &eacute;dition').' au total)</p>';
+					   echo '<p><img src="'.$pays['I_drapeau'].'" alt="Drapeau '.$olympiade['pays_hote'].'" class="img-thumbnail border-0" width="35px"> <a href="Carte_des_editions.php?view=p&lat='.$olympiade['latitude_pays'].'&lon='.$olympiade['longitude_pays'].'#ancre" class="text-primary">'.$olympiade['pays_hote'].'</a> ('.$nb_pays['olymp'].($nb_pays['olymp'] > 1 ? ' &eacute;ditions' : ' &eacute;dition').' au total)</p>';
 					  echo '<p>Jeux Olympiques d\''.($olympiade['saison'] == 'Summer' ? '&Eacute;t&eacute;' : 'Hiver').'</p>';
 
 					  // Calcul du nb de jour
@@ -115,7 +115,7 @@ echo'</head>
 					$discipline = $bdd->query("SELECT * FROM disciplines WHERE disciplines.id_discipline =".$epreuve['id_disciplines'])->fetch();
 					$pays =  $bdd->query("SELECT * FROM etre_nationalite, pays_participants WHERE etre_nationalite.id_pays = pays_participants.Code_CIO AND etre_nationalite.ID_athletes =".$record['id_athlete']." LIMIT 1")->fetch();
 					
-					echo "<p><strong>Record olympique al&eacute;atoire :</strong> ".$epreuve['epreuves']." - ".($athlete['Sexe'] == 'M' ? 'Monsieur ' : 'Madame ').$athlete['Name']." (".$pays['nom_pays'].") a fait ".$record['record olympique']." ".strtolower($record['unite'])." au ".strtolower($record['stade de la comp&eacute;tition'])." de la comp&eacute;tition.</p>";
+					echo "<p><strong>Record olympique al&eacute;atoire :</strong> ".$epreuve['epreuves']." - ".($athlete['Sexe'] == 'M' ? 'Monsieur ' : 'Madame ').$athlete['nom']." (".$pays['nom_pays'].") a fait ".$record['record olympique']." ".strtolower($record['unite'])." au ".strtolower($record['stade de la comp&eacute;tition'])." de la comp&eacute;tition.</p>";
 				}
 				
 			   echo '</div>';
@@ -129,7 +129,7 @@ if ($nb_ath['nb']!=0) {
 	echo '<center><h2><strong>Classement des m&eacute;dailles CIO</strong></h2></center>';
 	echo '<br>';
 	
-	$classement_or = $bdd->query('SELECT count(DISTINCT lier_m.id_epreuves) as nb, etre_nationalite.id_pays, pays_participants.nom_pays, pays_participants.I_drapeau FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade AND lier_m.id_med = 1 AND lier_m.id_olympiade = "'.$olympiade['id_olympiade'].'" GROUP BY etre_nationalite.id_pays ORDER BY nb DESC LIMIT 5');	
+	$classement_or = $bdd->query('SELECT count(DISTINCT lier_m.id_epreuves) as nb, etre_nationalite.id_pays, pays_participants.nom_pays, pays_participants.I_drapeau FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade AND lier_m.id_medaille = 1 AND lier_m.id_olympiade = "'.$olympiade['id_olympiade'].'" GROUP BY etre_nationalite.id_pays ORDER BY nb DESC LIMIT 5');	
   
 	echo '<div class="container card">';
 	echo '<div class="card-body">';
@@ -143,8 +143,8 @@ if ($nb_ath['nb']!=0) {
 					
 					$i = 0;
 					while ($ligne_classement_or = $classement_or ->fetch()) {
-						$argent = $bdd->query('SELECT count(DISTINCT lier_m.id_epreuves) as nb FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade AND lier_m.id_med = 2 AND lier_m.id_olympiade = "'.$olympiade['id_olympiade'].'" AND etre_nationalite.id_pays = "'.$ligne_classement_or['id_pays'].'"')->fetch();
-						$bronze = $bdd->query('SELECT count(DISTINCT lier_m.id_epreuves) as nb, etre_nationalite.id_pays, pays_participants.nom_pays, pays_participants.I_drapeau FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade AND lier_m.id_med = 3 AND lier_m.id_olympiade = "'.$olympiade['id_olympiade'].'" AND etre_nationalite.id_pays = "'.$ligne_classement_or['id_pays'].'"')->fetch();
+						$argent = $bdd->query('SELECT count(DISTINCT lier_m.id_epreuves) as nb FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade AND lier_m.id_medaille = 2 AND lier_m.id_olympiade = "'.$olympiade['id_olympiade'].'" AND etre_nationalite.id_pays = "'.$ligne_classement_or['id_pays'].'"')->fetch();
+						$bronze = $bdd->query('SELECT count(DISTINCT lier_m.id_epreuves) as nb, etre_nationalite.id_pays, pays_participants.nom_pays, pays_participants.I_drapeau FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade AND lier_m.id_medaille = 3 AND lier_m.id_olympiade = "'.$olympiade['id_olympiade'].'" AND etre_nationalite.id_pays = "'.$ligne_classement_or['id_pays'].'"')->fetch();
 
 						echo '<tr>
 							<td>'.++$i.'</td>
@@ -196,7 +196,7 @@ if ($nb_ath['nb']!=0) {
 				  <p class="card-text">Description du classement.</p>
 							  <p class="card-text">';
 					
-					$classement_or_pop = $bdd->query('SELECT (count(DISTINCT lier_m.id_epreuves) / (pays_participants.population)) as nb, etre_nationalite.id_pays, pays_participants.nom_pays, pays_participants.I_drapeau FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade and pays_participants.population != -1 AND lier_m.id_med = 1 AND lier_m.id_olympiade = "'.$olympiade['id_olympiade'].'" GROUP BY etre_nationalite.id_pays ORDER BY `nb`  ASC LIMIT 3');	
+					$classement_or_pop = $bdd->query('SELECT (count(DISTINCT lier_m.id_epreuves) / (pays_participants.population)) as nb, etre_nationalite.id_pays, pays_participants.nom_pays, pays_participants.I_drapeau FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade and pays_participants.population != -1 AND lier_m.id_medaille = 1 AND lier_m.id_olympiade = "'.$olympiade['id_olympiade'].'" GROUP BY etre_nationalite.id_pays ORDER BY `nb`  ASC LIMIT 3');	
 					
 					 echo '<div class="row">
 						<div class="col-12">
@@ -204,9 +204,9 @@ if ($nb_ath['nb']!=0) {
 							<tbody>';
 							$i = 0;
 							while ($ligne_classement_or_pop = $classement_or_pop ->fetch()) {
-								$or = $bdd->query('SELECT count(DISTINCT lier_m.id_epreuves) as nb FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade AND lier_m.id_med = 1 AND lier_m.id_olympiade = "'.$olympiade['id_olympiade'].'" AND etre_nationalite.id_pays = "'.$ligne_classement_or_pop['id_pays'].'"')->fetch();
-								$argent = $bdd->query('SELECT count(DISTINCT lier_m.id_epreuves) as nb FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade AND lier_m.id_med = 2 AND lier_m.id_olympiade = "'.$olympiade['id_olympiade'].'" AND etre_nationalite.id_pays = "'.$ligne_classement_or_pop['id_pays'].'"')->fetch();
-								$bronze = $bdd->query('SELECT count(DISTINCT lier_m.id_epreuves) as nb, etre_nationalite.id_pays, pays_participants.nom_pays, pays_participants.I_drapeau FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade AND lier_m.id_med = 3 AND lier_m.id_olympiade = "'.$olympiade['id_olympiade'].'" AND etre_nationalite.id_pays = "'.$ligne_classement_or_pop['id_pays'].'"')->fetch();
+								$or = $bdd->query('SELECT count(DISTINCT lier_m.id_epreuves) as nb FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade AND lier_m.id_medaille = 1 AND lier_m.id_olympiade = "'.$olympiade['id_olympiade'].'" AND etre_nationalite.id_pays = "'.$ligne_classement_or_pop['id_pays'].'"')->fetch();
+								$argent = $bdd->query('SELECT count(DISTINCT lier_m.id_epreuves) as nb FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade AND lier_m.id_medaille = 2 AND lier_m.id_olympiade = "'.$olympiade['id_olympiade'].'" AND etre_nationalite.id_pays = "'.$ligne_classement_or_pop['id_pays'].'"')->fetch();
+								$bronze = $bdd->query('SELECT count(DISTINCT lier_m.id_epreuves) as nb, etre_nationalite.id_pays, pays_participants.nom_pays, pays_participants.I_drapeau FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade AND lier_m.id_medaille = 3 AND lier_m.id_olympiade = "'.$olympiade['id_olympiade'].'" AND etre_nationalite.id_pays = "'.$ligne_classement_or_pop['id_pays'].'"')->fetch();
 
 								echo '<tr>
 									<td>'.++$i.'</td>
