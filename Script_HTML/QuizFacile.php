@@ -16,7 +16,7 @@
 			require("fonction.php");
 			$bdd = getBDD();
 			$niveau = $_GET['niveau'];
-			$requete = "SELECT question, question.id_question FROM question, composer_de, quiz WHERE quiz.id_quiz=composer_de.id_quiz and question.id_question=composer_de.id_question and `Niveau de difficulte`='$niveau'";
+			$requete = "SELECT question, question.id_question FROM question, composer_de, quiz WHERE quiz.id_quiz=composer_de.id_quiz and question.id_question=composer_de.id_question and `difficulte`='$niveau'";
 			$resultat = $bdd->query($requete);
 			if ($resultat->rowCount() > 0) {
 				echo "<form method='post'>";
@@ -39,7 +39,7 @@
 			// Process form submission
 			if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 				$score = 0;
-				$requete = "SELECT reponse, question.id_question FROM question, composer_de, quiz, reponses WHERE quiz.id_quiz=composer_de.id_quiz and question.id_question=reponses.id_question and question.id_question=composer_de.id_question and `Niveau de difficulte`='$niveau' and vraie_fausse=1";
+				$requete = "SELECT reponse, question.id_question FROM question, composer_de, quiz, reponses WHERE quiz.id_quiz=composer_de.id_quiz and question.id_question=reponses.id_question and question.id_question=composer_de.id_question and `difficulte`='$niveau' and vraie_fausse=1";
 				$resultat = $bdd->query($requete);
 				while($ligne = $resultat->fetch()) {
 					if ($_POST[$ligne['id_question']] == $ligne['reponse']) {

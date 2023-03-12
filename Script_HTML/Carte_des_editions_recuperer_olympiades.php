@@ -4,7 +4,7 @@ require("fonction.php");
 $bdd = getBDD();
 
 // Récupération de toutes les olympiades
-$result = $bdd->prepare('SELECT * FROM olympiades, villes_hotes, pays_participants WHERE villes_hotes.latitude != 0 AND villes_hotes.id_ville = olympiades.id_ville_hote AND olympiades.Code_CIO = pays_participants.Code_CIO ORDER BY saison ASC, n_edition  ASC');
+$result = $bdd->prepare('SELECT * FROM olympiades, villes_hotes WHERE villes_hotes.latitude != 0 AND villes_hotes.id_ville = olympiades.id_ville_hote');
 $result->execute();
 
 // Stockage des données dans un tableau
