@@ -1,0 +1,21 @@
+img.logo{
+	width: 70px;
+	display : flex;
+}
+
+a{
+text-decoration:none;
+color: black;
+}
+
+h1{
+	font-weight: bold;
+	color: #194aa5;
+}
+div{
+margin-left: 20%;
+margin-right: 20%;
+font-style: normal;
+}
+
+.footer {position: relative; bottom: 0; left: 0; right: 0}

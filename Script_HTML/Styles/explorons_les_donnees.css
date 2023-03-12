@@ -1,0 +1,50 @@
+body{
+    background-image: url("../Images/General/fond.gif");
+    
+    background-image: url("../Images/fond.gif");
+    1cb68be (ajout fichier)
+    background-repeat: no-repeat;
+    background-size: 100%;
+    }
+    
+    h1{
+        font-size: 1.6em;
+        font-variant:small-caps;
+        color:#1c1c1c;
+        text-align: center;
+    }
+    
+    table{
+        display : flex;
+        justify-content: center;
+        border :rgb(59, 56, 56);
+        object-fit: contain;
+    }
+    table,
+    th{
+        border: 1px 1px 1px 1px;
+        padding: 20px;
+    }
+
+    button{
+        background-color: rgb(255, 255, 255);
+        border:0;
+        size: 20%;
+        object-fit: contain;
+        text-align: center;
+    }
+    .btn-primary {
+        text-align: center;
+    }
+    img{
+        object-fit: contain;
+        width : 150px;
+        height : 150px;
+    }  
+    
+    .fond_accueil{
+        background-color: white;
+        border-width: 0;
+        border-spacing: inherit;
+        border-style: none;    
+    }

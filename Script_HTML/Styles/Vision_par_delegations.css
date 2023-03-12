@@ -1,0 +1,67 @@
+h1{
+	
+	font-size : 65px;
+	text-align:center;
+	font-family:helvetica-w01-roman,helvetica-w02-roman,helvetica-lt-w10-roman,sans-serif;
+	padding-top : 100px;
+	
+}
+
+span {
+	
+	 color:#00968D;
+	
+	
+	
+}
+
+img{
+	object-fit: contain;
+	width : 150px;
+	height : 150px;
+}
+
+table,td{
+        border: 1px 1px 1px 1px;
+        padding: 20px;
+    }
+
+
+table{
+
+	
+	display : flex;
+        justify-content: center;
+        border :rgb(59, 56, 56);
+        object-fit: contain;
+		
+}
+
+
+
+button{
+	
+background-color : white;
+	
+	
+}
+
+
+
+
+
+
+.imageclassement{
+
+width : 30px;
+height : 50px;
+}
+
+
+.drapeaufr{
+
+	width : 60px;
+	height : 50px;
+
+}
+

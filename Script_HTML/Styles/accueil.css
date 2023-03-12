@@ -1,0 +1,46 @@
+body{
+background-image: url("../../Images/General/fond.gif");
+1cb68be (ajout fichier)
+background-repeat: no-repeat;
+background-size: 100%;
+padding-top: -100px;
+
+}
+
+h1{
+	background-color:#6C6C6C;
+	color:#FFFFFF;
+	font-weight: 900;
+	text-align: center;
+	position: relative; top: 0; left: 0; right: 0;
+	padding: 20px;
+	margin-top: -45px;
+	font-family: Andale Mono, monospace;
+	text-shadow: 1px 1px 2px black;
+	font-variant: small-caps;
+	font-size: 50px;
+}
+
+p{
+	opacity: 0,7;
+
+}
+	
+}
+.fond_accueil{
+	background-color: white;
+	border-width: 0;
+	border-spacing: inherit;
+	border-style: none;
+	
+	
+}
+
+.footer {position: absolute; bottom: 0; left: 0; right: 0}
+
+.cycle-slideshow {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
