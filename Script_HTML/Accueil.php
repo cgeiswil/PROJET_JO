@@ -2,7 +2,7 @@
 <html lang="fr">
 	<head>
     <title>Les JO Autrement</title>
-	<link rel="shortcut icon" href="../Images/Anneaux/officiel.png" type="image/png">
+		<link rel="shortcut icon" href="../Images/Anneaux/officiel.png" type="image/png">
     <meta charset="utf-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap @5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="Styles/accueil.css" type="text/css">        
