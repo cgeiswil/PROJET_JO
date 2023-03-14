@@ -12,8 +12,6 @@ span {
 	
     color:#250987;
    
-   
-   
 }
 
 
@@ -21,16 +19,16 @@ span {
 
 padding-top : 15px;
 padding : 15px;
-border-right : solid #250987 8px;
-border-bottom : solid #250987 8px;
+border-right : solid #7c7985 3px;
+border-bottom : solid #7c7985 3px;
 }
 
 
 .celbot{
     padding-top : 15px;
     padding : 15px;
-    border-right : solid #250987 8px;
-    border-top : solid #250987 8px;
+    border-right : solid #7c7985 3px;
+    border-top : solid #7c7985 3px;
 
 }
 
@@ -38,30 +36,31 @@ border-bottom : solid #250987 8px;
 #tir{
 
     border-right : none;  
-    border-bottom :solid #250987 8px;
+    border-bottom :solid #7c7985 3px;
   }
-
-td{
-
-    text-align : center;
-}
 
 table {
     
     margin-left:auto;
     margin-right:auto;
-   
     height:  30em;
     width: 60em;
+    
 
+}
+td{
+
+    text-align : center;
+    
 }
 
 button{
 
-background-color :  blue;
-color : white;
-width: 50%;
-height :100px;
+    border-radius: 30px;
+    background-color :  #4b4951;
+    color : white;
+    width: 50%;
+    height :100px;
 
 }
 
