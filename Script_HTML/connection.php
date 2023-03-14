@@ -14,7 +14,7 @@
 
 		<object data="Barre_de_navigation.html" width="100%" height="100%">
 		</object>
-		<h3> Entrez vos informations pour vous connecter à votre compte. Si vous n'avez pa de compte, cliquez sur Nouveau Utilisateur. </h3>
+		<h3> Entrez vos informations pour vous connecter à votre compte. Si vous n'avez pas de compte, cliquez sur Nouveau Utilisateur. </h3>
 		</br></br>
 		<div class ="container">
 		<?php

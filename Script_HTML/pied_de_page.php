@@ -29,6 +29,19 @@
     <!-- Grid row -->
     <div class="row">
 
+      <?php
+      session_start();
+      if(isset($_SESSION['utilisateur'])) {
+        echo "~   <a>Bonjour ".$_SESSION['utilisateur']["nom"]." !</a> ";
+        echo "   |   <a href='deconnexion.php'>Se déconnecter</a>   ~";
+      }
+      else {
+        echo "   |   <a href='nouveau.php'>Nouveau Client</a>";
+        echo "   |   <a href='connection.php'>Se connecter</a>   ~";
+      }
+      ?>
+
+
       <!-- Grid column -->
       <div class="col-md-3 mx-auto">
 
@@ -59,18 +72,19 @@
         <!-- Links -->
         <h5 class="font-weight-bold  mt-3 mb-4"><a href="Mentions_legales.html" target="_top"> Mentions Légales et CGU</a></h5>
 
-        
-
-
       </div>
       <!-- Grid column -->
 
       <hr class="clearfix w-100 d-md-none">
 
+      
+
  
 
     </div>
     <!-- Grid row -->
+
+
 
   </div>
   <!-- Footer Links -->
