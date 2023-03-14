@@ -17,11 +17,11 @@
 		$bdd = getBDD();
 
 		if(isset($_POST['pseudo']) and $_POST['pseudo'] != '' and isset($_POST['mdp']) and $_POST['mdp'] != '') {
-			echo 'premier if';
+			
 			$requete = $bdd->prepare('select * FROM utilisateurs WHERE pseudo= ? AND mot_de_passe = ?'); 
-			echo 'requete preparee';
+			
 			$requete->execute(array($_POST['pseudo'], md5($_POST['mdp'])));
-			echo 'requete execute';
+			
 			
 			if($result = $requete->fetch()) {
 				echo 'deuxieme if';
