@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+    <title>Les JO Autrement</title>
+    <meta charset="utf-8">
+     <link rel="stylesheet" href="Styles/quiz.css" type="text/css">    
+     <!-- liens vers les fichiers CSS et JS nécessaires pour faire fonctionner la barre de navigation -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link rel="shortcut icon" href="../Images/Anneaux/officiel.png" type="image/png">
+  <style type="text/css">
+  #retour{
+		display: flex;
+		justify-content: center;
+		margin: auto;	  
+  }
+  </style>
+	</head>
+    <body>
+    
+
+	<object data="Barre_de_navigation.html" width="100%" height="100%">
+	</object>
+	
+	
+   <h1>Classement des Délégations par records</h1>
+    <h2>Choisissez la discipline des records que vous voulez afficher :</h2>
+    
+ 	<table>
+<td><a href="Classement_Delegation_record_discipline.php?nom_discipline=Athletics"><button type="button" class="btn btn-info">Athletics</button></a></td>
+<td><a href="Classement_Delegation_record_discipline.php?nom_discipline=Swimming"><button type="button" class="btn btn-info">Swimming</button></a></td>
+<td><a href="Classement_Delegation_record_discipline.php?nom_discipline=Cycling"><button type="button" class="btn btn-info">Cycling</button></a></td>
+<td><a href="Classement_Delegation_record_discipline.php?nom_discipline=Weightlifting"><button type="button" class="btn btn-info">Weightlifting</button></a></td>
+<td><a href="Classement_Delegation_record_discipline.php?nom_discipline=Speed Skating"><button type="button" class="btn btn-info">Speed Skating</button></a></td>
+</table>
+	<br>
+	<a id="retour"; href="Vision_par_delegations.html"><button type="button" class="btn btn-primary">Retour vers Vision par Délégation</button></a>
+        
+	<div class="footer">
+	<object  data="Pied_de_page.html" width="100%" height="100%">
+	</object>
+	</div>
+	
+    </body>
+</html>
