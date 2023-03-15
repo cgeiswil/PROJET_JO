@@ -93,7 +93,7 @@ echo'</head>
 					echo '</div>';
 					echo '<div class="col-sm">';
 					
-					  $nb_ath = $bdd->query("SELECT count(etre_nationalite.ID_athletes) as nb FROM olympiades, etre_nationalite WHERE olympiades.id_olympiade = etre_nationalite.id_olympiade AND olympiades.id_olympiade = '".$olympiade['id_olympiade']."'")->fetch();	
+					  $nb_ath = $bdd->query("SELECT count(DISTINCT etre_nationalite.ID_athletes) as nb FROM olympiades, etre_nationalite WHERE olympiades.id_olympiade = etre_nationalite.id_olympiade AND olympiades.id_olympiade = '".$olympiade['id_olympiade']."'")->fetch();	
 					  echo $nb_ath['nb']!=0 ? '<p class="text-success">'.$nb_ath['nb'].' athlètes</p>' : "";
 					  echo '<p class="text-danger">'.$olympiade['nb_delegations'].' d&eacute;l&eacute;gations repr&eacute;sent&eacute;es</p>';
 					  echo '<p class="text-warning">'.$olympiade['nb_discplines'].' disciplines, '.$olympiade['nb_epreuves'].' &eacute;preuves</p>';
@@ -115,7 +115,7 @@ echo'</head>
 					$discipline = $bdd->query("SELECT * FROM disciplines WHERE disciplines.id_discipline =".$epreuve['id_disciplines'])->fetch();
 					$pays =  $bdd->query("SELECT * FROM etre_nationalite, pays_participants WHERE etre_nationalite.id_pays = pays_participants.Code_CIO AND etre_nationalite.ID_athletes =".$record['id_athlete']." LIMIT 1")->fetch();
 					
-					echo "<p><strong>Record olympique al&eacute;atoire :</strong> ".$epreuve['epreuves']." - ".($athlete['Sexe'] == 'M' ? 'Monsieur ' : 'Madame ').$athlete['nom']." (".$pays['nom_pays'].") a fait ".$record['record olympique']." ".strtolower($record['unite'])." au ".strtolower($record['stade de la comp&eacute;tition'])." de la comp&eacute;tition.</p>";
+					echo "<p><strong>Record olympique al&eacute;atoire :</strong> ".$epreuve['epreuves']." - ".($athlete['Sexe'] == 'M' ? 'Monsieur ' : 'Madame ').$athlete['nom']." (".$pays['nom_pays'].") a fait ".$record['record olympique']." ".strtolower($record['unite'])." au ".strtolower($record['stade de la compétition'])." de la comp&eacute;tition.</p>";
 				}
 				
 			   echo '</div>';
@@ -255,7 +255,7 @@ if ($nb_ath['nb']!=0) {
 		
 }
 ?>
-
+	</div></div>
 	<br><br><br>
 	<footer>
 		<object  data="Pied_de_page.html" width="100%" height="100%">
