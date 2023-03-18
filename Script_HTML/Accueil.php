@@ -50,15 +50,75 @@
   </div>
 </div>
 </div>
+<div class="container">
+	<h2>Les classements et éditions de Jeux Olympiques</h2>
+	</div>
+
+	<div class="container justify-content-center">
+	  <div class="row justify-content-center card-deck">
+		<div class="col-md-6 col-lg-5">
+		  <div class="card border">
+			<div class="card-body">
+			  <table class="rounded-4">
+				<tr>
+				  <th>
+					<a href="./Vision_par_delegations.php" target="_parent">
+					  <img alt="Survol" onmouseout="this.src='../Images/Boutons/podium_drapeau.png';" onmouseover="this.src='../Images/Boutons/podium_drapeau_survol.png';" src="../Images/Boutons/podium_drapeau.png" />
+					</a>
+					<br>
+					<small class="text-muted">Les meilleures délégations.</small>
+				  </th>
+
+				  <th>
+					<a href="./Vision_par_athletes.php" target="_parent">
+					  <img alt="Survol" onmouseout="this.src='../Images/Boutons/discipline_podium.png';" onmouseover="this.src='../Images/Boutons/discipline_podium_survol.png';" src="../Images/Boutons/discipline_podium.png" />
+					</a>
+					<br>
+					<small class="text-muted">Les meilleurs athlètes.</small>
+				  </th>
+				</tr>
+			  </table>
+			</div>
+		  </div>
+		</div>
+
+		<div class="col-md-6 col-lg-5">
+		  <div class="card border">
+			<div class="card-body">
+			  <table class="rounded-4">
+				<tr>
+				  <th>
+					<a href="./Carte_des_editions.php" target="_parent">
+					  <img alt="Survol" onmouseout="this.src='../Images/Boutons/planisphere.png';" onmouseover="this.src='../Images/Boutons/planisphere_survol.png';" src="../Images/Boutons/planisphere.png" />
+					</a>
+					<br>
+					<small class="text-muted">La carte des éditions.</small>
+				  </th>
+				  <th>
+					<a href="./FriseChrono.php" target="_parent">
+					  <img alt="Survol" onmouseout="this.src='../Images/Boutons/frise.png';" onmouseover="this.src='../Images/Boutons/frise_survol.png';" src="../Images/Boutons/frise.png" />
+					</a>
+					<br>
+					<small class="text-muted">La frise des éditions.</small>
+				  </th>
+				</tr>
+			  </table>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+	<div class="container">
+	<h2>Commençons par explorer par exemple...</h2>
+	</div>
+	<div class="container">
+	<br><p>Recommandations futures.</p>
+	</div>
 
 	
         
-	<div class="footer">
-	<object data="Pied_de_page.php" width="100%" height="100%">
-	</object>
-	</div>
-	
-
+<iframe class="my-5" src="Pied_de_page.php" width="100%" height="50%" frameborder="0"></iframe>
 
     </body>
 </html>

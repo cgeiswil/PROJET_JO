@@ -1,51 +1,42 @@
-.gif{
-background-image: url("../../Images/General/fond1.gif");
-background-repeat: no-repeat;
-background-size: 100%;
-height: 800px;
-margin-top: -50px;
-
+.gif {
+    background-image: url("../../Images/General/fond.gif");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    height: 400px;
 }
 
-
 h1{
-	background-color:#6C6C6C;
-	color:#FFFFFF;
-	font-weight: 900;
-	text-align: center;
-	position: relative; top: 0; left: 0; right: 0;
-	padding: 20px;
-	margin-top: -45px;
-	font-family: Andale Mono, monospace;
-	text-shadow: 1px 1px 2px black;
-	font-variant: small-caps;
-	font-size: 50px;
+    background-color:#6C6C6C;
+    color:#FFFFFF;
+    font-weight: 900;
+    text-align: center;
+    position: relative; top: 0; left: 0; right: 0;
+    padding: 2%;
+    margin-top: -45px;
+    font-family: Andale Mono, monospace;
+    text-shadow: 1px 1px 2px black;
+    font-variant: small-caps;
+    font-size: 50px;
 }
 
 p{
-	opacity: 0,7;
+    opacity: 0,7;
 
 }
-	
+    
 }
 .fond_accueil{
-	background-color: white;
-	border-width: 0;
-	border-spacing: inherit;
-	border-style: none;
-	
-	
+    background-color: white;
+    border-width: 0;
+    border-spacing: inherit;
+    border-style: none;
+    
+    
 }
 
 .footer {position: relative; bottom: 0; left: 0; right: 0}
 
 .cycle-slideshow {
-	background-color: white;
-	background-size: 50%;
-	border-left: -20px;
-	display: flex;
-	justify-content:center;
-	margin: auto;
     position: relative;
     top: 50%;
     left: 50%;
@@ -53,6 +44,84 @@ p{
 }
 
 p {
-	font-size: 20px;
-	color: darkred;
+  font-size: 15px;
+  background-color: #F5F5F5;
+  color : #6C6C6C;
+  padding: 15px;
+  padding-left: 25px;
+  padding-right: 25px;
+  font-family: Andale Mono, monospace;
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  margin: auto;
+}
+
+
+h2 {
+  background-color: #F5F5F5;
+  color : #6C6C6C;
+  border-radius: 10px 100px / 120px;
+  text-align: center;
+  font-weight: bold;
+  padding: 15px;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+img{
+    width : auto;
+    height : 150px;
+}  
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.card-deck {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 1000px; 
+  margin-top: 20px; 
+}
+
+.card {
+  margin-bottom: 1rem;
+  border-radius: .25rem;
+  width: 470px;
+  margin-right: 20px;
+}
+
+.card:last-child {
+  margin-right: 0;
+}
+
+.card-body {
+  display: flex;
+  justify-content: center;
+}
+
+.card-body table {
+  text-align: center;
+  padding: 25px;
+}
+
+.card-body table th {
+  padding: 0 20px;
+}
+
+.card-body table img {
+  height: 150px;
+  width: auto;
+}
+
+.card-title {
+  text-align: center;
+  margin-bottom: 10px; 
+}
+
+a {
+    text-decoration:none;
 }
