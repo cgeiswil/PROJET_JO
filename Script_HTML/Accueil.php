@@ -29,9 +29,7 @@
 	
     <h1>Explorons les jeux olympiques <br> différemment !</h1>
     
-    	
-			
-    
+    <div class="gif">
    <div class="cycle-slideshow">
   <div class="cycle-slide">
     <p>Le Saviez-vous ?</p>
@@ -50,6 +48,7 @@
 
 
   </div>
+</div>
 </div>
 
 	

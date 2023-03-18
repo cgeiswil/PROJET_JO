@@ -1,9 +1,7 @@
-body{
+#gif{
 background-image: url("../../Images/General/fond.gif");
-1cb68be (ajout fichier)
 background-repeat: no-repeat;
 background-size: 100%;
-margin-top: -165px;
 
 }
 
@@ -43,4 +41,9 @@ p{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+p {
+	font-size: 20px;
+	color: darkred;
 }

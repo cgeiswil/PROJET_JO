@@ -1,11 +1,12 @@
-body{
-background-image: url("../../Images/General/fond.gif");
-1cb68be (ajout fichier)
+.gif{
+background-image: url("../../Images/General/fond1.gif");
 background-repeat: no-repeat;
 background-size: 100%;
-padding-top: -100px;
+height: 800px;
+margin-top: -50px;
 
 }
+
 
 h1{
 	background-color:#6C6C6C;
@@ -36,10 +37,16 @@ p{
 	
 }
 
-.footer {position: absolute; bottom: 0; left: 0; right: 0}
+.footer {position: relative; bottom: 0; left: 0; right: 0}
 
 .cycle-slideshow {
-    position: fixed;
+	background-color: white;
+	background-size: 50%;
+	border-left: -20px;
+	display: flex;
+	justify-content:center;
+	margin: auto;
+    position: relative;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
