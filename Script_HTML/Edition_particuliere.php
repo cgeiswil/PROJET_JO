@@ -40,11 +40,13 @@ echo'</head>
 			echo '<img src="'.$olympiade["logo"].'" class="float-right" alt="Logo JO '.$olympiade["nom"]." ".$olympiade["annee_o"].'" style="max-width: 200px; max-height: 150px;">';
 
 			echo "<h1><strong>Olympiade ".$olympiade["nom"]." ".$olympiade["annee_o"]."</strong>";
-
-
 				  echo '<button type="button" class="btn btn-lg bg-white text-danger border-0">';
 					 echo '<img src="../Images/Boutons/coeur_plein.svg" alt="Coeur rempli" />';
 				   echo "</button>";
+				   
+				   echo '<a href="Comparer.php?id='.$olympiade["id_olympiade"].'#Comparons"><button type="button" class="btn btn-lg bg-white text-danger border-0">';
+					 echo '<img src="../Images/Boutons/balance.png" alt="Balance" />';
+				   echo "</button><a>";
 				 echo "</h1>";
 			
 		# Boutons JO AVANT < > JO APRES			
