@@ -2,6 +2,8 @@
 require_once ('jpgraph/jpgraph.php');
 require_once ('jpgraph/jpgraph_log.php');
 require_once ('jpgraph/jpgraph_line.php');
+set_include_path(get_include_path().PATH_SEPARATOR.
+                 dirname(__FILE__)."/jpgraph/");
 
 require("fonction.php");
 $bdd = getBDD();

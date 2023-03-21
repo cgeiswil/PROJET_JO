@@ -55,7 +55,6 @@ $graph->xgrid->Show(true,false);
 
 // Set the labels for X-axis
 $graph->xaxis->SetTickLabels($datax);
-$graph->xaxis->SetTextLabelInterval(2);
 
 // Create the linear plot
 $lineplot=new LinePlot($ydata);
