@@ -25,6 +25,8 @@
         <label for="Athletics Men\'s Long Jump">Athletics Men\'s Long Jump</label><br>
         <input type="radio" id="Athletics Men\'s Javelin Throw" name="discipline" value="Athletics Men\'s Javelin Throw">
         <label for="Athletics Men\'s Javelin Throw">Athletics Men\'s Javelin Throw</label><br>
+        <input type="radio" id="Swimming Women\'s 400 metres Freestyle" name="discipline" value="Swimming Women\'s 400 metres Freestyle">
+        <label for="Swimming Women\'s 400 metres Freestyle">Swimming Women\'s 400 metres Freestyle</label><br>
         <input type="submit" value="Choisir">
         
     </form>
