@@ -48,7 +48,7 @@
 
 <td> <button type=submit  onclick = "document.getElementById('médailleCIO').style.display='block'">  <img  src = "../Images/Boutons/medaille_or.png"> </button>  </td>   
 
- <td>  <button type=submit  onclick = "document.getElementById('records').style.display='block'">  <a href="Classement_Delegation_record.html" >  <img src = "../Images/Boutons/record_(podium,couronne).png">  </button> </td> 
+ <td>  <button type=submit  onclick = "document.getElementById('records').style.display='block'">  <a href="Classement_Delegation_record.php" >  <img src = "../Images/Boutons/record_(podium,couronne).png">  </button> </td> 
 </tr>
 </table>
 </div>
@@ -719,12 +719,8 @@ ORDER BY `nb_medailles`  DESC limit 5");
 
 </body>
 
-<footer >
 
-	<object data="pied_de_page.html" width="100%" height="100%">
-	</object>
- </footer>
-
+ <iframe class="mt-5" src="Pied_de_page.php" width="100%" height="50%" frameborder="0"></iframe>
 
 
 </html>
