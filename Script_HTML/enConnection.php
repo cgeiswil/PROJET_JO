@@ -35,7 +35,7 @@
 					'photo' => $result['photo'],
 					'nb_heures' => $result['nb_heures']);
 				echo 'avant redirection';
-				header('Location: Profil.html');
+				header('Location: Profil.php');
 				exit();
 			}
 		}else {
