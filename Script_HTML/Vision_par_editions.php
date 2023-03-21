@@ -58,7 +58,7 @@
 				  let lon = parseFloat(olympiades[i].longitude);
 				  let saison = olympiades[i].saison == 'Summer' ? '&Eacutet&eacute;' : 'Hiver';
 
-				  let popupText = "<a href='Edition_particuliere.php?id=" + olympiades[i].id_olympiade + "'>Olympiade d'" + saison + " " + olympiades[i].annee_o + "</a>";
+				  let popupText = "<a class='annee  pt-2' style='text-decoration:none;' href='Edition_particuliere.php?id=" + olympiades[i].id_olympiade + "'>Olympiade d'" + saison + " " + olympiades[i].annee_o + "</a>";
 
 				  let coordinates = lat + "," + lon;
 				  if (coordinates in popupTextByCoordinates) {
@@ -79,7 +79,7 @@
 				  let lon = parseFloat(olympiades[i].longitude_pays);
 				  let saison = olympiades[i].saison == 'Summer' ? '&Eacutet&eacute;' : 'Hiver';
 
-				  let popupText = "<a href='Edition_particuliere.php?id=" + olympiades[i].id_olympiade + "'>" + olympiades[i].nom + ' ' + olympiades[i].annee_o + "</a>";
+				  let popupText = "<a class='annee  pt-2' style='text-decoration:none;' href='Edition_particuliere.php?id=" + olympiades[i].id_olympiade + "'>" + olympiades[i].nom + ' ' + olympiades[i].annee_o + "</a>";
 				  
 				  if (saison == 'Hiver') { summer_indication = 'Olympiades d\'Hiver :<br>'; }
 
