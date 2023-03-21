@@ -42,13 +42,13 @@
 
  <tr> <td>  <button type=submit onclick = "document.getElementById('disciplines').style.display='block'">
 
-<img  src = "./Images/Boutons/discipline.png"  alt = "erreur" >
+<img  src = "../Images/Boutons/discipline.png"  alt = "erreur" >
 </button>  </td>   
  
 
-<td> <button type=submit  onclick = "document.getElementById('médailleCIO').style.display='block'">  <img  src = "./Images/Boutons/medaille_or.png"> </button>  </td>   
+<td> <button type=submit  onclick = "document.getElementById('médailleCIO').style.display='block'">  <img  src = "../Images/Boutons/medaille_or.png"> </button>  </td>   
 
- <td>  <button type=submit  onclick = "document.getElementById('records').style.display='block'">    <img src = "./Images/Boutons/record_(podium,couronne).png">  </button> </td> 
+ <td>  <button type=submit  onclick = "document.getElementById('records').style.display='block'">  <a href="Classement_Delegation_record.html" >  <img src = "../Images/Boutons/record_(podium,couronne).png">  </button> </td> 
 </tr>
 </table>
 </div>
