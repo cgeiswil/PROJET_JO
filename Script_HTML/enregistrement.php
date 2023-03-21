@@ -15,12 +15,10 @@
     		
     		$mdpH = md5($mdp);
     		
-    		echo 'avant la requete';
-    		$bdd->query("insert into utilisateurs (pseudo, email, mot_de_passe)Values ('$ps', '$mail', '$mdpH')");
-    		//$stmt->execute([$ps, $mail, $mdpH]);
+    		$requete = $bdd->prepare("insert into utilisateurs (pseudo, email, mot_de_passe) Values (?, ?, ?)");
+    		
+    		$requete->execute(array($ps, $mail, $mdpH));
 
-
-    		echo 'valeurs ajoutees';
 		}
 
 		if((isset($_GET['ps']) and empty($_GET['ps']))
@@ -35,12 +33,11 @@
 		}else{
 
 			if($_GET['mdp2'] == $_GET['mdp']){
+				
 
-				echo "mdp egaux";
-
-				echo '<meta http-equiv="refresh" content="3; url=Accueil.php">';
-
-
+				
+				session_start();
+				echo '<meta http-equiv="refresh" content="3; url=Profil.php">';
 
 				echo $_GET['ps']."</br>";
 				echo $_GET['mail']."</br>";
@@ -54,6 +51,16 @@
 				echo "Pseudo : ".$_GET['ps'];
 				echo "<br>";
 				echo "Adresse mail : ".$_GET['mail'];
+
+				$_SESSION['utilisateur'] = array(
+					'utilisateur' => $result['id_utilisateur'],
+					'pseudo' => $result['pseudo'],
+					'MDP' => $result['mot_de_passe'],
+					'email' => $result['email'],
+					'photo' => $result['photo'],
+					'nb_heures' => $result['nb_heures']);
+				echo $_SESSION['utilisateur']['utilisateur'];
+				
 
 
 			}else{

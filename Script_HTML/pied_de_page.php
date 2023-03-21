@@ -24,20 +24,27 @@
 <footer class="page-footer font-small indigo">
   <div class="container text-center text-md-left">
     <div class="row">
-      <?php
-      // session_start();
-      // if(isset($_SESSION['utilisateur'])) {
-        // echo "~   <a>Bonjour ".$_SESSION['utilisateur']["nom"]." !</a> ";
-        // echo "   |   <a href='deconnexion.php'>Se déconnecter</a>   ~";
-      // }
-      // else {
-        // echo "   |   <a href='nouveau.php'>Nouveau Client</a>";
-        // echo "   |   <a href='connection.php'>Se connecter</a>   ~<br>";
-      // }
-      ?>
+     
 	
 		<p class="my-3"><em>&ensp;« L’important dans la vie n'est point le triomphe mais le combat, l’essentiel ce n'est pas d’avoir vaincu, mais de s’être bien battu. »</em> &ensp; Maxime de l'Olympisme.</p><br>
 		
+    <div class="col-md-3 mx-auto">
+      <p class="font-weight-bold mt-3 mb-1">
+     <?php
+      session_start();
+      if(isset($_SESSION['utilisateur'])) {
+        echo "~   <a>Bonjour ".$_SESSION['utilisateur']["pseudo"]." !</a> ";
+        echo "   |   <a href='deconnexion.php'>Se déconnecter</a>   ~";
+      }
+      else {
+        echo "   |   <a href='nouveau.php'>Nouveau Utilisateur</a>";
+        echo "   |   <a href='connection.php'>Se connecter</a>   ~<br>";
+      }
+      ?>
+      </p>
+    </div>
+
+
 		<div class="col-md-3 mx-auto">
 		  <p class="font-weight-bold mt-3 mb-1"><a href="Accueil.php" target="_top">Accueil</a></p>
 		</div>
