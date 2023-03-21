@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<title>record</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="" type="text/css">    
+	</head>
+	<body>
+	
+	<h1>Choisissez une discipline :</h1>
+    <form action="test_graphe2.php" method="post">
+        <input type="radio" id="Athletics_men_100" name="discipline" value="Athletics Men\'s 100 metres">
+        <label for="Athletics_men_100">Athletics_men_100</label><br>
+        <input type="radio" id="Athletics_women_100" name="discipline" value="Athletics Women\'s 100 metres">
+        <label for="Athletics_women_100">Athletics_women_100</label><br>
+        <input type="radio" id="Athletics_men_800" name="discipline" value="Athletics Men\'s 800 metres">
+        <label for="Athletics_men_800">Athletics_men_800</label><br>
+        <input type="radio" id="Athletics_women_800" name="discipline" value="Athletics Women\'s 800 metres">
+        <label for="Athletics_women_800">Athletics_women_800</label><br>
+        <input type="radio" id="Athletics Men's Hammer Throw" name="discipline" value="Athletics Men\'s Hammer Throw">
+        <label for="Athletics Men's Hammer Throw">Athletics Men's Hammer Throw</label><br>
+        <input type="radio" id="Athletics Men\'s Marathon" name="discipline" value="Athletics Men\'s Marathon">
+        <label for="Athletics Men\'s Marathon">Athletics Men\'s Marathon</label><br>
+        <input type="radio" id="Athletics Men\'s Long Jump" name="discipline" value="Athletics Men\'s Long Jump">
+        <label for="Athletics Men\'s Long Jump">Athletics Men\'s Long Jump</label><br>
+        <input type="radio" id="Athletics Men\'s Javelin Throw" name="discipline" value="Athletics Men\'s Javelin Throw">
+        <label for="Athletics Men\'s Javelin Throw">Athletics Men\'s Javelin Throw</label><br>
+        <input type="submit" value="Choisir">
+        
+    </form>
+	
+
+
+
+	</body>
+</html>
+
