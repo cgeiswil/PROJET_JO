@@ -49,10 +49,119 @@
 <td> <button type=submit  onclick = "document.getElementById('médailleCIO').style.display='block'">  <img  src = "./Images/Boutons/medaille_or.png"> </button>  </td>   
 
  <td>  <button type=submit  onclick = "document.getElementById('records').style.display='block'">    <img src = "./Images/Boutons/record_(podium,couronne).png">  </button> </td> 
-
+</tr>
 </table>
-
 </div>
+
+<div id="disciplines" style="display:none">
+<div class="container">
+	<br><br>
+   
+     <center><h2><strong>Classement des délégations en fonction des disciplines</strong></h2></center>
+	 <br>
+	 <?php 
+	 require("fonction.php");
+	 $BDD = getBDD();
+	 echo "avant requete";
+	 $Or = $BDD->query("select requete_imbriquee.id_pays, count(requete_imbriquee.nb) as nb_medailles, requete_imbriquee.nom_pays, requete_imbriquee.I_drapeau, requete_imbriquee.nom_discipline
+FROM (
+        select etre_nationalite.id_olympiade, etre_nationalite.id_pays, count(DISTINCT lier_m.id_epreuves) as nb, pays_participants.nom_pays, pays_participants.I_drapeau, disciplines.nom_discipline
+        from athletes, lier_m, medailles, pays_participants, etre_nationalite, olympiades, epreuves, disciplines
+                where athletes.ID_athletes = lier_m.ID_athletes
+                and lier_m.id_medaille = medailles.id_medaille
+                and athletes.ID_athletes = etre_nationalite.ID_athletes AND
+                etre_nationalite.id_pays = pays_participants.Code_CIO
+                and lier_m.id_olympiade = olympiades.id_olympiade
+                and epreuves.id_epreuves = lier_m.id_epreuves 
+                and epreuves.id_disciplines = disciplines.id_discipline
+                and medailles.type = 'Gold'
+         and lier_m.id_olympiade = etre_nationalite.id_olympiade
+                group by etre_nationalite.id_olympiade, etre_nationalite.id_pays, lier_m.id_epreuves, disciplines.id_discipline
+        ORDER BY `etre_nationalite`.`id_pays` ASC
+) as requete_imbriquee
+ group by requete_imbriquee.nom_discipline, requete_imbriquee.id_pays 
+ORDER BY `nb_medailles`  DESC limit 5
+");
+	 echo "apres premiere requete";
+
+	 $Ar = $BDD -> query("select requete_imbriquee.id_pays, count(requete_imbriquee.nb) as nb_medailles, requete_imbriquee.nom_pays, requete_imbriquee.I_drapeau, requete_imbriquee.nom_discipline
+			FROM (select etre_nationalite.id_olympiade, etre_nationalite.id_pays, count(DISTINCT lier_m.id_epreuves) as nb, pays_participants.nom_pays, pays_participants.I_drapeau, disciplines.nom_discipline
+        from athletes, lier_m, medailles, pays_participants, etre_nationalite, olympiades, epreuves, disciplines
+                where athletes.ID_athletes = lier_m.ID_athletes
+                and lier_m.id_medaille = medailles.id_medaille
+                and athletes.ID_athletes = etre_nationalite.ID_athletes AND
+                etre_nationalite.id_pays = pays_participants.Code_CIO
+                and lier_m.id_olympiade = olympiades.id_olympiade
+                and epreuves.id_epreuves = lier_m.id_epreuves 
+                and epreuves.id_disciplines = disciplines.id_discipline
+                and medailles.type = 'Silver'
+         and lier_m.id_olympiade = etre_nationalite.id_olympiade
+                group by etre_nationalite.id_olympiade, etre_nationalite.id_pays, lier_m.id_epreuves, disciplines.id_discipline
+        ORDER BY `etre_nationalite`.`id_pays` ASC
+) as requete_imbriquee
+ group by requete_imbriquee.nom_discipline, requete_imbriquee.id_pays 
+ORDER BY `nb_medailles`  DESC limit 5");
+
+	 $Br = $BDD -> query("select requete_imbriquee.id_pays, count(requete_imbriquee.nb) as nb_medailles, requete_imbriquee.nom_pays, requete_imbriquee.I_drapeau, requete_imbriquee.nom_discipline
+			FROM (select etre_nationalite.id_olympiade, etre_nationalite.id_pays, count(DISTINCT lier_m.id_epreuves) as nb, pays_participants.nom_pays, pays_participants.I_drapeau, disciplines.nom_discipline
+        from athletes, lier_m, medailles, pays_participants, etre_nationalite, olympiades, epreuves, disciplines
+                where athletes.ID_athletes = lier_m.ID_athletes
+                and lier_m.id_medaille = medailles.id_medaille
+                and athletes.ID_athletes = etre_nationalite.ID_athletes AND
+                etre_nationalite.id_pays = pays_participants.Code_CIO
+                and lier_m.id_olympiade = olympiades.id_olympiade
+                and epreuves.id_epreuves = lier_m.id_epreuves 
+                and epreuves.id_disciplines = disciplines.id_discipline
+                and medailles.type = 'Bronze'
+         and lier_m.id_olympiade = etre_nationalite.id_olympiade
+                group by etre_nationalite.id_olympiade, etre_nationalite.id_pays, lier_m.id_epreuves, disciplines.id_discipline
+        ORDER BY `etre_nationalite`.`id_pays` ASC
+) as requete_imbriquee
+ group by requete_imbriquee.nom_discipline, requete_imbriquee.id_pays 
+ORDER BY `nb_medailles`  DESC limit 5");
+	 echo "requete execute";
+
+	 ?>
+
+
+     <table >
+
+     <tr>
+     	<th> Discipline </th>
+     	<th> Pays </th>
+     	<th> Drapeau </th>
+     	<th> Médailles d'Or </th>
+     	<th> Médailles d'argent </th>
+     	<th> Médailles de bronze </th>
+     	<th> Total de médailles </th>
+     </tr>
+     <?php 
+     	
+     	$i = 0;
+     	while ($i < 5) {
+     		$medailleOR = $Or -> fetch();
+     		$medailleAR = $Ar -> fetch();
+     		$medailleBR = $Br -> fetch();
+     		echo "<tr>";
+     		echo "<td>".$medailleOR['nom_discipline']."</td>";
+     		echo "<td>".$medailleOR['nom_pays']."</td>";
+     		echo "<td> <img src =".$medailleOR['I_drapeau']." alt = 'erreur'></td>";
+     		echo "<td>".$medailleOR['nb_medailles']."</td>";
+     		echo "<td>".$medailleAR['nb_medailles']."</td>";
+     		echo "<td>".$medailleBR['nb_medailles']."</td>";
+     		echo "<td>".$medailleBR['nb_medailles']+$medailleOR['nb_medailles']+$medailleAR['nb_medailles']."</td>";
+     		$i = $i+1;
+
+     	}
+
+     ?> 
+
+     </table>
+   </div>
+ </div>
+ 
+
+
 
 
 <div id="médailleCIO" style="display:none">
