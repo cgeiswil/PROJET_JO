@@ -31,7 +31,7 @@
 			require("fonction.php");
 			$bdd = getBDD();
 			$discipline = $_GET['nom_discipline'];
-			$requete = "SELECT COUNT(`record_olympique`) as 'record', pays_participants.nom_pays, disciplines.nom_discipline, pays_participants.I_drapeau 
+			$requete = "SELECT COUNT(`record olympique`) as 'record', pays_participants.nom_pays, disciplines.nom_discipline, pays_participants.I_drapeau 
         FROM records, lier_r, etre_nationalite, pays_participants, epreuves, disciplines 
         WHERE records.id_record = lier_r.id_record 
         AND lier_r.id_athlete = etre_nationalite.ID_athletes 
@@ -59,11 +59,11 @@
 		?>
 		<br>
 	<a href="Classement_Delegation_record.html"><button type="button" class="btn btn-primary">Retour vers le choix des disciplines</button></a>
-<!--
+
 		<div class="footer">
 			<object  data="Pied_de_page.html" width="100%" height="100%">
 			</object>
 		</div>
--->
+
 	</body>
 </html>
