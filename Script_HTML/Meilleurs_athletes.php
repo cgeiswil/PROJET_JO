@@ -19,9 +19,13 @@
 		<object data="Barre_de_navigation.html" width="100%" height="100%">
 	</object>
 
-    <h1><center> Les meilleurs Athlètes de tous les temps </center></h1>
+    
 
     <?php 
+	echo "<div class='container'>
+	<h1><center> Les meilleurs athl&egrave;tes de tous les temps </center></h1>";
+		
+		
     // Connexion à votre base de données
     require("fonction.php");
     $bdd = getBDD();
@@ -54,7 +58,7 @@ echo "}";
 echo "</script>";
 
 
-    echo "<div class='container'>";
+
     
 if(isset($sport)){
 
@@ -328,15 +332,6 @@ ORDER BY nb_medailles_or DESC, nb_medailles_Ar DESC, nb_medailles_Br DESC limit 
     
     ?>
 </div>
-<footer >
-
-<object data="pied_de_page.php" width="100%" height="100%">
-</object>
-</footer>
-
+ <iframe class="mt-5" src="Pied_de_page.php" width="100%" height="50%" frameborder="0"></iframe>
 </body>
-
-
-
-
 </html>

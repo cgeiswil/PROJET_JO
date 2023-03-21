@@ -11,42 +11,43 @@
 	<link rel="shortcut icon" href="../Images/Anneaux/officiel.png" type="image/png">
   </head>
   <body>
-
-    <?php
-    session_start();
-    if(isset($_SESSION['utilisateur'])){ ?>
-      <object data="Barre_de_navigation.html" width="100%" height="100%">
-      </object>
-       <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-3 bg-light sidebar">
-              <div class="sidebar-sticky">
-                <img src="../Images/Profil/profil.png" alt="Ma photo">
-                <h2>Informations Personnelles</h2>
-                <p>Pseudo : ...</p>
-                <p>Email : exemple@gmail.com</p>
-                <p>Intérêts : Athlètes ..</p>
-              </div>
-            </div>
-            <div class="col-md-9">
-              <h1>Mon profil</h1>
-              <p>Mon contenu principal ici...</p>
-              <div class="text-center">
-                <button type="button" class="btn btn-primary">Changer les informations d'utilisateur</button>
-              </div>
-            </div>
-          </div>
-        </div> 
-      <div class="footer">
-      <object  data="Pied_de_page.html" width="100%" height="100%">
-      </object>
-      </div>
+  
+	<object data="Barre_de_navigation.html" width="100%" height="100%">
+    </object>
+  
+	<div class="container">
+		<h1 class="mb-3">Mon profil</h1>
+		
+		<?php
+		session_start();
+		if(isset($_SESSION['utilisateur'])){ ?>
+			  <div class="row">
+				<div class="col-sm-12 col-md-3 bg-light sidebar">
+				  <div class="sidebar-sticky">
+					<img src="../Images/Profil/profil.png" alt="Ma photo">
+					<h2>Informations Personnelles</h2>
+					<p>Pseudo : ...</p>
+					<p>Email : exemple@gmail.com</p>
+					<p>Intérêts : Athlètes ..</p>
+					
+					<a href='deconnexion.php' class='btn btn-primary'>Se d&eacute;connecter</a><br> 
+				  </div>
+				</div>
+				<div class="col-sm-12 col-md-9 mt-3">
+				  <h2>Mes préférences</h2>
+				  <p>Mon contenu principal ici... : J'ai mis des likes à tous ces thèmes... (Requêtes SQL à faire)</p>
+				  <!--<div class="text-center">
+					<button type="button" class="btn btn-primary">Changer les informations d'utilisateur</button>
+				  </div>-->
+				</div>
+			  </div>
+			  
+	  </div>
+      <iframe class="mt-5" src="Pied_de_page.php" width="100%" height="50%" frameborder="0"></iframe>
     <?php 
     }else{
         echo '<meta http-equiv="refresh" content="0; url=connection.php ">';
-    } 
-
-
+    }
     ?> 
 
 

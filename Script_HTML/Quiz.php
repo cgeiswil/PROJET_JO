@@ -15,14 +15,14 @@
 
 		<div class="container">
 		
-		 <h1>Quiz</h1>
-    <h2>Choisissez le niveau de difficulté :</h2>
-    
- 	<table>
-		<td><a href="QuizFacile.php?niveau=facile"><button type="button" class="btn btn-success">Facile</button></a></td>
-		<td><a href="QuizFacile.php?niveau=moyen"><button type="button" class="btn btn-warning">Moyen</button></a></td>
-		<td><a href="QuizFacile.php?niveau=difficile"><button type="button" class="btn btn-danger">Difficile</button></a></td>
- 	</table>
+		<h1>Quiz</h1>
+		<h2>Choisissez le niveau de difficulté :</h2>
+		
+		<table>
+			<td><a href="Quiz.php?niveau=facile"><button type="button" class="btn btn-success">Facile</button></a></td>
+			<td><a href="Quiz.php?niveau=moyen"><button type="button" class="btn btn-warning">Moyen</button></a></td>
+			<td><a href="Quiz.php?niveau=difficile"><button type="button" class="btn btn-danger">Difficile</button></a></td>
+		</table>
 		
 		
 		<h4>Quiz niveau <?php echo ($_GET['niveau'] != "" ? $_GET['niveau'] : 'Facile'); ?></h4>
