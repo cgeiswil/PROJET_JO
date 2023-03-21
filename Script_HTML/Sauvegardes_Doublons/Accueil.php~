@@ -88,14 +88,14 @@
 			  <table class="rounded-4">
 				<tr>
 				  <th>
-					<a href="./Carte_des_editions.php" target="_parent">
+					<a href="./Vision_par_editions.php#carte" target="_parent">
 					  <img alt="Survol" onmouseout="this.src='../Images/Boutons/planisphere.png';" onmouseover="this.src='../Images/Boutons/planisphere_survol.png';" src="../Images/Boutons/planisphere.png" />
 					</a>
 					<br>
 					<small class="text-muted">La carte des éditions.</small>
 				  </th>
 				  <th>
-					<a href="./FriseChrono.php" target="_parent">
+					<a href="./Vision_par_editions.php#frise" target="_parent">
 					  <img alt="Survol" onmouseout="this.src='../Images/Boutons/frise.png';" onmouseover="this.src='../Images/Boutons/frise_survol.png';" src="../Images/Boutons/frise.png" />
 					</a>
 					<br>
@@ -115,19 +115,11 @@
 	<div class="container">
 	<br><p>Recommandations futures.</p>
 	</div>
+	<br>
 
 	
         
 <iframe class="my-5" src="Pied_de_page.php" width="100%" height="50%" frameborder="0"></iframe>
-	
-	
-        
-	<div class="footer">
-	<object data="Pied_de_page.php" width="100%" height="100%">
-	</object>
-	</div>
-	
-
 
     </body>
 </html>

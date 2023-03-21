@@ -88,14 +88,14 @@
 			  <table class="rounded-4">
 				<tr>
 				  <th>
-					<a href="./Carte_des_editions.php" target="_parent">
+					<a href="./Vision_par_editions.php#carte" target="_parent">
 					  <img alt="Survol" onmouseout="this.src='../Images/Boutons/planisphere.png';" onmouseover="this.src='../Images/Boutons/planisphere_survol.png';" src="../Images/Boutons/planisphere.png" />
 					</a>
 					<br>
 					<small class="text-muted">La carte des éditions.</small>
 				  </th>
 				  <th>
-					<a href="./FriseChrono.php" target="_parent">
+					<a href="./Vision_par_editions.php#frise" target="_parent">
 					  <img alt="Survol" onmouseout="this.src='../Images/Boutons/frise.png';" onmouseover="this.src='../Images/Boutons/frise_survol.png';" src="../Images/Boutons/frise.png" />
 					</a>
 					<br>
