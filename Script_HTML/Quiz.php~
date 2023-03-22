@@ -7,6 +7,13 @@
 		
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="Styles/quiz.css" type="text/css">    
+		<style>
+		.center{
+		display: flex;
+		justify-content: center;
+		margin: auto;
+		}
+		</style>
 	</head>
 	<body>
 
@@ -25,47 +32,51 @@
 		</table>
 		
 		
-		<h4>Quiz niveau <?php echo ($_GET['niveau'] != "" ? $_GET['niveau'] : 'Facile'); ?></h4>
+		<h4 class="center">Quiz niveau <?php echo ($_GET['niveau'] != "" ? $_GET['niveau'] : 'Facile'); ?></h4>
+		<br>
 
+	
 		<?php	
-			require("fonction.php");
-			$bdd = getBDD();
-			$niveau = ($_GET['niveau'] != "" ? $_GET['niveau'] : 'facile');
-			$requete = "SELECT question, question.id_question FROM question, composer_de, quiz WHERE quiz.id_quiz=composer_de.id_quiz and question.id_question=composer_de.id_question and `difficulte`='$niveau'";
-			$resultat = $bdd->query($requete);
-			if ($resultat->rowCount() > 0) {
-				echo "<form method='post'>";
-				while($ligne = $resultat->fetch()) {
-					echo "<h5>".$ligne['question']."</h5>";
-					echo "<ul>";
-					$requete_reponses = "SELECT reponse, vraie_fausse FROM `reponses` WHERE id_question = '".$ligne['id_question']."'";
-					$resultat_reponses = $bdd->query($requete_reponses);
-					while($ligne_reponse = $resultat_reponses->fetch()) {
-						echo "<li><label><input type='radio' name='".$ligne['id_question']."' value='".$ligne_reponse['reponse']."'> ".$ligne_reponse['reponse']."</label></li>";
-					}
-					echo "</ul>";
-				}
-				echo "<button type='submit' class='btn btn-success'>Valider les réponses</button>";
-				echo "</form>";
-			} else {
-				echo "Aucune question trouvée.";
+	require("fonction.php");
+	$bdd = getBDD();
+	$niveau = ($_GET['niveau'] != "" ? $_GET['niveau'] : 'facile');
+	$requete = "SELECT question, question.id_question FROM question, composer_de, quiz WHERE quiz.id_quiz=composer_de.id_quiz and question.id_question=composer_de.id_question and `difficulte`='$niveau'";
+	$resultat = $bdd->query($requete);
+	if ($resultat->rowCount() > 0) {
+		echo "<form method='post'>";
+		while($ligne = $resultat->fetch()) {
+			echo '<h5 class="center"><strong>'.$ligne['question'].'</strong></h5>';
+			echo "<ul>";
+			$requete_reponses = "SELECT reponse, vraie_fausse FROM `reponses` WHERE id_question = '".$ligne['id_question']."' ORDER BY RAND()";
+			$resultat_reponses = $bdd->query($requete_reponses);
+			while($ligne_reponse = $resultat_reponses->fetch()) {
+				echo "<li  class='center'><label><input type='radio' name='".$ligne['id_question']."' value='".$ligne_reponse['reponse']."'> ".$ligne_reponse['reponse']."</label></li>";
 			}
+			echo "</ul>";
+		}
+		echo "<button type='submit' class='btn btn-success center' >Valider les réponses</button>";
+		echo "</form>";
+	} else {
+		echo "Aucune question trouvée.";
+	}
 
-			// Process form submission
-			if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-				$score = 0;
-				$requete = "SELECT reponse, question.id_question FROM question, composer_de, quiz, reponses WHERE quiz.id_quiz=composer_de.id_quiz and question.id_question=reponses.id_question and question.id_question=composer_de.id_question and `difficulte`='$niveau' and vraie_fausse=1";
-				$resultat = $bdd->query($requete);
-				while($ligne = $resultat->fetch()) {
-					if ($_POST[$ligne['id_question']] == $ligne['reponse']) {
-						$score++;
-					}
-				}
-				echo "<h2>Votre score est de ".$score."/". $resultat->rowCount()."</h2>";
+	// Process form submission
+	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+		$score = 0;
+		$requete = "SELECT reponse, question.id_question FROM question, composer_de, quiz, reponses WHERE quiz.id_quiz=composer_de.id_quiz and question.id_question=reponses.id_question and question.id_question=composer_de.id_question and `difficulte`='$niveau' and vraie_fausse=1";
+		$resultat = $bdd->query($requete);
+		while($ligne = $resultat->fetch()) {
+			if ($_POST[$ligne['id_question']] == $ligne['reponse']) {
+				$score++;
 			}
-		?>
+		}
+		$score_text = "Votre score est de ".$score."/". $resultat->rowCount();
+		echo "<script>alert('$score_text');</script>";
+	}
+?>
+
 		</div>
-
+		
 	<iframe class="mt-5" src="Pied_de_page.php" width="100%" height="50%" frameborder="0"></iframe>
 	</body>
 </html>

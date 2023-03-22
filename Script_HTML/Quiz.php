@@ -16,6 +16,7 @@
 		</style>
 	</head>
 	<body>
+	<?php session_start(); ?>
 
 		<object data="Barre_de_navigation.html" width="100%" height="100%">
 		</object>
@@ -36,43 +37,58 @@
 		<br>
 
 	
-		<?php	
-	require("fonction.php");
-	$bdd = getBDD();
-	$niveau = ($_GET['niveau'] != "" ? $_GET['niveau'] : 'facile');
-	$requete = "SELECT question, question.id_question FROM question, composer_de, quiz WHERE quiz.id_quiz=composer_de.id_quiz and question.id_question=composer_de.id_question and `difficulte`='$niveau'";
-	$resultat = $bdd->query($requete);
-	if ($resultat->rowCount() > 0) {
-		echo "<form method='post'>";
-		while($ligne = $resultat->fetch()) {
-			echo '<h5 class="center"><strong>'.$ligne['question'].'</strong></h5>';
-			echo "<ul>";
-			$requete_reponses = "SELECT reponse, vraie_fausse FROM `reponses` WHERE id_question = '".$ligne['id_question']."' ORDER BY RAND()";
-			$resultat_reponses = $bdd->query($requete_reponses);
-			while($ligne_reponse = $resultat_reponses->fetch()) {
-				echo "<li  class='center'><label><input type='radio' name='".$ligne['id_question']."' value='".$ligne_reponse['reponse']."'> ".$ligne_reponse['reponse']."</label></li>";
-			}
-			echo "</ul>";
-		}
-		echo "<button type='submit' class='btn btn-success center' >Valider les réponses</button>";
-		echo "</form>";
-	} else {
-		echo "Aucune question trouvée.";
-	}
+		<?php
+require("fonction.php");
+$bdd = getBDD();
+$niveau_str = ($_GET['niveau'] != "" ? $_GET['niveau'] : 'facile');
+$niveau = 1; // par défaut, on suppose que c'est facile
+if ($niveau_str == "moyen") {
+    $niveau = 2;
+} elseif ($niveau_str == "difficile") {
+    $niveau = 3;
+}
+$requete = "SELECT question, question.id_question FROM question, composer_de, quiz WHERE quiz.id_quiz=composer_de.id_quiz and question.id_question=composer_de.id_question and `difficulte`='$niveau_str'";
+$resultat = $bdd->query($requete);
+if ($resultat->rowCount() > 0) {
+    echo "<form method='post'>";
+    while($ligne = $resultat->fetch()) {
+        echo '<h5 class="center"><strong>'.$ligne['question'].'</strong></h5>';
+        echo "<ul>";
+        $requete_reponses = "SELECT reponse, vraie_fausse FROM `reponses` WHERE id_question = '".$ligne['id_question']."' ORDER BY RAND()";
+        $resultat_reponses = $bdd->query($requete_reponses);
+        while($ligne_reponse = $resultat_reponses->fetch()) {
+            echo "<li  class='center'><label><input type='radio' name='".$ligne['id_question']."' value='".$ligne_reponse['reponse']."'> ".$ligne_reponse['reponse']."</label></li>";
+        }
+        echo "</ul>";
+    }
+    echo "<button type='submit' class='btn btn-success center' >Valider les réponses</button>";
+    echo "</form>";
+} else {
+    echo "Aucune question trouvée.";
+}
 
-	// Process form submission
-	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-		$score = 0;
-		$requete = "SELECT reponse, question.id_question FROM question, composer_de, quiz, reponses WHERE quiz.id_quiz=composer_de.id_quiz and question.id_question=reponses.id_question and question.id_question=composer_de.id_question and `difficulte`='$niveau' and vraie_fausse=1";
-		$resultat = $bdd->query($requete);
-		while($ligne = $resultat->fetch()) {
-			if ($_POST[$ligne['id_question']] == $ligne['reponse']) {
-				$score++;
-			}
-		}
-		$score_text = "Votre score est de ".$score."/". $resultat->rowCount();
-		echo "<script>alert('$score_text');</script>";
-	}
+// Process form submission
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $score = 0;
+    $requete = "SELECT reponse, question.id_question FROM question, composer_de, quiz, reponses WHERE quiz.id_quiz=composer_de.id_quiz and question.id_question=reponses.id_question and question.id_question=composer_de.id_question and `difficulte`='$niveau_str' and vraie_fausse=1";
+    $resultat = $bdd->query($requete);
+    while($ligne = $resultat->fetch()) {
+        if ($_POST[$ligne['id_question']] == $ligne['reponse']) {
+            $score++;
+        }
+    }
+    $score_text = "Votre score est de ".$score."/". $resultat->rowCount();
+    echo "<script>alert('$score_text');</script>";
+
+    // Si l'utilisateur est connecté, enregistrez le score, l'id_utilisateur et l'id_quiz dans la table "répondre" de la base de données
+    if (isset($_SESSION['utilisateur'])) {
+        $id_utilisateur = $_SESSION['utilisateur']['utilisateur'];
+        $id_quiz = $niveau;
+        $stmt = $bdd->prepare("INSERT INTO repondre (id_utilisateur, id_quiz, score) VALUES (?, ?, ?)");
+        $stmt->execute([$id_utilisateur, $id_quiz, $score]);
+    }
+}
+
 ?>
 
 		</div>
