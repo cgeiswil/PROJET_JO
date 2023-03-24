@@ -57,7 +57,7 @@ if ($resultat->rowCount() > 0) {
         $requete_reponses = "SELECT reponse, vraie_fausse FROM `reponses` WHERE id_question = '".$ligne['id_question']."' ORDER BY RAND()";
         $resultat_reponses = $bdd->query($requete_reponses);
         while($ligne_reponse = $resultat_reponses->fetch()) {
-           echo "<li  class='center'><label><input type='radio' name='".$ligne['id_question']."' value='".htmlentities($ligne_reponse['reponse'], ENT_QUOTES)."'> ".htmlentities($ligne_reponse['reponse'], ENT_QUOTES)."</label></li>";
+            echo "<li  class='center'><label><input type='radio' name='".$ligne['id_question']."' value='".$ligne_reponse['reponse']."'> ".$ligne_reponse['reponse']."</label></li>";
         }
         echo "</ul>";
     }
