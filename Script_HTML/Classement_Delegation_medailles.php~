@@ -12,12 +12,6 @@
   <link rel="shortcut icon" href="../Images/Anneaux/officiel.png" type="image/png">
 
   <link  href="Styles/Vision_par_delegations.css" >
-<<<<<<< HEAD
-
-</head>
-
-
-=======
   <style type="text/css">
   .containe{
 	display: flex;
@@ -60,16 +54,11 @@
   </div>
  </div>
 
->>>>>>> 4ffbf3a (Modification classement par delegation pour une meilleure navigation de l'utilisateur)
 
 
 
 <div class="container">
-<<<<<<< HEAD
-
-=======
 <div id="medailleCIO">
->>>>>>> 4ffbf3a (Modification classement par delegation pour une meilleure navigation de l'utilisateur)
 
 <?php
 
@@ -242,15 +231,9 @@ $lignes_bronze = $requete_bronze -> fetchAll();
 
     
 </div>
-<<<<<<< HEAD
-
-
-=======
-</div>
 </div>
 <iframe class="mt-5" src="Pied_de_page.php" width="100%" height="50%" frameborder="0"></iframe>
 </body>
->>>>>>> 4ffbf3a (Modification classement par delegation pour une meilleure navigation de l'utilisateur)
 
 </html>
 
