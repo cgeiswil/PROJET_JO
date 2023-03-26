@@ -22,9 +22,11 @@
     <body>
     
 
-	<object data="Barre_de_navigation.html" width="100%" height="100%">
-	</object>
-	
+	<header>
+		<?php
+		include "Barre_de_navigation.html";
+		?>
+	</header>
 	
     <h1>Que voulez-vous comparer ?</h1>
     
@@ -34,15 +36,11 @@
 		<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 			 <ul class="navbar-nav mr-auto ml-auto mt-lg-0">
 				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle font-weight-bold active" href="classement_par_delegation.html" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Athlètes</a>
-				</li>
-
-				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle font-weight-bold active" href="classement_par_delegation.html" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pays</a>  
 				</li>
 
 				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle font-weight-bold active" href="classement_par_delegation.html" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Editions</a>
+					<a class="nav-link dropdown-toggle font-weight-bold active" href="classement_par_delegation.html" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&Eacute;ditions</a>
 				</li>
 
 				<li class="nav-item dropdown">
@@ -72,7 +70,7 @@
 			$id2 = isset($_GET['id2']) && $_GET['id2'] !== '' ? $_GET['id2'] : $id2_result['id_olympiade'];
 
 
-		// R&eacute;cup&eacute;ration de toutes les olympiades
+		// Récupération de toutes les olympiades
 			$olympiade1 = $bdd->prepare('SELECT * FROM olympiades, villes_hotes, pays_participants WHERE olympiades.Code_CIO = pays_participants.Code_CIO AND villes_hotes.id_ville = olympiades.id_ville_hote AND olympiades.id_olympiade = ?');
 			$olympiade1->execute(array($id));
 
@@ -109,15 +107,66 @@
 						}
 						echo '</select></div><hr>';
 						
+							
+						echo '<a href="Edition_particuliere.php?id='.$olympiade["id_olympiade"].'"><img src="'.$olympiade["logo"].'" class="float-right mr-2" alt="Logo JO '.$olympiade["nom"]." ".$olympiade["annee_o"].'" style="max-width: 100px; max-height: 70px;"></a>';
+						echo '<h4 class="card-title mb-0"><b>Olympiade ' . $olympiade['nom'] . ' ' . $olympiade['annee_o'] . '</b>
+											
+							<button type="button" class="btn btn-lg bg-white text-danger border-0">
+							<img id="coeur_' . $olympiade["id_olympiade"] . '" src="../Images/Boutons/Coeur_olympiades.jpg" alt="Coeur Olympiades" height="30px"/>
+							</button>
 						
-						echo '<a href="Edition_particuliere.php?id='.$olympiade["id_olympiade"].'"><img src="'.$olympiade["logo"].'" class="float-right" alt="Logo JO '.$olympiade["nom"]." ".$olympiade["annee_o"].'" style="max-width: 100px; max-height: 75px;"></a>';
-						  echo '<h4 class="card-title mb-0"><b>Olympiade ' . $olympiade['nom'] . ' ' . $olympiade['annee_o'] . '</b></h4>
-						  <h6 class="card-title mb-0 my-1"><img src="' . $olympiade['I_drapeau'] . '" alt="Drapeau ' . $olympiade['pays_hote'] . '" class="img-thumbnail border-0" width="30px">' . $olympiade['pays_hote'] . ' (' . $nb_pays['olymp'].($nb_pays['olymp'] > 1 ? ' &eacute;ditions' : ' &eacute;dition'). ')</h6>
-						  <p class="card-text">';
-						  
-						  
+						</h4>';
+					
+						echo'<h6 class="card-title mb-0 my-1"><a href="Pays_particulier.php?id='.$olympiade['Code_CIO'].'" class="text-dark"><img src="' . $olympiade['I_drapeau'] . '" alt="Drapeau ' . $olympiade['pays_hote'] . '" class="img-thumbnail border-0" width="30px">' . $olympiade['pays_hote'] . '</a> (' . $nb_pays['olymp'].($nb_pays['olymp'] > 1 ? ' &eacute;ditions organis&eacute;es' : ' &eacute;dition organis&eacute;e'). ')</h6>
+						  <p class="card-text">';					
+						
+										
+			
+			
+				// AJOUT DU COEUR
+					session_start();
+					$image = "../Images/Boutons/Coeur_olympiades.jpg";
+					if (isset($_SESSION['utilisateur']['utilisateur'])) {
+						$aimer = $bdd->prepare('SELECT * FROM apprecier_o WHERE id_olympiade = ? AND id_utilisateur = ?');
+						$aimer->execute(array($olympiade["id_olympiade"], $_SESSION['utilisateur']['utilisateur']));
+						if ($aimer->fetch()) {
+							$image = "../Images/Boutons/Coeur_olympiades_rempli.jpg";
+						}
+					}
+
+					echo '<div class="float-right">
+							<button type="button" class="btn btn-lg bg-white text-danger border-0">
+							<img id="coeur_' . $olympiade["id_olympiade"] . '" src="' . $image . '" alt="Coeur Olympiades" height="40px"/>
+							</button>
+					</div>';
+
+					echo '<script>
+					var coeur = document.getElementById("coeur_' . $olympiade["id_olympiade"] . '");
+					coeur.addEventListener("click", function() {
+						var xhr = new XMLHttpRequest();
+						xhr.open("POST", "Comparer.php?id=' . $olympiade["id_olympiade"] . '#Comparons");
+						xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+						xhr.onload = function() {
+							if (xhr.status === 200) {
+								coeur.src = "../Images/Boutons/Coeur_olympiades_rempli.jpg";
+							} else {
+								console.log("[ERREUR] Erreur de mise à jour des données !!!!");
+							}
+						};
+						xhr.send("id_olympiade=' . $olympiade["id_olympiade"] . '&utilisateur=' . $_SESSION['utilisateur']['utilisateur'] . '");
+					});
+					</script>';
+
+					if (isset($_POST['id_olympiade']) && isset($_POST['utilisateur']) && $_POST['id_olympiade'] == $olympiade["id_olympiade"]) {
+						$aimerBD = $bdd->prepare('INSERT INTO apprecier_o(id_olympiade, id_utilisateur) VALUES (?, ?)');
+						$aimerBD->execute(array($_POST['id_olympiade'], $_POST['utilisateur']));
+						unset($_POST['id_olympiade']);
+					}
+			// FIN AJOUT DU COEUR
+					
+					
 					$pays = $bdd->query("SELECT * FROM pays_participants WHERE pays_participants.Code_CIO = '".$olympiade['Code_CIO']."'")->fetch();
-					  echo '<p>Jeux Olympiques d\''.($olympiade['saison'] == 'Summer' ? '&Eacute;t&eacute;' : 'Hiver').'</p>';
+					echo '<p>Jeux Olympiques d\''.($olympiade['saison'] == 'Summer' ? '&Eacute;t&eacute;' : 'Hiver').'</p>';	
 
 					  // Calcul du nb de jour
 						// Convertir les dates en objets DateTime
@@ -135,18 +184,14 @@
 							$dateFin = strftime("%e %B", $dateObj2->getTimestamp());
 
 							echo '<p>'.$diff.' jours - '.strtolower($dateDebut). " au " .strtolower($dateFin).'</p>';
-						  
-							foreach ($resultats as $resultat) {
-								// Affichage des r&eacute;sultats
-							}
-						  
+							
 						  echo '</p>';
 						  
 						  
 						  echo '<div class="container">';
 	echo '<br>';
 	
-	$classement_or = $bdd->query('SELECT count(DISTINCT lier_m.id_epreuves) as nb, etre_nationalite.id_pays, pays_participants.nom_pays, pays_participants.I_drapeau FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade AND lier_m.id_medaille = 1 AND lier_m.id_olympiade = "'.$olympiade['id_olympiade'].'" GROUP BY etre_nationalite.id_pays ORDER BY nb DESC LIMIT 5');	
+	$classement_or = $bdd->query('SELECT count(DISTINCT lier_m.id_epreuves) as nb, etre_nationalite.id_pays, pays_participants.nom_pays, pays_participants.I_drapeau, Code_CIO FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade AND lier_m.id_medaille = 1 AND lier_m.id_olympiade = "'.$olympiade['id_olympiade'].'" GROUP BY etre_nationalite.id_pays ORDER BY nb DESC LIMIT 5');	
  
 
 		  echo '<div class="row">';
@@ -161,7 +206,7 @@
 
 						echo '<tr>
 							<td>'.++$i.'</td>
-							<th scope="row"><img src="'.$ligne_classement_or['I_drapeau'].'" alt="Drapeau '.$ligne_classement_or['nom_pays'].'" class="img-thumbnail border-0" width="40px"> '.$ligne_classement_or['nom_pays'].'</th>
+							<th scope="row"><a href="Pays_particulier.php?id='.$ligne_classement_or['Code_CIO'].'" class="text-dark"><img src="'.$ligne_classement_or['I_drapeau'].'" alt="Drapeau '.$ligne_classement_or['nom_pays'].'" class="img-thumbnail border-0" width="40px"></a> <a href="Pays_particulier.php?id='.$ligne_classement_or['Code_CIO'].'" class="text-dark">'.$ligne_classement_or['nom_pays'].'</a></th>
 							<td><img src="../Images/Boutons/medaille_or.png" alt="M&eacute;daille d\'or" width="20px"> <span>'.$ligne_classement_or['nb'].'</span></td>
 							<td><img src="../Images/Boutons/medaille_argent.png" alt="M&eacute;daille d\'argent" width="20px"> <span>'.$argent['nb'].'</span></td>
 							<td><img src="../Images/Boutons/medaille_bronze.png" alt="M&eacute;daille de bronze" width="20px"> <span>'.$bronze["nb"].'</span></td>
@@ -183,68 +228,12 @@
 		}	
 		?>
 		</div>
+	</div>
 
-
-<br><br><br>
-<form class="form-inline">
-  <input class="form-control mr-sm-2" type="search" placeholder="Recherche" aria-label="Recherche">
-  <button class="btn btn-primary my-2 my-sm-0" type="submit">Rechercher</button>
-</form>
-
-<div id="search-results"></div>
-<br>
-<script>
-  // R&eacute;cup&eacute;rer les &eacute;l&eacute;ments de la barre de recherche
-  const searchForm = document.querySelector('form');
-  const searchInput = document.querySelector('input[type="search"]');
-  const searchResults = document.querySelector('#search-results');
-
-  // Ajouter un gestionnaire d'&eacute;v&eacute;nement pour le formulaire de recherche
-  searchForm.addEventListener('submit', (event) => {
-    event.preventDefault(); // Empêcher l'envoi du formulaire
-
-    const searchTerm = searchInput.value; // R&eacute;cup&eacute;rer le terme de recherche
-
-    // Effectuer une recherche et r&eacute;cup&eacute;rer les r&eacute;sultats
-    const results = performSearch(searchTerm);
-
-    // Afficher les r&eacute;sultats dans la zone de r&eacute;sultats
-    renderResults(results);
-  });
-
-  // Fonction pour effectuer une recherche
-  function performSearch(term) {
-    // Effectuez une requête AJAX ou utilisez une autre bibliothèque pour r&eacute;cup&eacute;rer les r&eacute;sultats de la recherche
-    const results = [
-      { title: 'R&eacute;sultat 1', description: 'Description du r&eacute;sultat 1.' },
-      { title: 'R&eacute;sultat 2', description: 'Description du r&eacute;sultat 2.' },
-      { title: 'R&eacute;sultat 3', description: 'Description du r&eacute;sultat 3.' },
-    ];
-
-    return results;
-  }
-
-  // Fonction pour afficher les r&eacute;sultats
-  function renderResults(results) {
-    // Effacer les r&eacute;sultats pr&eacute;c&eacute;dents
-    searchResults.innerHTML = '';
-
-    // Ajouter chaque r&eacute;sultat à la zone de r&eacute;sultats
-    results.forEach(result => {
-      const item = document.createElement('a');
-      item.classList.add('dropdown-item');
-      item.href = '#';
-      item.innerHTML = `<strong>${result.title}</strong><br>${result.description}`;
-      searchResults.appendChild(item);
-    });
-  }
-</script>
-Le bouton recherche, nous servira pour les comparaisons d'athletes !
-
-</div>
-	<footer>
-		<object class='mt-5' data="Pied_de_page.php" width="100%" height="100%">
-		</object>
+	<footer class='mt-5'>
+	<?php
+		include "pied_de_page.php";
+	?>
 	</footer>
 		
 	</body>
