@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 	<meta charset="utf-8">
-	<title>Médailles/délégation</title>
+	<title>Records pour graphique</title>
 	<link rel="shortcut icon" href="../Images/Anneaux/officiel.png" type="image/png">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 	<link href="./Styles/Vision_par_delegations.css" rel="stylesheet" type="text/css">
@@ -27,17 +27,6 @@
 	<br>
 	<br>
 	<br>
-	<div id="disciplines" >
-		<div class="containe">
-		<!--Code Arthur-->
-		</div>
-	</div>
-
-	<div id="medailleCIO" style="display:none">
-		<div class="container">
-		<!--Code Malo-->
-		</div>
-	</div>
 
 	<div class="containe">
 	<div class="row">

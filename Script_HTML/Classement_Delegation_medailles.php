@@ -1,35 +1,22 @@
-
-<html>
-
-
-
+<!DOCTYPE html>
+<html lang="fr">
 <head>
-
-
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <link href="./Styles/Vision_par_delegations.css" rel="stylesheet" type = "text/css">
-  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-  <link rel="shortcut icon" href="../Images/Anneaux/officiel.png" type="image/png">
-
-  <link  href="Styles/Vision_par_delegations.css" >
-<<<<<<< HEAD
-
-</head>
-
-
-=======
-  <style type="text/css">
-  .containe{
+	<meta charset="utf-8">
+	<title>Médailles/délégation</title>
+	<link rel="shortcut icon" href="../Images/Anneaux/officiel.png" type="image/png">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link href="./Styles/Vision_par_delegations.css" rel="stylesheet" type="text/css">
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+ <style type="text/css">
+.containe{
 	display: flex;
 	justify-content : center;
 	margin: auto;
 	}
-  </style>
-
+</style>
 </head>
+
 <body  class="d-flex flex-column">
-
-
 	<object data="Barre_de_navigation.html" width="100%" height="100%">
     </object>
 <h1>  Comparons par <span> délégations </span>  </h1> 
@@ -37,7 +24,6 @@
 <br>
 <br>
 <br>
-
 
 	<div class="containe">
 	<div class="row">
@@ -60,17 +46,11 @@
   </div>
  </div>
 
->>>>>>> 4ffbf3a (Modification classement par delegation pour une meilleure navigation de l'utilisateur)
-
 
 
 <div class="container">
-<<<<<<< HEAD
 
-=======
 <div id="medailleCIO">
->>>>>>> 4ffbf3a (Modification classement par delegation pour une meilleure navigation de l'utilisateur)
-
 <?php
 
 
@@ -190,11 +170,6 @@ $lignes_bronze = $requete_bronze -> fetchAll();
             <table class="table">
             <tbody>
 
-
-
-
-
-            
               <tr>
                 <td>1</td>
                 <th scope="row"><img class = "drapeaufr"  src= <?= $lignes_or[0]["drapeau"] ?> alt="Drapeau France" class="img-thumbnail border-0" width="40px"> <?= $lignes_or[0]["nom_pays"] ?></th>
@@ -229,31 +204,17 @@ $lignes_bronze = $requete_bronze -> fetchAll();
 
               </tbody>
           </table>
-
-
-        
-            
-          
-
-        
+  
         </div>
       </div>
     </div>
 
     
 </div>
-<<<<<<< HEAD
 
-
-=======
 </div>
 </div>
 <iframe class="mt-5" src="Pied_de_page.php" width="100%" height="50%" frameborder="0"></iframe>
 </body>
->>>>>>> 4ffbf3a (Modification classement par delegation pour une meilleure navigation de l'utilisateur)
 
 </html>
-
-
-
-
