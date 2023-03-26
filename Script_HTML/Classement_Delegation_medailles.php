@@ -13,6 +13,11 @@
 	justify-content : center;
 	margin: auto;
 	}
+
+  a{
+
+    color: black;
+  }
 </style>
 </head>
 
@@ -139,20 +144,20 @@ $lignes[$i]  =  $requete -> fetchall();
 
               
     $i = 0;
+    $i = 0;
 
     while ($i < $taille_classement) {
-
         echo "<tr>
                   <td>".strval($i + 1)."</td>
-                  <th scope='row'><img class='drapeaufr' src='" . $lignes[0][$i]["drapeau"] . "' alt='Drapeau France' class='img-thumbnail border-0' width='40px'>" . $lignes[0][$i]["nom_pays"] . "</th>
+                   <th scope='row'><a href='Pays_particulier.php?id=".$lignes[0][$i]["id_pays"]."'><img class='drapeaufr' src='" . $lignes[0][$i]["drapeau"] . "' alt='Drapeau France' class='img-thumbnail border-0' width='40px'> " . $lignes[0][$i]["nom_pays"] . "</a></th>
                   <td><img class='imageclassement' src='../Images/Boutons/medaille_or.png' alt='Médaille d'or' width='20px'> <span>" . $lignes[0][$i]["nb_medailles"] . "</span></td>
                   <td><img class='imageclassement' src='../Images/Boutons/medaille_argent.png' alt='Médaille d'argent' width='20px'> <span>" . $lignes[1][$i]["nb_medailles"] . "</span></td>
                   <td><img class='imageclassement' src='../Images/Boutons/medaille_bronze.png' alt='Médaille de bronze' width='20px'> <span>" . $lignes[2][$i]["nb_medailles"] . "</span></td>
                   <td>= " . ($lignes[0][$i]["nb_medailles"] + $lignes[1][$i]["nb_medailles"] + $lignes[2][$i]["nb_medailles"]) . "</td>
               </tr>";
-
         $i += 1;
     }
+    
 ?>
 
 
