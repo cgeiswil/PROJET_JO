@@ -57,11 +57,11 @@
 		<h2>Choisissez la discipline des records que vous voulez afficher :</h2>
     
 		<table>
-			<td><a href="Vision_par_delegations_2.php?nom_discipline=Athletics#record"><button type="button" class="btn btn-info">Athletics</button></a></td>
-			<td><a href="Vision_par_delegations_2.php?nom_discipline=Swimming#record"><button type="button" class="btn btn-info">Swimming</button></a></td>
-			<td><a href="Vision_par_delegations_2.php?nom_discipline=Cycling#record"><button type="button" class="btn btn-info">Cycling</button></a></td>
-			<td><a href="Vision_par_delegations_2.php?nom_discipline=Weightlifting#record"><button type="button" class="btn btn-info">Weightlifting</button></a></td>
-			<td><a href="Vision_par_delegations_2.php?nom_discipline=Speed Skating#record"><button type="button" class="btn btn-info">Speed Skating</button></a></td>
+			<td><a href="Classement_Delegation_records.php?nom_discipline=Athletics#record"><button type="button" class="btn btn-info">Athletics</button></a></td>
+			<td><a href="Classement_Delegation_records.php?nom_discipline=Swimming#record"><button type="button" class="btn btn-info">Swimming</button></a></td>
+			<td><a href="Classement_Delegation_records.php?nom_discipline=Cycling#record"><button type="button" class="btn btn-info">Cycling</button></a></td>
+			<td><a href="Classement_Delegation_records.php?nom_discipline=Weightlifting#record"><button type="button" class="btn btn-info">Weightlifting</button></a></td>
+			<td><a href="Classement_Delegation_records.php?nom_discipline=Speed Skating#record"><button type="button" class="btn btn-info">Speed Skating</button></a></td>
 		</table>
 
 	
