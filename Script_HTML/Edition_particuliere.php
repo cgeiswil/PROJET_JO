@@ -12,7 +12,7 @@
 	$id_olympiade = $_GET['id'];
 	if (!$id_olympiade) {
 		// L'ID est invalide ou absent
-		header("Location: Frise_des_editions.php");
+		header("Location: Vision_par_editions.php");
 		exit;
 	}
 
@@ -22,30 +22,63 @@
 
 	if (!$olympiade) {
 		// L'olympiade n'existe pas
-		// header("Location: Frise_des_editions.php");
+		header("Location: Vision_par_editions.php");
 		exit;
 	}
 	
-	echo '<title>'.$olympiade["nom"]." ".$olympiade["annee_o"].'</title>';
-echo'</head>
+	echo '<title>'.$olympiade["nom"]." ".$olympiade["annee_o"].'</title>
+</head>
 
 <body>
-
-  <iframe class="navbar" src="Barre_de_navigation.html" width="100%" height="5%" frameborder="0"></iframe>  
-  
-  <div class="container">
+<header>';
+  include "Barre_de_navigation.html";
+  echo'</header>
+	<div class="container mt-4">
     <div class="row">
         <div class="col-md-12">';
 		
 			echo '<img src="'.$olympiade["logo"].'" class="float-right" alt="Logo JO '.$olympiade["nom"]." ".$olympiade["annee_o"].'" style="max-width: 200px; max-height: 150px;">';
 
 			echo "<h1><strong>Olympiade ".$olympiade["nom"]." ".$olympiade["annee_o"]."</strong>";
-				  echo '<button type="button" class="btn btn-lg bg-white text-danger border-0">';
-					 echo '<img src="../Images/Boutons/coeur_plein.svg" alt="Coeur rempli" />';
-				   echo "</button>";
-				   
-				   echo '<a href="Comparer.php?id='.$olympiade["id_olympiade"].'#Comparons"><button type="button" class="btn btn-lg bg-white text-danger border-0">';
-					 echo '<img src="../Images/Boutons/balance.png" alt="Balance" />';
+			
+					session_start();
+					$image = "../Images/Boutons/Coeur_olympiades.jpg";
+					if (isset($_SESSION['utilisateur']['utilisateur'])) {
+						$aimer = $bdd->prepare('SELECT * FROM apprecier_o WHERE id_olympiade = ? AND id_utilisateur = ?');
+						$aimer->execute(array($id_olympiade, $_SESSION['utilisateur']['utilisateur']));
+						if ($aimer->fetch()) {
+							$image = "../Images/Boutons/Coeur_olympiades_rempli.jpg";
+						}
+					}
+
+					echo '<button type="button" class="btn btn-lg bg-white text-danger border-0 ml-2">';
+					echo '<img id="coeur" src="'.$image.'" alt="Coeur Olympiades" height="60px"/>';
+					echo "</button>";
+
+					echo '<script>
+						var coeur = document.getElementById("coeur");
+						coeur.addEventListener("click", function() {
+							var xhr = new XMLHttpRequest();
+							xhr.open("POST", "Edition_particuliere.php?id='.$id_olympiade.'");
+							xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+							xhr.onload = function() {
+								if (xhr.status === 200) {
+									coeur.src = "../Images/Boutons/Coeur_olympiades_rempli.jpg";
+								} else {
+									console.log("[ERREUR] Erreur de mise à jour des données !!!!");
+								}
+							};
+							xhr.send("id_olympiade='.$id_olympiade.'&utilisateur='.$_SESSION['utilisateur']['utilisateur'].'");
+						});
+					</script>';
+
+					if (isset($_POST['id_olympiade']) && isset($_POST['utilisateur'])) {
+						$aimerBD = $bdd->prepare('INSERT INTO apprecier_o(id_olympiade, id_utilisateur) VALUES (?, ?)');
+						$aimerBD->execute(array($_POST['id_olympiade'], $_POST['utilisateur']));
+					}
+					
+				   echo '<a href="Comparer.php?id='.$olympiade["id_olympiade"].'#Comparons"><button type="button" class="btn btn-lg bg-white text-danger border-0  ml-2">';
+					 echo '<img src="../Images/Boutons/Comparer_olympiades.jpg" alt="Balance de comparaison de pays" height="60px" />';
 				   echo "</button><a>";
 				 echo "</h1>";
 			
@@ -69,7 +102,8 @@ echo'</head>
 					$nb_pays = $bdd->query('SELECT COUNT(olympiades.pays_hote) as olymp FROM olympiades WHERE olympiades.pays_hote = "'.$olympiade['pays_hote'].'" GROUP BY olympiades.pays_hote')->fetch();
 					$pays = $bdd->query("SELECT * FROM pays_participants WHERE pays_participants.Code_CIO = '".$olympiade['Code_CIO']."'")->fetch();
 					
-					   echo '<p><img src="'.$pays['I_drapeau'].'" alt="Drapeau '.$olympiade['pays_hote'].'" class="img-thumbnail border-0" width="35px"> <a href="Vision_par_editions.php?view=p&lat='.$olympiade['latitude_pays'].'&lon='.$olympiade['longitude_pays'].'#carte" class="text-primary">'.$olympiade['pays_hote'].'</a> ('.$nb_pays['olymp'].($nb_pays['olymp'] > 1 ? ' &eacute;ditions' : ' &eacute;dition').' au total)</p>';
+					 //  echo '<p><img src="'.$pays['I_drapeau'].'" alt="Drapeau '.$olympiade['pays_hote'].'" class="img-thumbnail border-0" width="35px"> <a href="Vision_par_editions.php?view=p&lat='.$olympiade['latitude_pays'].'&lon='.$olympiade['longitude_pays'].'#carte" class="text-dark">'.$olympiade['pays_hote'].'</a> ('.$nb_pays['olymp'].($nb_pays['olymp'] > 1 ? ' &eacute;ditions' : ' &eacute;dition').' au total)</p>';
+					  echo '<p><a href="Pays_particulier.php?id='.$olympiade['Code_CIO'].'" class="text-dark"><img src="'.$pays['I_drapeau'].'" alt="Drapeau '.$olympiade['pays_hote'].'" class="img-thumbnail border-0" width="35px"><b>'.$olympiade['pays_hote'].'</b></a> ('.$nb_pays['olymp'].($nb_pays['olymp'] > 1 ? ' &eacute;ditions organis&eacute;es' : ' &eacute;dition organis&eacute;e').')</p>';
 					  echo '<p>Jeux Olympiques d\''.($olympiade['saison'] == 'Summer' ? '&Eacute;t&eacute;' : 'Hiver').'</p>';
 
 					  // Calcul du nb de jour
@@ -131,7 +165,7 @@ if ($nb_ath['nb']!=0) {
 	echo '<center><h2><strong>Classement des m&eacute;dailles CIO</strong></h2></center>';
 	echo '<br>';
 	
-	$classement_or = $bdd->query('SELECT count(DISTINCT lier_m.id_epreuves) as nb, etre_nationalite.id_pays, pays_participants.nom_pays, pays_participants.I_drapeau FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade AND lier_m.id_medaille = 1 AND lier_m.id_olympiade = "'.$olympiade['id_olympiade'].'" GROUP BY etre_nationalite.id_pays ORDER BY nb DESC LIMIT 5');	
+	$classement_or = $bdd->query('SELECT count(DISTINCT lier_m.id_epreuves) as nb, etre_nationalite.id_pays, pays_participants.nom_pays, pays_participants.I_drapeau, Code_CIO FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade AND lier_m.id_medaille = 1 AND lier_m.id_olympiade = "'.$olympiade['id_olympiade'].'" GROUP BY etre_nationalite.id_pays ORDER BY nb DESC LIMIT 5');	
   
 	echo '<div class="container card">';
 	echo '<div class="card-body">';
@@ -150,7 +184,7 @@ if ($nb_ath['nb']!=0) {
 
 						echo '<tr>
 							<td>'.++$i.'</td>
-							<th scope="row"><img src="'.$ligne_classement_or['I_drapeau'].'" alt="Drapeau '.$ligne_classement_or['nom_pays'].'" class="img-thumbnail border-0" width="40px"> '.$ligne_classement_or['nom_pays'].'</th>
+							<th scope="row"><a href="Pays_particulier.php?id='.$ligne_classement_or['Code_CIO'].'" class="text-dark"><img src="'.$ligne_classement_or['I_drapeau'].'" alt="Drapeau '.$ligne_classement_or['nom_pays'].'" class="img-thumbnail border-0" width="40px"> '.$ligne_classement_or['nom_pays'].'</a></th>
 							<td><img src="../Images/Boutons/medaille_or.png" alt="M&eacute;daille d\'or" width="20px"> <span>'.$ligne_classement_or['nb'].'</span></td>
 							<td><img src="../Images/Boutons/medaille_argent.png" alt="M&eacute;daille d\'argent" width="20px"> <span>'.$argent['nb'].'</span></td>
 							<td><img src="../Images/Boutons/medaille_bronze.png" alt="M&eacute;daille de bronze" width="20px"> <span>'.$bronze["nb"].'</span></td>
@@ -212,7 +246,7 @@ if ($nb_ath['nb']!=0) {
 
 								echo '<tr>
 									<td>'.++$i.'</td>
-									<th scope="row"><img src="'.$ligne_classement_or_pop['I_drapeau'].'" alt="Drapeau '.$ligne_classement_or_pop['nom_pays'].'" class="img-thumbnail border-0" width="40px"> '.$ligne_classement_or_pop['nom_pays'].'</th>
+									<th scope="row"><a href="Pays_particulier.php?id='.$ligne_classement_or_pop['Code_CIO'].'" class="text-dark"><img src="'.$ligne_classement_or_pop['I_drapeau'].'" alt="Drapeau '.$ligne_classement_or_pop['nom_pays'].'" class="img-thumbnail border-0" width="40px"> '.$ligne_classement_or_pop['nom_pays'].'</a></th>
 									<td><img src="../Images/Boutons/medaille_or.png" alt="M&eacute;daille d\'or" width="20px"> <span>'.$or['nb'].'</span></td>
 									<td><img src="../Images/Boutons/medaille_argent.png" alt="M&eacute;daille d\'argent" width="20px"> <span>'.$argent['nb'].'</span></td>
 									<td><img src="../Images/Boutons/medaille_bronze.png" alt="M&eacute;daille de bronze" width="20px"> <span>'.$bronze["nb"].'</span></td>
@@ -251,17 +285,16 @@ if ($nb_ath['nb']!=0) {
 				</div>
 			  </div>
 			</div>
-
-		<br><br>
 		</div>';
 		
 }
 ?>
 	</div></div>
-	<br><br><br>
-	<footer>
-		<object  data="Pied_de_page.html" width="100%" height="100%">
-		</object>
+
+	<footer class='mt-5'>
+	<?php
+		include "pied_de_page.php";
+	?>
 	</footer>
 	</body>
 	</html>

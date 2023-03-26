@@ -5,7 +5,7 @@ function getBDD(){
 }
 
 function translate($expression){
-	$url = 'https://api.mymemory.translated.net/get?q=' . urlencode($expression) . '&langpair=fr|en';
+	$url = 'https://api.mymemory.translated.net/get?q=' . urlencode($expression) . '&langpair=en|fr';
 	$response = file_get_contents($url);
 	$result = json_decode($response, true);
 	$translation = $result['responseData']['translatedText'];

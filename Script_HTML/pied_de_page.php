@@ -9,57 +9,52 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <style>
-  html{
-  background-color: #F5F5F5;
-  }
-  body{
+  #pied{
    background-color: #F5F5F5;
   }
-  
   </style>
 </head>
 
-
 <body class="d-flex flex-column" >
-<footer class="page-footer font-small indigo">
-  <div class="container text-center text-md-left">
-    <div class="row">
-     
-	
-		<p class="my-3"><em>&ensp;« L’important dans la vie n'est point le triomphe mais le combat, l’essentiel ce n'est pas d’avoir vaincu, mais de s’être bien battu. »</em> &ensp; Maxime de l'Olympisme.</p><br>
+	<footer id="pied" class="page-footer font-small indigo">
+	  <div class="container text-center text-md-left">
+		<div class="row">
+		 
 		
-    <div class="col-md-3 mx-auto">
-      <p class="font-weight-bold mt-3 mb-1">
-     <?php
-      session_start();
-      if(isset($_SESSION['utilisateur'])) {
-        echo "~   <a>Bonjour ".$_SESSION['utilisateur']["pseudo"]." !</a> ";
-        echo "   |   <a href='deconnexion.php'>Se déconnecter</a>   ~";
-      }
-      else {
-        echo "   |   <a href='nouveau.php'>Nouveau Utilisateur</a>";
-        echo "   |   <a href='connection.php'>Se connecter</a>   ~<br>";
-      }
-      ?>
-      </p>
-    </div>
+			<p class="my-3"><em>&ensp;« L’important dans la vie n'est point le triomphe mais le combat, l’essentiel ce n'est pas d’avoir vaincu, mais de s’être bien battu. »</em> &ensp; Maxime de l'Olympisme.</p><br>
+			
+			<div class="col-md-2 mx-auto p-auto">
+				<p class="font-weight-bold mt-1 mb-1">
+					<div class="border-top border-dark"></div>
+					<?php
+					session_start();
+					if(isset($_SESSION['utilisateur'])) {
+						echo "   <b><a>Bonjour ".$_SESSION['utilisateur']["pseudo"]." !</a> ";
+						echo "   <br>   <a href='deconnexion.php' target='_top'>Se déconnecter</a></b>";
+					}
+					else {
+						echo "   <b><a href='connection.php' target='_top'>Se connecter</a><br>";
+						echo "   <a href='nouveau.php' target='_top'>S'inscrire</a></b>";
+					}
+					?>
+					<div class="border-top border-dark"></div>
+				</p>
+			</div>
+			<div class="col-md-2 mx-auto">
+			  <p class="font-weight-bold mt-2 mb-1"><a href="Accueil.php" target="_top">Accueil</a></p>
+			</div>
+			<div class="col-md-2 mx-auto">
+			  <p class="font-weight-bold mt-2 mb-1"><a href="Qui_sommes_nous.php" target="_top">Qui sommes-nous ?</a></p>
+			</div>
+			<div class="col-md-2 mx-auto">
+			  <p class="font-weight-bold mt-2 mb-1"><a href="Bibliographie.php" target="_top">Bibliographie</a></p>
+			</div>
+			<div class="col-md-2 mx-auto">
+			  <p class="font-weight-bold mt-2 mb-1"><a href="Mentions_legales.php" target="_top">Mentions L&eacute;gales</a></p>
+			</div>
+		</div>
+	  </div>
 
-
-		<div class="col-md-3 mx-auto">
-		  <p class="font-weight-bold mt-3 mb-1"><a href="Accueil.php" target="_top">Accueil</a></p>
-		</div>
-		<div class="col-md-3 mx-auto">
-		  <p class="font-weight-bold mt-3 mb-1"><a href="Qui_sommes_nous.html" target="_top">Qui sommes-nous ?</a></p>
-		</div>
-		<div class="col-md-3 mx-auto">
-		  <p class="font-weight-bold mt-3 mb-1"><a href="Bibliographie.html" target="_top">Bibliographie</a></p>
-		</div>
-		<div class="col-md-3 mx-auto">
-		  <p class="font-weight-bold mt-3 mb-1"><a href="Mentions_legales.html" target="_top">Mentions Légales et CGU</a></p>
-		</div>
-    </div>
-  </div>
-
-</footer>
+	</footer>
 </body>
 </html>
