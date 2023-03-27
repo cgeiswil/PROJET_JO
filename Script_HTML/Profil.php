@@ -170,11 +170,12 @@
 		<div class="col-md-6">				
 				<h2 class="centrer">Historique des quiz</h2>
 				<br>
-				<h4 class="centrer">Voici l'historique de vos 10 derniers quiz !</h4>
+				<h4 class="centrer">Voici l'historique de vos 15 derniers quiz !</h4>
+				<br>
 				
 				<?php
 				 $utilisateur_id = $_SESSION['utilisateur']['utilisateur'];
-  				 $resultats = $BDD->query("SELECT quiz.difficulte, repondre.score FROM repondre, quiz WHERE quiz.id_quiz=repondre.id_quiz AND repondre.id_utilisateur= $utilisateur_id ORDER BY repondre.id_repondre DESC LIMIT 10");
+  				 $resultats = $BDD->query("SELECT quiz.difficulte, repondre.score FROM repondre, quiz WHERE quiz.id_quiz=repondre.id_quiz AND repondre.id_utilisateur= $utilisateur_id ORDER BY repondre.id_repondre DESC LIMIT 15");
   				 $resultats->execute([$utilisateur_id]);
 
  				 if($resultats->rowCount() > 0) {
@@ -203,11 +204,44 @@
 			$_SESSION['moyenne_score'] = $moyenne_score;
 			$_SESSION['difficulte'] = $difficulte;
 			?>
+			<?php
+			$utilisateur_id = $_SESSION['utilisateur']['utilisateur'];
+			$resultats = $BDD->query("SELECT quiz.difficulte, (repondre.score) as facile FROM repondre, quiz WHERE repondre.id_quiz=quiz.id_quiz AND repondre.id_utilisateur=$utilisateur_id  AND quiz.difficulte='Facile'");
+			$facile = array();
+			while ($row = $resultats->fetch()) {
+    			$facile[] = $row['facile'];
+			}
+			$_SESSION['facile'] = $facile;
+			
+			
+			$resultats = $BDD->query("SELECT quiz.difficulte, (repondre.score) as moyen FROM repondre, quiz WHERE repondre.id_quiz=quiz.id_quiz AND repondre.id_utilisateur=$utilisateur_id  AND quiz.difficulte='Moyen'");
+			$moyen = array();
+			while ($row = $resultats->fetch()) {
+    			$moyen[] = $row['moyen'];
+			}
+			$_SESSION['moyen'] = $moyen;
+			
+			
+			$resultats = $BDD->query("SELECT quiz.difficulte, (repondre.score) as difficile FROM repondre, quiz WHERE repondre.id_quiz=quiz.id_quiz AND repondre.id_utilisateur=$utilisateur_id  AND quiz.difficulte='Difficile'");
+			$difficile = array();
+			while ($row = $resultats->fetch()) {
+    			$difficile[] = $row['difficile'];
+			}
+			$_SESSION['difficile'] = $difficile;
+			
+			?>
 			
 			<div class="graph">
 	
 			<?php
 			echo "<img src='./Graphique_moyenne_quiz.php'/>";
+			?>
+			</div>
+			
+			<div class="graph">
+	
+			<?php
+			echo "<img src='./Graphique_evolution_quiz.php'/>";
 			?>
 			</div>
 

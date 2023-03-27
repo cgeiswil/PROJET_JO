@@ -20,7 +20,7 @@ $graph->SetScale("textlin");
 $graph->xaxis->SetTickLabels($difficulte);
 
 // Set title and subtitle
-$graph->title->Set("Moyenne des Quiz !");
+$graph->title->Set("Moyenne des quiz !");
 
 // Use built in font
 $graph->title->SetFont(FF_FONT1,FS_BOLD);
