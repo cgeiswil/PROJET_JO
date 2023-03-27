@@ -34,6 +34,7 @@
 			 		echo '<img src="../Images/Boutons/coeur_plein.svg" alt="Coeur rempli" />';
 		   		echo "</button></h1>";
 		   	echo '</div>';
+		   echo '</div>';
 
 		$nbath = $bdd -> prepare('select etre_nationalite.id_pays, count(DISTINCT etre_nationalite.ID_athletes) as nbAth from etre_nationalite, athletes, pays_participants, olympiades
 			where etre_nationalite.ID_athletes = athletes.ID_athletes
@@ -46,52 +47,47 @@
 		echo $AthP['nbAth'].": athlètes depuis le d&eacutebut des jeux olympiques modernes";
 
 
-		$OlympOrg = $bdd -> prepare('select * from olympiades
-			where olympiades.Code_CIO = ?');
+		$OlympOrg = $bdd -> prepare('select * from olympiades, villes_hotes
+			where olympiades.Code_CIO = ?
+			and villes_hotes.id_ville = olympiades.id_ville_hote
+       ORDER By olympiades.annee_o');
 		$OlympOrg -> execute([$pays]);
 		$now = time();
 		$Olpasse = array();
 		$Olfutur = array();
 		$OlenCours = array();
-		
-		/*while($Info = $OlympOrg -> fetch()){
-			
-			$RapportDebut = $now-$Info['date_ouverture'];
-			$RapportFin = $now-$Info['date_fermeture'];
-			
-			if($RapportFin > 0 and $RapportDebut > 0){
-				array_push($Olpasse, $Info['id_olympiade']);
-			}	else{
-				
-				if($RapportFin < 0 and $RapportDebut < 0)
-					array_push($Olfutur, $Info['id_olympiade']);
-			}else{
-				array_push($OlenCours, $Info['id_olympiade']);
-			}
-		}*/
 
 
 		echo '<h2> Olympiades Organis&eacute;es </h2>';
-		echo '<h4> Olympiades pass&eacute;e </h4>';
 		echo '<table>';
 		echo '<tr>';
 		echo '<th> Ann&eacute;e</th>';
+		echo '<th> Ville h&ocirc;te </th>';
+		echo "<th> Nombre d'athletes</th>";
+		echo "<th> Nombre de discplines</th>";
+		echo "<th> Nombre d'&eacute;preuves</th>";
+		echo "<th> Nombre de d&eacute;l&eacute;gations</th>";
 		echo '</tr>';
-		foreach ($Olpasse as $infos ) {
-			echo $infos;
+		foreach ($OlympOrg as $infos ) {
+			$NbAthEd = $bdd -> prepare("select count(DISTINCT athletes.ID_athletes) as nbAth from athletes, etre_nationalite, pays_participants, olympiades
+				where athletes.ID_athletes = etre_nationalite.ID_athletes
+				and olympiades.id_olympiade = etre_nationalite.id_olympiade
+				and pays_participants.Code_CIO = pays_participants.Code_CIO
+				and olympiades.id_olympiade = ?");
+			$NbAthEd -> execute([$infos['id_olympiade']]);
+			$nbath = $NbAthEd -> fetch();
+
+			echo '<tr>';
+			echo '<td>'.$infos['annee_o'].'</td>';
+			echo '<td> <a href="Vision_par_editions.php?view=p&lat='.$infos['latitude_pays'].'&lon='.$infos['longitude_pays'].'#carte" class="text-primary">'.$infos['nom'].'</a> </td>';
+			echo '<td>'.$nbath['nbAth'].'</td>';
+			echo '<td>'.$infos['nb_discplines'].'</td>';
+			echo '<td>'.$infos['nb_sports'].'</td>';
+			echo '<td>'.$infos['nb_delegations'].'</td>';
+			echo '</tr>';
 		}
 
 
-
-		$dtJO = 1721980800 ;
-		$now = time();
-		$dt = $now-$dtJO;
-		echo $dt;
-		/*if($dt < $dtJO){
-			echo "dt plus petit";
-		}else{
-			echo "dt plus grand";
-		}*/
 
 
 		?>
@@ -101,4 +97,3 @@
 
 	</body>
 </html>
-
