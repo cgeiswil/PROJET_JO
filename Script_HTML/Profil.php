@@ -181,7 +181,7 @@
  				 if($resultats->rowCount() > 0) {
       				echo "<table class='centrer'><tr><th>Niveau de difficult&eacute; &emsp;</th><th>Score</th></tr>";
       				while ($row = $resultats->fetch()) {
-          			echo "<tr><td>".$row["difficulte"]."</td><td>".$row["score"]."</td></tr>";
+          			echo "<tr><td>".$row["difficulte"]."</td><td>".$row["score"]."/10</td></tr>";
       					}
      					echo "</table>";
  					} else {

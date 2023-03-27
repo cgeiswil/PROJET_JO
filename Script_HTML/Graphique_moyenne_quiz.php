@@ -14,7 +14,7 @@ $graph->clearTheme();
 $graph->SetShadow();
 
 // Use a "text" X-scale
-$graph->SetScale("textlin");
+$graph->SetScale("textlin",0,10);
 
 // Specify X-labels
 $graph->xaxis->SetTickLabels($difficulte);
