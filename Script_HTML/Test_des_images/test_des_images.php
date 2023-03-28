@@ -10,7 +10,7 @@
 	require("../fonction.php");
 	$bdd = getBDD();
 	
-	$images = $bdd->prepare('SELECT * FROM pays_participants LIMIT 10');
+	$images = $bdd->prepare('SELECT * FROM pays_participants');
 	$images->execute();
 
 	while ($image = $images->fetch()) {

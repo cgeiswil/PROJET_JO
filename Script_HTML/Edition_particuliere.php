@@ -44,7 +44,7 @@
 				// AJOUT DU COEUR
 					session_start();
 					$image = "../Images/Boutons/Coeur_olympiades.jpg";
-					if (isset($_SESSION['utilisateur']['utilisateur'])) {
+					if (isset($_SESSION['utilisateur'])) {
 						$aimer = $bdd->prepare('SELECT * FROM apprecier_o WHERE id_olympiade = ? AND id_utilisateur = ?');
 						$aimer->execute(array($id_olympiade, $_SESSION['utilisateur']['utilisateur']));
 						if ($aimer->fetch()) {
