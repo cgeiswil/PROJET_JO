@@ -50,12 +50,12 @@ p{
   padding-right: 25px;
   font-family: Andale Mono, monospace;
   width: 60%;
+  display: flex;
   margin: auto;
 
 }
 p {
   font-size: 15px;
-  display: flex
   justify-content: center;
 }
 

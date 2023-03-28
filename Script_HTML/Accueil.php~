@@ -49,7 +49,7 @@ $anec = $bdd->query("SELECT * FROM anecdotes
     LIMIT 1");
 $ligne = $anec->fetch();
 echo "<p>".$ligne['anecdote'];
-echo " <a href='".$ligne['source']."'>Source.</a>";
+echo " <a href='".$ligne['source']."'>Source</a>";
 echo "<div class='float-right'>";
 echo '<img id="anecdote" src="'.$image.'" alt="Coeur Anecdote"  height="60px"/>';
 echo "</div></p>";
