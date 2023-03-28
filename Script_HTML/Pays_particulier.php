@@ -18,6 +18,14 @@
 		$informationPP = $bdd -> prepare('select * from pays_participants Where Code_CIO = ?');
 		$informationPP -> execute([$pays]);
 		$ligne = $informationPP -> fetch();
+		$NbOl = $bdd -> prepare('select count(DISTINCT olympiades.id_olympiade) as nb from olympiades, athletes, etre_nationalite, pays_participants
+			where etre_nationalite.ID_athletes = athletes.ID_athletes
+			and etre_nationalite.id_pays = pays_participants.Code_CIO
+			and olympiades.id_olympiade = etre_nationalite.id_olympiade
+			and etre_nationalite.id_pays = ?');
+		$NbOl -> execute([$pays]);
+		$NbOligne = $NbOl -> fetch();
+
 
 		echo '<body>
 
@@ -45,6 +53,7 @@
 		$nbath -> execute([$pays]);
 		$AthP = $nbath -> fetch();
 		echo $AthP['nbAth'].": athlètes depuis le d&eacutebut des jeux olympiques modernes";
+		echo "Nombre d'&eacute;dition particip&eacute; : ".$NbOligne['nb'];
 
 
 		$OlympOrg = $bdd -> prepare('select * from olympiades, villes_hotes
@@ -86,6 +95,33 @@
 			echo '<td>'.$infos['nb_delegations'].'</td>';
 			echo '</tr>';
 		}
+		echo '</table>';
+
+		echo '<h2> Tableau historique des m&eacute;dailles </h2>';
+
+	$MedOr = $bdd -> prepare('select requete_imbriquee.id_pays, count(requete_imbriquee.nb) as nb_medailles, requete_imbriquee.nom_pays, requete_imbriquee.I_drapeau as drapeau
+from (
+        select etre_nationalite.id_olympiade, etre_nationalite.id_pays, count(DISTINCT lier_m.id_epreuves) as nb, pays_participants.nom_pays, pays_participants.I_drapeau
+        from athletes,lier_m,medailles,pays_participants,etre_nationalite,olympiades,epreuves
+                where athletes.ID_athletes = lier_m.ID_athletes
+                and lier_m.id_medaille = medailles.id_medaille
+                and athletes.ID_athletes = etre_nationalite.ID_athletes and
+                etre_nationalite.id_pays = pays_participants.Code_CIO
+                and lier_m.id_olympiade = olympiades.id_olympiade
+                and epreuves.id_epreuves = lier_m.id_epreuves 
+                  and medailles.type = "Gold"
+    			and etre_nationalite.id_pays = ?
+         and lier_m.id_olympiade = etre_nationalite.id_olympiade
+                group by etre_nationalite.id_olympiade, etre_nationalite.id_pays, lier_m.id_epreuves
+        ORDER BY etre_nationalite.id_pays ASC
+) as requete_imbriquee
+ group by requete_imbriquee.id_pays 
+order by  nb_medailles  DESC'); 
+
+	$MedOr -> execute([$pays]);
+	$Or = $MedOr -> fetch();
+	echo $Or['nb_medailles'];
+
 
 
 
