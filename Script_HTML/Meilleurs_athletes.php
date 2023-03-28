@@ -34,7 +34,7 @@
     $req = $bdd->prepare("select disciplines.nom_discipline, disciplines.id_discipline from disciplines; "); // Peut etre changer pour ajouter des disciplines 
     $req->execute();
 
-    echo "<h2> <center>TOP 3 </center> </h2>";
+    echo "<h2> <center>TOP 6 </center> </h2>";
 
     $sport = ($_GET['sport'] != '' ? $_GET['sport'] : 'Toutes disciplines confondues');
 
@@ -50,6 +50,7 @@ echo "<option value='Toutes disciplines confondues'>Toutes disciplines confondue
 echo "</select>";
 echo "</div>";
 echo "</form>";
+//bouton comparer et coeur de la discipline
 
 echo "<script>";
 echo "function submitForm() {";
@@ -99,7 +100,7 @@ ORDER BY nb_medailles_or DESC, nb_medailles_Ar DESC, nb_medailles_Br DESC limit 
     while ($i <= 3 && $athlete = $athletes->fetch()) {
 
          // Récupération du pays de l'athlète
-    $pays = $bdd->prepare("SELECT pays_participants.nom_pays, pays_participants.I_drapeau FROM pays_participants, etre_nationalite where etre_nationalite.id_pays=pays_participants.Code_CIO and etre_nationalite.ID_athletes=".$athlete['ID_athletes'].' Limit 3');
+    $pays = $bdd->prepare("SELECT pays_participants.nom_pays, pays_participants.I_drapeau, pays_participants.Code_CIO FROM pays_participants, etre_nationalite where etre_nationalite.id_pays=pays_participants.Code_CIO and etre_nationalite.ID_athletes=".$athlete['ID_athletes'].' Limit 3');
         // Exécution de la requête pour récupérer le pays de l'athlète
         $pays->execute();
         $resultat_pays = $pays->fetch();
@@ -125,8 +126,9 @@ ORDER BY nb_medailles_or DESC, nb_medailles_Ar DESC, nb_medailles_Br DESC limit 
         echo '<div class="card">
                 <div class="card-body">
 
-                    <h4 class="card-title mb-0"><center><b>'.$i.' '. $athlete['nom'] . '</b></center></h4>
-                    <h6 class="card-title mb-0 my-1"><img src="' . $resultat_pays['I_drapeau'] . '" alt="Drapeau ' . $resultat_pays['nom_pays'] . '" class="img-thumbnail border-0" width="40px">' . $resultat_pays['nom_pays'] . '</h6>';
+                    <h4 class="card-title mb-0"><center><b>'.$i.' '. $athlete['nom'] . '</b></center></h4>';
+                   //bouton coeur athletes 
+                   echo' <h6 class="card-title mb-0 my-1"><a href="Pays_particulier.php?id='.$resultat_pays['Code_CIO'].'"style="color: black;"><img src="' . $resultat_pays['I_drapeau'] . '" alt="Drapeau ' . $resultat_pays['nom_pays'] . '" class="img-thumbnail border-0" width="40px"><strong>' . $resultat_pays['nom_pays'] . '</strong></a></h6>';
 
 
         echo '<div class="row">';        
@@ -160,13 +162,12 @@ ORDER BY nb_medailles_or DESC, nb_medailles_Ar DESC, nb_medailles_Br DESC limit 
     $rr = $bdd->prepare("select disciplines.nom_discipline from disciplines, epreuves,lier_r, records where disciplines.id_discipline = epreuves.id_disciplines and epreuves.id_epreuves = lier_r.id_epreuve and lier_r.id_record = records.id_record group by disciplines.nom_discipline; ");
         // Exécution de la requête 
         $rr->execute();
-        //$rre = $rr->fetch();
 
         $sports = $rr->fetchAll(PDO::FETCH_COLUMN);
 
         if (in_array($sport, $sports) || $sport == 'Toutes disciplines confondues' ) {
 
-
+            // carte d'affichage des records de cet athlete
               echo '<div class="card">
                 <div class="card-body">';
                  if($r_records['nb_records'] != NULL) {
@@ -183,11 +184,33 @@ ORDER BY nb_medailles_or DESC, nb_medailles_Ar DESC, nb_medailles_Br DESC limit 
                 echo'</div>
 		  </div>';
             }else{
-                echo " ";
+                echo "Pas de records enregistrées pour cette discipline.";
             }
 
-			echo "</div>
-		  </div>
+            // Récupération des olympades auquels l'athlete à participés
+            $olympiades = $bdd->prepare("select olympiades.annee_o, olympiades.logo, villes_hotes.nom from olympiades, etre_nationalite, villes_hotes WHERE villes_hotes.id_ville = olympiades.id_ville_hote and olympiades.id_olympiade = etre_nationalite.id_olympiade and etre_nationalite.ID_athletes =".$athlete['ID_athletes']);
+             $olympiades->execute();
+
+             //Récupération du nombre de participation 
+             $chiffres_significatifs_1 = $bdd->prepare("select count(DISTINCT olympiades.annee_o) as nbo from olympiades, etre_nationalite, villes_hotes, lier_m, medailles WHERE villes_hotes.id_ville = olympiades.id_ville_hote and olympiades.id_olympiade = etre_nationalite.id_olympiade and etre_nationalite.ID_athletes =".$athlete['ID_athletes']);
+             $chiffres_significatifs_1->execute();
+            
+             //Récupération du nombre de médailles recus au total
+             $chiffres_significatifs_2 = $bdd->prepare("SELECT count( DISTINCT id_olympiade) as nbm FROM lier_m, athletes where lier_m.ID_athletes = athletes.ID_athletes and id_medaille != 4 and athletes.ID_athletes =".$athlete['ID_athletes']);
+             $chiffres_significatifs_2->execute();
+
+        $olympe = $olympiades->fetchAll();
+        $cs1 = $chiffres_significatifs_1->fetchAll();
+        $cs2 = $chiffres_significatifs_2->fetchAll();
+            // carte d'affichage des olympliades auquels cet athlete à participer
+            echo '<div class="card"><div class="card-body">';
+                
+                echo "Participation à <strong>".$cs1[0]['nbo']."</strong> olympiades <br>(dont <strong>".$cs2[0]['nbm']."</strong> m&eacute;daill&eacute;".($cs2[0]['nbm'] > 1 ? "es" : "e").").<br>";
+                foreach ($olympe as $ligne) {
+                    echo '<br><img src="'.$ligne['logo'].'" class="img-thumbnail border-0" width="40px"> '.$ligne['nom'].' '.$ligne['annee_o'];
+                }
+
+		  echo "</div></div></div></div>
 
 
                 </div>
@@ -200,7 +223,7 @@ ORDER BY nb_medailles_or DESC, nb_medailles_Ar DESC, nb_medailles_Br DESC limit 
     
    //////////////////////////////////////////////////////////////////////////////////////////////////////////// 
     
-// ne marche pas 
+ 
 
     if ($sport == 'Toutes disciplines confondues') {
         // Toutes disciplines confondues
@@ -229,7 +252,7 @@ ORDER BY nb_medailles_or DESC, nb_medailles_Ar DESC, nb_medailles_Br DESC limit 
     
     echo '<div class="card-deck">';
     $i = 4;
-    while ($i <= 3 && $athlete = $athletes2->fetch()) {
+    while ($i <= 6 && $athlete = $athletes2->fetch()) {
 
          // Récupération du pays de l'athlète
     $pays = $bdd->prepare("SELECT pays_participants.nom_pays, pays_participants.I_drapeau FROM pays_participants, etre_nationalite where etre_nationalite.id_pays=pays_participants.Code_CIO and etre_nationalite.ID_athletes=".$athlete['ID_athletes'].' Limit 3');
@@ -316,14 +339,38 @@ ORDER BY nb_medailles_or DESC, nb_medailles_Ar DESC, nb_medailles_Br DESC limit 
                 echo'</div>
 		  </div>';
             }else{
-                echo " ";
+                echo "Pas de records enregistrées pour cette discipline.";
             }
+            // Récupération des olympades auquels l'athlete à participés
+            $olympiades = $bdd->prepare("select olympiades.annee_o, olympiades.logo, villes_hotes.nom from olympiades, etre_nationalite, villes_hotes WHERE villes_hotes.id_ville = olympiades.id_ville_hote and olympiades.id_olympiade = etre_nationalite.id_olympiade and etre_nationalite.ID_athletes =".$athlete['ID_athletes']);
+             $olympiades->execute();
 
+             //Récupération du nombre de participation 
+             $chiffres_significatifs_1 = $bdd->prepare("select count(DISTINCT olympiades.annee_o) as nbo from olympiades, etre_nationalite, villes_hotes, lier_m, medailles WHERE villes_hotes.id_ville = olympiades.id_ville_hote and olympiades.id_olympiade = etre_nationalite.id_olympiade and etre_nationalite.ID_athletes =".$athlete['ID_athletes']);
+             $chiffres_significatifs_1->execute();
+            
+             //Récupération du nombre de médailles recus au total
+             $chiffres_significatifs_2 = $bdd->prepare("SELECT count( DISTINCT id_olympiade) as nbm FROM lier_m, athletes where lier_m.ID_athletes = athletes.ID_athletes and id_medaille != 4 and athletes.ID_athletes =".$athlete['ID_athletes']);
+             $chiffres_significatifs_2->execute();
+
+        $olympe = $olympiades->fetchAll();
+        $cs1 = $chiffres_significatifs_1->fetchAll();
+        $cs2 = $chiffres_significatifs_2->fetchAll();
+            // carte d'affichage des olympliades auquels cet athlete à participer
+            echo '<div class="card"><div class="card-body">';
+                
+                echo "Participation à <strong>".$cs1[0]['nbo']."</strong> olympiades <br>(dont <strong>".$cs2[0]['nbm']."</strong> m&eacute;daill&eacute;".($cs2[0]['nbm'] > 1 ? "es" : "e").").<br>";
+                foreach ($olympe as $ligne) {
+                    echo '<br><img src="'.$ligne['logo'].'" class="img-thumbnail border-0" width="40px"> '.$ligne['nom'].' '.$ligne['annee_o'];
+                }
+
+		  echo "</div></div>";
+        
 			echo "</div>
 		  </div>
 
 
-                </div>
+          </div>
                 </div>";
             $i++;       
     }
