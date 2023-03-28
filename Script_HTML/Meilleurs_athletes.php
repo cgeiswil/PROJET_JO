@@ -188,7 +188,7 @@ ORDER BY nb_medailles_or DESC, nb_medailles_Ar DESC, nb_medailles_Br DESC limit 
             }
 
             // Récupération des olympades auquels l'athlete à participés
-            $olympiades = $bdd->prepare("select olympiades.annee_o, olympiades.logo, villes_hotes.nom from olympiades, etre_nationalite, villes_hotes WHERE villes_hotes.id_ville = olympiades.id_ville_hote and olympiades.id_olympiade = etre_nationalite.id_olympiade and etre_nationalite.ID_athletes =".$athlete['ID_athletes']);
+            $olympiades = $bdd->prepare("select olympiades.id_olympiade, olympiades.annee_o, olympiades.logo, villes_hotes.nom from olympiades, etre_nationalite, villes_hotes WHERE villes_hotes.id_ville = olympiades.id_ville_hote and olympiades.id_olympiade = etre_nationalite.id_olympiade and etre_nationalite.ID_athletes =".$athlete['ID_athletes']);
              $olympiades->execute();
 
              //Récupération du nombre de participation 
@@ -207,7 +207,7 @@ ORDER BY nb_medailles_or DESC, nb_medailles_Ar DESC, nb_medailles_Br DESC limit 
                 
                 echo "Participation à <strong>".$cs1[0]['nbo']."</strong> olympiades <br>(dont <strong>".$cs2[0]['nbm']."</strong> m&eacute;daill&eacute;".($cs2[0]['nbm'] > 1 ? "es" : "e").").<br>";
                 foreach ($olympe as $ligne) {
-                    echo '<br><img src="'.$ligne['logo'].'" class="img-thumbnail border-0" width="40px"> '.$ligne['nom'].' '.$ligne['annee_o'];
+                    echo "<br><img src='".$ligne['logo']."' class='img-thumbnail border-0' width='40px'><a style = 'color:black;' href='Edition_particuliere.php?id=". $ligne['id_olympiade'] ."'> ".$ligne['nom']." ".$ligne['annee_o']."</a>";
                 }
 
 		  echo "</div></div></div></div>
@@ -342,7 +342,7 @@ ORDER BY nb_medailles_or DESC, nb_medailles_Ar DESC, nb_medailles_Br DESC limit 
                 echo "Pas de records enregistrées pour cette discipline.";
             }
             // Récupération des olympades auquels l'athlete à participés
-            $olympiades = $bdd->prepare("select olympiades.annee_o, olympiades.logo, villes_hotes.nom from olympiades, etre_nationalite, villes_hotes WHERE villes_hotes.id_ville = olympiades.id_ville_hote and olympiades.id_olympiade = etre_nationalite.id_olympiade and etre_nationalite.ID_athletes =".$athlete['ID_athletes']);
+            $olympiades = $bdd->prepare("select olympiades.id_olympiade, olympiades.annee_o, olympiades.logo, villes_hotes.nom from olympiades, etre_nationalite, villes_hotes WHERE villes_hotes.id_ville = olympiades.id_ville_hote and olympiades.id_olympiade = etre_nationalite.id_olympiade and etre_nationalite.ID_athletes =".$athlete['ID_athletes']);
              $olympiades->execute();
 
              //Récupération du nombre de participation 
@@ -361,7 +361,7 @@ ORDER BY nb_medailles_or DESC, nb_medailles_Ar DESC, nb_medailles_Br DESC limit 
                 
                 echo "Participation à <strong>".$cs1[0]['nbo']."</strong> olympiades <br>(dont <strong>".$cs2[0]['nbm']."</strong> m&eacute;daill&eacute;".($cs2[0]['nbm'] > 1 ? "es" : "e").").<br>";
                 foreach ($olympe as $ligne) {
-                    echo '<br><img src="'.$ligne['logo'].'" class="img-thumbnail border-0" width="40px"> '.$ligne['nom'].' '.$ligne['annee_o'];
+                    echo "<br><img src='".$ligne['logo']."' class='img-thumbnail border-0' width='40px'><a style = 'color:black;' href='Edition_particuliere.php?id=". $ligne['id_olympiade'] ."'> ".$ligne['nom']." ".$ligne['annee_o']."</a>";
                 }
 
 		  echo "</div></div>";
