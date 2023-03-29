@@ -31,11 +31,13 @@ require("fonction.php");
 
 $bdd = getBDD();
 
-
 // AJOUT DU COEUR
 session_start();
-$image = "../Images/Boutons/Coeur_olympiades.jpg";
+
+$anec = $bdd->query("SELECT * FROM anecdotes ORDER BY RAND() LIMIT 1");
+$ligne = $anec->fetch();
 $id_anecdote = $ligne['id_anecdote'];
+$image = "../Images/Boutons/Coeur_olympiades.jpg";
 
 if (isset($_SESSION['utilisateur'])) {
     $aimer = $bdd->prepare('SELECT * FROM apprecier_an WHERE id_anecdote = ? AND id_utilisateur = ?');
@@ -44,17 +46,12 @@ if (isset($_SESSION['utilisateur'])) {
         $image = "../Images/Boutons/Coeur_olympiades_rempli.jpg";
     }
 }
-$anec = $bdd->query("SELECT * FROM anecdotes
-    ORDER BY RAND()
-    LIMIT 1");
-$ligne = $anec->fetch();
+
 echo "<p>".$ligne['anecdote'];
 echo " <a href='".$ligne['source']."'>Source.</a>";
 echo "<div class='float-right'>";
-echo '<img id="anecdote" src="'.$image.'" alt="Coeur Anecdote"  height="60px"/>';
+echo '<img id="anecdote" src="'.$image.'" alt="Coeur Anecdote" height="60px"/>';
 echo "</div></p>";
-
-
 
 echo '<script type="text/javascript">
     var anecdote = document.getElementById("anecdote");
@@ -73,10 +70,10 @@ echo '<script type="text/javascript">
     });
 </script>';
 
-if (isset($_POST['id_anecdote']) && isset($_POST['utilisateur'])) {
+if (isset($_POST['id_anecdote'], $_POST['utilisateur'])) {
     $aimerBD = $bdd->prepare('INSERT INTO apprecier_an(id_anecdote, id_utilisateur) VALUES (?, ?)');
     $aimerBD->execute(array($_POST['id_anecdote'], $_POST['utilisateur']));
-    unset($_POST['id_anecdote']);
+    unset($_POST['id_anecdote'], $_POST['utilisateur']);
 }
 // FIN AJOUT DU COEUR
 ?>
