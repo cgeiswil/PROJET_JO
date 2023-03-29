@@ -14,7 +14,7 @@
 		<h4 class="mb-3">Entrez quelques informations, et c&#039;est parti pour explorer les donn&eacute;es !</h4>
 		
 			<ol>
-			  <form method="get" action="enregistrement.php" autocomplete="on">
+			  <form method="post" action="enregistrement.php" autocomplete="on">
 				<li class="form-group">
 				  <label for="pseudo">Pseudo</label>
 				  <input type="text" class="form-control" id="pseudo" name="ps" value="<?php echo $_GET['ps'] ?? ''; ?>" style="width: 400px;">

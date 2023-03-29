@@ -27,6 +27,10 @@
 		justify-content: center;
 		margin: auto;
 		}
+		.titre{
+		color:black;
+		}
+
 		</style> 
 
 
@@ -189,16 +193,16 @@ from (
     COUNT(CASE WHEN medailles.type = "Gold" THEN 1 ELSE NULL END) AS nb_medailles_or, 
     COUNT(CASE WHEN medailles.type = "Silver" THEN 1 ELSE NULL END) AS nb_medailles_Ar,
     COUNT(CASE WHEN medailles.type = "Bronze" THEN 1 ELSE NULL END) AS nb_medailles_Br
-FROM athletes, lier_m, medailles, etre_nationalite, epreuves, olympiades
-where athletes.ID_athletes=lier_m.ID_athletes 
-and lier_m.id_medaille=medailles.id_medaille
-and lier_m.id_olympiade = olympiades.id_olympiade
-and lier_m.id_epreuves = epreuves.id_epreuves
-and etre_nationalite.id_pays = ?
-and etre_nationalite.ID_athletes = athletes.ID_athletes
-and etre_nationalite.id_olympiade = olympiades.id_olympiade
-GROUP BY athletes.ID_athletes, athletes.nom, athletes.sexe
-ORDER BY nb_medailles_or DESC, nb_medailles_Ar DESC, nb_medailles_Br DESC limit 5');
+	FROM athletes, lier_m, medailles, etre_nationalite, epreuves, olympiades
+	where athletes.ID_athletes=lier_m.ID_athletes 
+	and lier_m.id_medaille=medailles.id_medaille
+	and lier_m.id_olympiade = olympiades.id_olympiade
+	and lier_m.id_epreuves = epreuves.id_epreuves
+	and etre_nationalite.id_pays = ?
+	and etre_nationalite.ID_athletes = athletes.ID_athletes
+	and etre_nationalite.id_olympiade = olympiades.id_olympiade
+	GROUP BY athletes.ID_athletes, athletes.nom, athletes.sexe
+	ORDER BY nb_medailles_or DESC, nb_medailles_Ar DESC, nb_medailles_Br DESC limit 5');
 	$MeilAth -> execute([$pays]);
 
 	echo '<table class="tableau">';
@@ -208,9 +212,7 @@ ORDER BY nb_medailles_or DESC, nb_medailles_Ar DESC, nb_medailles_Br DESC limit 
 	echo '<th> <img src=../Images/Boutons/medaille_or.png alt= oups width="25px"></th>';
 	echo '<th> <img src=../Images/Boutons/medaille_argent.png alt= oups width="25px"></th>';
 	echo '<th> <img src=../Images/Boutons/medaille_bronze.png alt= oups width="25px"></th>';
-	//echo "<th> Nombre de m&eacute;dailles d'OR </th>";
-	//echo "<th> Nombre de m&eacute;dailles d'ARGENT </th>";
-	//echo "<th> Nombre de m&eacute;dailles de BRONZE </th>";
+	
 	echo "<th> Nombre de m&eacute;dailles Total</th>";
 	echo '</tr>';
 	$classement = 1;
@@ -229,7 +231,108 @@ ORDER BY nb_medailles_or DESC, nb_medailles_Ar DESC, nb_medailles_Br DESC limit 
 	echo '</table>';
 
 
+	//Ajout de deux tableaux en fonction des saisons
+	
 
+	$MeilAthEte = $bdd -> prepare('select athletes.ID_athletes, athletes.nom, athletes.sexe, etre_nationalite.id_pays,
+    COUNT(CASE WHEN medailles.type = "Gold" THEN 1 ELSE NULL END) AS nb_medailles_or, 
+    COUNT(CASE WHEN medailles.type = "Silver" THEN 1 ELSE NULL END) AS nb_medailles_Ar,
+    COUNT(CASE WHEN medailles.type = "Bronze" THEN 1 ELSE NULL END) AS nb_medailles_Br
+	FROM athletes, lier_m, medailles, etre_nationalite, epreuves, olympiades
+	where athletes.ID_athletes=lier_m.ID_athletes 
+	and lier_m.id_medaille=medailles.id_medaille
+	and lier_m.id_olympiade = olympiades.id_olympiade
+	and lier_m.id_epreuves = epreuves.id_epreuves
+	and etre_nationalite.id_pays = ?
+	and etre_nationalite.ID_athletes = athletes.ID_athletes
+	and etre_nationalite.id_olympiade = olympiades.id_olympiade
+	and olympiades.saison = "summer"
+	GROUP BY athletes.ID_athletes, athletes.nom, athletes.sexe
+	ORDER BY nb_medailles_or DESC, nb_medailles_Ar DESC, nb_medailles_Br DESC limit 5');
+	echo 'debug';
+	$MeilAthEte -> execute([$pays]);
+	
+
+	$MeilAthHiver = $bdd-> prepare('select athletes.ID_athletes, athletes.nom, athletes.sexe, etre_nationalite.id_pays,
+    COUNT(CASE WHEN medailles.type = "Gold" THEN 1 ELSE NULL END) AS nb_medailles_or, 
+    COUNT(CASE WHEN medailles.type = "Silver" THEN 1 ELSE NULL END) AS nb_medailles_Ar,
+    COUNT(CASE WHEN medailles.type = "Bronze" THEN 1 ELSE NULL END) AS nb_medailles_Br
+	FROM athletes, lier_m, medailles, etre_nationalite, epreuves, olympiades
+	where athletes.ID_athletes=lier_m.ID_athletes 
+	and lier_m.id_medaille=medailles.id_medaille
+	and lier_m.id_olympiade = olympiades.id_olympiade
+	and lier_m.id_epreuves = epreuves.id_epreuves
+	and etre_nationalite.id_pays = ?
+	and etre_nationalite.ID_athletes = athletes.ID_athletes
+	and etre_nationalite.id_olympiade = olympiades.id_olympiade
+	and olympiades.saison = "winter"
+	GROUP BY athletes.ID_athletes, athletes.nom, athletes.sexe
+	ORDER BY nb_medailles_or DESC, nb_medailles_Ar DESC, nb_medailles_Br DESC limit 5');
+	$MeilAthHiver -> execute([$pays]);
+
+
+
+	echo '<table class="tableau">';
+	echo '<tr>';
+	echo "<th class='titre'><h4>Les meilleurs athl&egrave;tes des JO d'&eacute;t&eacute; </h4></th>";
+	echo '<th></th>';
+	echo "<th class='titre'><h4> Les meilleurs athl&egrave;tes des JO d'hiver </h4></th>";
+	echo '</tr>';
+	//JO d'hiver partie gauche
+	echo '<tr>';
+	echo '<td>';
+	echo '<table class="tableau">';
+	echo '<tr>';
+	echo '<th> Classement </th>';
+	echo '<th> Nom </th>';
+	echo '<th> <img src=../Images/Boutons/medaille_or.png alt= oups width="25px"></th>';
+	echo '<th> <img src=../Images/Boutons/medaille_argent.png alt= oups width="25px"></th>';
+	echo '<th> <img src=../Images/Boutons/medaille_bronze.png alt= oups width="25px"></th>';
+	echo '<th> TotMed </th>';
+	echo '</tr>';
+	$classement = 1;
+	foreach($MeilAthHiver as $AthH){
+		$medTot = $AthH['nb_medailles_or']+$AthH['nb_medailles_Ar']+$AthH['nb_medailles_Br'];
+		echo '<tr>';
+		echo "<td>".$classement."</td>";
+		echo "<td>".$AthH['nom']."</td>";
+		echo "<td>".$AthH['nb_medailles_or']."</td>";
+		echo "<td>".$AthH['nb_medailles_Ar']."</td>";
+		echo "<td>".$AthH['nb_medailles_Br']."</td>";
+		echo "<td>".$medTot."</td>";
+		echo '</tr>';
+		$classement += 1;
+	}
+	echo '</table>';
+	echo '</td>';
+	echo '<td> </td>';
+	//JO d'ete partie droite
+	echo '<td>';
+	echo '<table class="tableau">';
+	echo '<tr>';
+	echo '<th> Classement </th>';
+	echo '<th> Nom </th>';
+	echo '<th> <img src=../Images/Boutons/medaille_or.png alt= oups width="25px"></th>';
+	echo '<th> <img src=../Images/Boutons/medaille_argent.png alt= oups width="25px"></th>';
+	echo '<th> <img src=../Images/Boutons/medaille_bronze.png alt= oups width="25px"></th>';
+	echo '<th> TotMed </th>';
+	echo '</tr>';
+	$classement = 1;
+	foreach($MeilAthEte as $AthE){
+		$medTot = $AthE['nb_medailles_or']+$AthE['nb_medailles_Ar']+$AthE['nb_medailles_Br'];
+		echo '<tr>';
+		echo "<td>".$classement."</td>";
+		echo "<td>".$AthE['nom']."</td>";
+		echo "<td>".$AthE['nb_medailles_or']."</td>";
+		echo "<td>".$AthE['nb_medailles_Ar']."</td>";
+		echo "<td>".$AthE['nb_medailles_Br']."</td>";
+		echo "<td>".$medTot."</td>";
+		echo '</tr>';
+		$classement += 1;
+	}
+	echo '</table>';
+	echo '</td>';
+	echo '</tr>';
 		
 
 	echo '<br><br><br>';
@@ -268,7 +371,7 @@ ORDER BY nb_medailles_or DESC, nb_medailles_Ar DESC, nb_medailles_Br DESC limit 
 
 			echo '<tr>';
 			echo '<td>'.$infos['annee_o'].'</td>';
-			echo '<td> <a href="Vision_par_editions.php?view=p&lat='.$infos['latitude_pays'].'&lon='.$infos['longitude_pays'].'#carte" class="text-primary">'.$infos['nom'].'</a> </td>';
+			echo '<td> <a href="Vision_par_editions.php?view=p&lat='.$infos['latitude'].'&lon='.$infos['longitude'].'#carte" class="text-primary">'.$infos['nom'].'</a> </td>';
 			echo '<td>'.$nbath['nbAth'].'</td>';
 			echo '<td>'.$infos['nb_discplines'].'</td>';
 			echo '<td>'.$infos['nb_sports'].'</td>';

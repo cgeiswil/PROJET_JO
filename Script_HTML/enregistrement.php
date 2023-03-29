@@ -21,36 +21,49 @@
 
 		}
 
-		if((isset($_GET['ps']) and empty($_GET['ps']))
-			or (isset($_GET['mail']) and empty($_GET['mail']))
-			or (isset($_GET['mdp']) and empty($_GET['mdp']))
-			or (isset($_GET['mdp2']) and empty($_GET['mdp2']))	
+		if((isset($_POST['ps']) and empty($_POST['ps']))
+			or (isset($_POST['mail']) and empty($_POST['mail']))
+			or (isset($_POST['mdp']) and empty($_POST['mdp']))
+			or (isset($_POST['mdp2']) and empty($_POST['mdp2']))	
 			 ){
 
-			echo '<meta http-equiv="refresh" content="3; url=nouveau.php?ps='.$_GET['ps'].'&mail='.$_GET['mail'].'">';
+			echo '<meta http-equiv="refresh" content="3; url=nouveau.php?ps='.$_POST['ps'].'&mail='.$_POST['mail'].'">';
 			echo "pas rempli";			
 		
 		}else{
 
-			if($_GET['mdp2'] == $_GET['mdp']){
+			if($_POST['mdp2'] == $_POST['mdp']){
 				
+				echo 'mdp egaux';
+				$bdd = getBDD();
+				$verifMail = $bdd -> prepare('select email from utilisateurs where email= ?');
+				$mailPara = $_POST['mail'];
+				echo $mailPara;
+				echo 'preparee';
+				$verifMail -> execute([$mailPara]);
+				echo 'executee';
+				//$a = prepare('select email from utilisateurs where email= "?"');
+				if($verifMail -> fetch()){
+					echo "adresse mail deja existente merci de la modifier ou de vous connecter avec le compte correspondant &agrave; l'adresse mail renseign&eacute;e";
+					echo '<meta http-equiv="refresh" content="3; url= nouveau.php>';
 
-				
-				session_start();
+				}else {
+
+					session_start();
 				echo '<meta http-equiv="refresh" content="3; url=Profil.php">';
 
-				echo $_GET['ps']."</br>";
-				echo $_GET['mail']."</br>";
-				echo $_GET['mdp']."</br>";
+				echo $_POST['ps']."</br>";
+				echo $_POST['mail']."</br>";
+				echo $_POST['mdp']."</br>";
 
 
-				enregistrer($_GET['ps'], $_GET['mail'], $_GET['mdp']);
+				enregistrer($_POST['ps'], $_POST['mail'], $_POST['mdp']);
 				
 				echo "voici les informations que vous avez rentrée, vous serez redirigé vers la page d'accueil d'ici quelques secondes"; 
 				echo "<br>";
-				echo "Pseudo : ".$_GET['ps'];
+				echo "Pseudo : ".$_POST['ps'];
 				echo "<br>";
-				echo "Adresse mail : ".$_GET['mail'];
+				echo "Adresse mail : ".$_POST['mail'];
 
 				$_SESSION['utilisateur'] = array(
 					'utilisateur' => $result['id_utilisateur'],
@@ -60,6 +73,11 @@
 					'photo' => $result['photo'],
 					'nb_heures' => $result['nb_heures']);
 				echo $_SESSION['utilisateur']['utilisateur'];
+
+				}
+
+				
+				
 				
 
 
@@ -67,8 +85,8 @@
 
 				echo "Les mots de passe entrés ne sont pas les mêmes. Vous serez redirigés dans quelques instant";
 				echo "<br>";
-				echo $_GET['mdp2'];
-				echo '<meta http-equiv="refresh" content="3; url= nouveau.php?n='.$_GET['ps'].'&mail='.$_GET['mail'].'">';
+				echo $_POST['mdp2'];
+				echo '<meta http-equiv="refresh" content="3; url= nouveau.php?n='.$_POST['ps'].'&mail='.$_POST['mail'].'">';
 
 			}
 		}
