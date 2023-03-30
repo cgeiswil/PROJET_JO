@@ -8,6 +8,7 @@
 
 		<?php
 		require("fonction.php");
+		$bdd = getBDD();
 
 		function enregistrer($ps, $mail, $mdp) {
 			
@@ -34,14 +35,14 @@
 
 			if($_POST['mdp2'] == $_POST['mdp']){
 				
-				echo 'mdp egaux';
-				$bdd = getBDD();
+				//echo 'mdp egaux';
+				//$bdd = getBDD();
 				$verifMail = $bdd -> prepare('select email from utilisateurs where email= ?');
 				$mailPara = $_POST['mail'];
-				echo $mailPara;
-				echo 'preparee';
+				//echo $mailPara;
+				//echo 'preparee';
 				$verifMail -> execute([$mailPara]);
-				echo 'executee';
+				//echo 'executee';
 				//$a = prepare('select email from utilisateurs where email= "?"');
 				if($verifMail -> fetch()){
 					echo "adresse mail deja existente merci de la modifier ou de vous connecter avec le compte correspondant &agrave; l'adresse mail renseign&eacute;e";
@@ -49,8 +50,8 @@
 
 				}else {
 
-					session_start();
-				echo '<meta http-equiv="refresh" content="3; url=Profil.php">';
+				session_start();
+				echo '<meta http-equiv="refresh" content="10; url=Profil.php">';
 
 				echo $_POST['ps']."</br>";
 				echo $_POST['mail']."</br>";
@@ -65,6 +66,13 @@
 				echo "<br>";
 				echo "Adresse mail : ".$_POST['mail'];
 
+
+				$resultT = $bdd -> prepare('select * from utilisateurs where pseudo = ?');
+
+				$resultT -> execute([$_POST['ps']]);
+				
+				$result = $resultT  -> fetch();
+				
 				$_SESSION['utilisateur'] = array(
 					'utilisateur' => $result['id_utilisateur'],
 					'pseudo' => $result['pseudo'],
@@ -72,6 +80,8 @@
 					'email' => $result['email'],
 					'photo' => $result['photo'],
 					'nb_heures' => $result['nb_heures']);
+
+				echo "test";
 				echo $_SESSION['utilisateur']['utilisateur'];
 
 				}

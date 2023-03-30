@@ -187,7 +187,7 @@ from (
 
 
 
-	echo "<h2 class='tableau'> Les meilleurs athlètes de l'histoire </h2>";
+	echo "<h2 class='tableau'> Les meilleurs athlètes ".$ligne['nationalite']." de l'histoire </h2>";
 
 	$MeilAth = $bdd -> prepare('select athletes.ID_athletes, athletes.nom, athletes.sexe, etre_nationalite.id_pays,
     COUNT(CASE WHEN medailles.type = "Gold" THEN 1 ELSE NULL END) AS nb_medailles_or, 
@@ -213,7 +213,8 @@ from (
 	echo '<th> <img src=../Images/Boutons/medaille_argent.png alt= oups width="25px"></th>';
 	echo '<th> <img src=../Images/Boutons/medaille_bronze.png alt= oups width="25px"></th>';
 	
-	echo "<th> Nombre de m&eacute;dailles Total</th>";
+	echo '<th> <img src=../Images/Boutons/medaille_or.png alt= oups width="25px"><img src=../Images/Boutons/medaille_argent.png alt= oups width="25px"><img src=../Images/Boutons/medaille_bronze.png alt= oups width="25px"></th>';
+	//echo "<th> Nombre de m&eacute;dailles Total</th>";
 	echo '</tr>';
 	$classement = 1;
 	foreach($MeilAth as $Ath){
@@ -249,7 +250,6 @@ from (
 	and olympiades.saison = "summer"
 	GROUP BY athletes.ID_athletes, athletes.nom, athletes.sexe
 	ORDER BY nb_medailles_or DESC, nb_medailles_Ar DESC, nb_medailles_Br DESC limit 5');
-	echo 'debug';
 	$MeilAthEte -> execute([$pays]);
 	
 
@@ -274,9 +274,9 @@ from (
 
 	echo '<table class="tableau">';
 	echo '<tr>';
-	echo "<th class='titre'><h4>Les meilleurs athl&egrave;tes des JO d'&eacute;t&eacute; </h4></th>";
+	echo "<th class='titre'><h3>Les meilleurs athl&egrave;tes ".$ligne['nationalite']." aux JO d'&eacute;t&eacute; </h3></th>";
 	echo '<th></th>';
-	echo "<th class='titre'><h4> Les meilleurs athl&egrave;tes des JO d'hiver </h4></th>";
+	echo "<th class='titre'><h3> Les meilleurs athl&egrave;tes ".$ligne['nationalite']."aux JO d'hiver </h3></th>";
 	echo '</tr>';
 	//JO d'hiver partie gauche
 	echo '<tr>';
@@ -333,6 +333,7 @@ from (
 	echo '</table>';
 	echo '</td>';
 	echo '</tr>';
+	echo '</table>';
 		
 
 	echo '<br><br><br>';
@@ -347,7 +348,7 @@ from (
 		$OlenCours = array();
 
 
-		echo '<h2> Olympiades Organis&eacute;es </h2>';
+		echo '<h2 class="tableau"> Olympiades Organis&eacute;es </h2>';
 		echo '<table>';
 		echo '<tr>';
 		echo '<th> Ann&eacute;e</th>';

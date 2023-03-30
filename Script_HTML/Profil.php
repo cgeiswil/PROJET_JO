@@ -22,7 +22,6 @@
 
     $BDD = getBDD();
 
-
 		session_start();
 		if(isset($_SESSION['utilisateur'])){ 
       $anecdotes = $BDD->query("select * from apprecier_an as AA, anecdotes where AA.id_anecdote = anecdotes.id_anecdote and AA.id_utilisateur=".$_SESSION['utilisateur']['utilisateur']);
@@ -77,7 +76,7 @@
               <th> Pays </th> 
               <th> Population </th>
               <th> PIB nominal </th>
-              <th> Olympiade concern&eacute;e </th>
+              <th> Drapeau </th>
             </tr>
           <?php
             while ($ligneAp = $pays ->fetch()) {
