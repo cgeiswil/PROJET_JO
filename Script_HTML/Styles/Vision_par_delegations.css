@@ -15,6 +15,14 @@ span {
 	
 }
 
+
+th{
+
+	padding-left: 100px;
+
+
+}
+
 img{
 	object-fit: contain;
 	width : 150px;
@@ -24,6 +32,7 @@ img{
 table,td{
         border: 1px 1px 1px 1px;
         padding: 20px;
+	
     }
 
 
@@ -58,10 +67,12 @@ height : 50px;
 }
 
 
+
 .drapeaufr{
 
 	width : 60px;
 	height : 50px;
 
 }
+
 
