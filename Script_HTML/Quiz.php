@@ -37,7 +37,7 @@
 		<br>
 
 	
-		<?php
+<?php
 require("fonction.php");
 $bdd = getBDD();
 $niveau_str = ($_GET['niveau'] != "" ? $_GET['niveau'] : 'facile');
@@ -57,7 +57,22 @@ if ($resultat->rowCount() > 0) {
         $requete_reponses = "SELECT reponse, vraie_fausse FROM `reponses` WHERE id_question = '".$ligne['id_question']."' ORDER BY RAND()";
         $resultat_reponses = $bdd->query($requete_reponses);
         while($ligne_reponse = $resultat_reponses->fetch()) {
-           echo "<li  class='center'><label><input type='radio' name='".$ligne['id_question']."' value='".htmlentities($ligne_reponse['reponse'], ENT_QUOTES)."'> ".htmlentities($ligne_reponse['reponse'], ENT_QUOTES)."</label></li>";
+            $reponse_text = htmlentities($ligne_reponse['reponse'], ENT_QUOTES);
+            $reponse_class = "";
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $requete_bonnes_reponses = "SELECT reponse FROM reponses WHERE id_question = '".$ligne['id_question']."' AND vraie_fausse = 1";
+                $resultat_bonnes_reponses = $bdd->query($requete_bonnes_reponses);
+                $bonnes_reponses = array();
+                while($ligne_bonne_reponse = $resultat_bonnes_reponses->fetch()) {
+                    $bonnes_reponses[] = htmlentities($ligne_bonne_reponse['reponse'], ENT_QUOTES);
+                }
+                if (in_array($reponse_text, $bonnes_reponses)) {
+                    $reponse_class = "text-success";
+                } else {
+                    $reponse_class = "text-danger";
+                }
+            }
+            echo "<li class='center'><label><input type='radio' name='".$ligne['id_question']."' value='".$reponse_text."'> <span class='".$reponse_class."'>".htmlentities($ligne_reponse['reponse'], ENT_QUOTES)."</span></label></li>";
         }
         echo "</ul>";
     }

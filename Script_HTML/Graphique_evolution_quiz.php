@@ -3,6 +3,11 @@ session_start();
 require_once ('./src/jpgraph.php');
 require_once ('./src/jpgraph_line.php');
 
+if((isset($_SESSION['facile']) && !empty($_SESSION['facile'])) ||
+   (isset($_SESSION['moyen']) && !empty($_SESSION['moyen'])) ||
+   (isset($_SESSION['difficile']) && !empty($_SESSION['difficile']))) {
+
+
 $facile = $_SESSION['facile'];
 $moyen = $_SESSION['moyen'];
 $difficile = $_SESSION['difficile'];
@@ -50,4 +55,8 @@ $graph->title->SetFont(FF_FONT1,FS_BOLD);
 
 // Display the graph
 $graph->Stroke();
+} else {
+    // Les variables n'existent pas ou sont vides
+    echo "Veuillez faire les quiz pour afficher les graphiques.";
+}
 ?>

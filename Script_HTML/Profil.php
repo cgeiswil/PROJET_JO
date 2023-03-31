@@ -184,12 +184,13 @@
       					}
      					echo "</table>";
  					} else {
-     					 echo "Vous n'avez pas encore fait de quiz.";
+     					 echo "<p class='centre'>Vous n'avez pas encore fait de quiz.</p>";
   					}
   				?>
   			</div>
   			<div class="col-md-5">		
   			<h2>Statistique</h2>
+  			<p>Si les graphiques ne s'affichent pas, <strong>faites des quiz !</strong></p>
   			<br>
   			<?php
   			$utilisateur_id = $_SESSION['utilisateur']['utilisateur'];
@@ -231,27 +232,31 @@
 			?>
 			
 			<div class="graph">
-	
-			<?php
-			echo "<img src='./Graphique_moyenne_quiz.php'/>";
-			?>
+    		<?php
+    		if(file_exists('./Graphique_moyenne_quiz.php')) {
+        		echo "<img src='./Graphique_moyenne_quiz.php'/>";
+    		} else {
+        		echo "Veuillez faire un quiz pour afficher le graphique.";
+    		}
+    		?>
 			</div>
-			
+	
 			<div class="graph">
-	
-			<?php
-			echo "<img src='./Graphique_evolution_quiz.php'/>";
-			?>
+    		<?php
+    		if(file_exists('./Graphique_evolution_quiz.php')) {
+       		echo "<img src='./Graphique_evolution_quiz.php'/>";
+    		} else {
+        		echo "Veuillez faire un quiz pour afficher le graphique.";
+    		}
+    		?>
 			</div>
+		</div>
+		</div>
 
-  			</div>
-  			
-  			</div>
   			
   			
   			
-  			
-      <iframe class="mt-5" src="Pied_de_page.php" width="100%" height="50%" frameborder="0"></iframe>
+   			<iframe class="mt-5" src="Pied_de_page.php" width="100%" height="50%" frameborder="0"></iframe>
     
 
 
