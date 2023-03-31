@@ -1,0 +1,6 @@
+.gif {
+    background-image: url("../../Images/General/fond.gif");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    height: 400px;
+}

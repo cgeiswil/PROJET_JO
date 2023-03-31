@@ -24,7 +24,7 @@
 
 
 <br><br>
-<div class="container">
+	<div class="container">
 	
 <div class="card-deck">
 
@@ -35,7 +35,6 @@
 			<?php
 				require("./fonction.php");
 				$bdd = getBDD();
-
 				$olympiades_p = "";
 				if(isset($_SESSION['utilisateur'])){ 
 					$test_olympiades = $bdd->prepare('SELECT * FROM apprecier_o WHERE apprecier_o.id_utilisateur = ? LIMIT 1');
