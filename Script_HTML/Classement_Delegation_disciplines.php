@@ -60,6 +60,9 @@
 	<br><br>
    
      <center><h2><strong>Classement des délégations en fonction des disciplines</strong></h2></center>
+
+	 <br>
+	 <br>
      
 
 	 <?php 
@@ -127,41 +130,79 @@ ORDER BY `nb_medailles`  DESC limit 5");
 	 ?>
 
 
-     <table >
+<div class="container card">
+    <table >
 
-     <tr>
-     	<th> Discipline </th>
-     	<th> Pays </th>
-     	<th> Drapeau </th>
-     	<th> Médailles d'Or </th>
-     	<th> Médailles d'argent </th>
-     	<th> Médailles de bronze </th>
-     	<th> Total de médailles </th>
-     </tr>
+     
+
+
+	<div class="card-body">
+	<h5 class="card-title">Classement officiel du Comité International Olympique</h5>
+                  <p class="card-text">Classement en fonction du nombre de médailles  gagnées par discipline  pour les délégations.</p>
+	<div class="row">
+	<div class="col-12">
+	<table class="table">
+    <tbody>
+
+	<tr>
+
+	 
+     <th> <strong> Discipline </strong> </th>
+    <th> <strong>  Pays   </strong></th>
+    <th><strong> Drapeau  </strong> </th>
+	<th> <strong> </strong></th>
+    <th> <strong>Médailles d'Or  </strong></th>
+	<th> <strong> </strong></th>
+    <th> <strong>Médailles d'argent  </strong></th>
+	<th> <strong> </strong></th>
+    <th> <strong>Médailles de bronze </strong> </th>
+    <th> <strong> Total de médailles </strong> </th>
+   </tr>
      <?php 
+
+	 
      	
      	$i = 0;
      	while ($i < 5) {
+           
      		$medailleOR = $Or -> fetch();
      		$medailleAR = $Ar -> fetch();
      		$medailleBR = $Br -> fetch();
      		echo "<tr>";
-     		echo "<td>".$medailleOR['nom_discipline']."</td>";
-     		echo "<td>".$medailleOR['nom_pays']."</td>";
-     		echo "<td> <img src =".$medailleOR['I_drapeau']." alt = 'erreur'></td>";
-     		echo "<td>".$medailleOR['nb_medailles']."</td>";
-     		echo "<td>".$medailleAR['nb_medailles']."</td>";
-     		echo "<td>".$medailleBR['nb_medailles']."</td>";
-     		//echo "<td>".$medailleBR['nb_medailles']+$medailleOR['nb_medailles']+$medailleAR['nb_medailles']."</td>";
+     		echo "<td><strong>".$medailleOR['nom_discipline']."</strong></td>";
+     		echo "<td> <strong> <a  href='Pays_particulier.php?id=".$medailleOR['id_pays']."'>".$medailleOR['nom_pays']."</a> </strong></td>";
+     		echo "<td><a href='Pays_particulier.php?id=".$medailleOR['id_pays']."'> <img class = 'drapeaufr' src =".$medailleOR['I_drapeau']." alt = 'erreur'> </a></td>";
+			echo "<td><img class='imageclassement' src='../Images/Boutons/medaille_or.png' alt='Médaille d'or' width='20px'> <span>" . $lignes[0][$i]["nb_medailles"] . "</span></td>";
+     		echo "<td><strong> ".$medailleOR['nb_medailles']."</strong></td>";
+			echo "<td><img class='imageclassement' src='../Images/Boutons/medaille_argent.png' alt='Médaille d'or' width='20px'> <span>" . $lignes[0][$i]["nb_medailles"] . "</span></td>";
+     		echo "<td><strong>".$medailleAR['nb_medailles']."</strong></td>";
+			echo "<td><img class='imageclassement' src='../Images/Boutons/medaille_bronze.png' alt='Médaille d'or' width='20px'> <span>" . $lignes[0][$i]["nb_medailles"] . "</span></td>";
+     		echo "<td><strong>".$medailleBR['nb_medailles']."</strong></td>";
+     		echo  "<td><strong>= ".$medailleBR['nb_medailles']+$medailleOR['nb_medailles']+$medailleAR['nb_medailles']."</strong></td>";
      		$i = $i+1;
-
+			
      	}
-
+ 
      ?> 
+	 </tbody>
+	</table>
+	</div>
+	</div>
+	</div>
 
-     </table>
-   </div>
- </div>
+
+
+    </table>
+  
+     
+
+</div>
+
+
+</div>
+
+</div>
+ 
 
 </body>
 
