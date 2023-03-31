@@ -1,6 +1,6 @@
 <?php
-require_once('jpgraph-4.4.1/src/jpgraph.php');
-require_once('jpgraph-4.4.1/src/jpgraph_line.php');
+require_once('./src/jpgraph.php');
+require_once('./src/jpgraph_line.php');
 require("fonction.php");
 
 $bd = getBDD();
