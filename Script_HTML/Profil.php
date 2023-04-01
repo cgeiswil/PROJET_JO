@@ -9,13 +9,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.cycle2/2.1.6/jquery.cycle2.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<link rel="shortcut icon" href="../Images/Anneaux/officiel.png" type="image/png">
+	<style>
+	.pref{
+	width: 80%;
+	margin: auto;}
+	</style>
   </head>
   <body>
   
 	<object data="Barre_de_navigation.html" width="100%" height="100%">
     </object>
   
-		<h1>Mon profil</h1>
+
 		
 		<?php
     require("fonction.php");
@@ -38,8 +43,9 @@
 
 
       ?>
+     <div class="pref">
     <div class="row">
-		<div class="col-md-6">
+		<div class="col-sm-5">
 				  <div class="info_pers">
 					<img src="../Images/Profil/profil.png" alt="Ma photo">
 					<h2 class="information">Informations Personnelles</h2>
@@ -50,22 +56,24 @@
 				  </div>
 		</div>
 		<div class="col-md-5">
+			<h1>Mon profil</h1>
+		</div>
+	</div>
+	<br>
+	<br>
+	
 			 <h2>Mes préférences</h2>
-          <h3> Anecdotes </h3>
+          <h3> Anecdotes favorites</h3>
           <table>
             <tr>  
               <th> Intitul&eacute; &nbsp;</th> 
               <th> Source &nbsp;</th>
-              <th> Cat&eacute;gorie &nbsp;</th>
-              <th> Olympiade concern&eacute;e &nbsp;</th>
             </tr>
             <?php
             while ($ligneAn = $anecdotes ->fetch()) {
               echo "<tr>";
               echo "<td>".$ligneAn['anecdote']."</td>";
               echo "<td> <a href= ".$ligneAn['source'].">".$ligneAn['source']."</td>";
-              echo "<td>".$ligneAn['categorie']."</td>";
-              echo "<td>".$ligneAn['annee']."</td>";
               echo "</tr>";
             }
             ?>
@@ -74,31 +82,13 @@
           <table>
             <tr>  
               <th> Pays </th> 
-              <th> Population </th>
-              <th> PIB nominal </th>
               <th> Drapeau </th>
             </tr>
           <?php
             while ($ligneAp = $pays ->fetch()) {
               echo "<tr>";
               echo "<td>".$ligneAp['nom_pays']."</td>";
-              echo "<td>".$ligneAp['population']."</td>";
-              echo "<td>".$ligneAp['pib_en_milliardsUSD']."</td>";
-              echo "<td> <img src= ".$ligneAp['l_drapeau']." alt= 'oups'></td>";
-              echo "</tr>";
-            }
-            ?>
-          </table>
-
-          <h3> Mes athl&egrave;tes favoris </h3>
-          <table>
-            <tr>  
-              <th> Nom </th> 
-            </tr>
-          <?php
-            while ($ligneAt = $athletes->fetch()) {
-              echo "<tr>";
-              echo "<td>".$ligneAt['nom']."</td>";
+              echo "<td> <img class='drapeau' src= ".$ligneAp['I_drapeau']." alt= 'oups'></td>";
               echo "</tr>";
             }
             ?>
@@ -120,24 +110,6 @@
             ?>
           </table>
 
-          <h3> Mes &eacute;preuves favorites </h3>
-          <table>
-            <tr>  
-              <th> &eacute;preuve </th> 
-              <th> Discipline &agrave; laquelle appartient l'&eacute;preuve </th>
-              <th> Pictogramme de la discipline</th>
-            </tr>
-          <?php
-            while ($ligneAe = $epreuves ->fetch()) {
-              echo "<tr>";
-              echo "<td>".$ligneAe['epreuves']."</td>";
-              echo "<td>".$ligneAe['nom_discipline']."</td>";
-              echo "<td> <img src= ".$ligneAe['pictogramme']." alt= 'oups'></td>";
-              echo "</tr>";
-            }
-            ?>
-          </table>
-
 
           <h3> Mes olympiades favorites </h3>
           <table>
@@ -145,7 +117,6 @@
               <th> Ann&eacute;e </th> 
               <th> Pays h&ocirc;te </th>
               <th> Saison</th>
-              <th> Num&eacute;ro d'&eacute;dition </th>
             </tr>
           <?php
             while ($ligneAo = $olympiade ->fetch()) {
@@ -153,14 +124,11 @@
               echo '<td><a href="Edition_particuliere.php?id='.$ligneAo['id_olympiade'].'">'.$ligneAo['annee_o'].'</td>';
               echo "<td>".$ligneAo['pays_hote']."</td>";
               echo "<td>".$ligneAo['saison']."</td>";
-              echo "<td>".$ligneAo['n_edition']."</td>";
               echo "</tr>";
             }
             ?>
           </table>
-
-		</div>
-		</div>
+       </div>
 		<br>
 		<br>
 		<br>
@@ -169,12 +137,12 @@
 		<div class="col-md-6">				
 				<h2 class="centrer">Historique des quiz</h2>
 				<br>
-				<h4 class="centrer">Voici l'historique de vos 15 derniers quiz !</h4>
+				<h4 class="centrer">Voici l'historique de vos 10 derniers quiz !</h4>
 				<br>
 				
 				<?php
 				 $utilisateur_id = $_SESSION['utilisateur']['utilisateur'];
-  				 $resultats = $BDD->query("SELECT quiz.difficulte, repondre.score FROM repondre, quiz WHERE quiz.id_quiz=repondre.id_quiz AND repondre.id_utilisateur= $utilisateur_id ORDER BY repondre.id_repondre DESC LIMIT 15");
+  				 $resultats = $BDD->query("SELECT quiz.difficulte, repondre.score FROM repondre, quiz WHERE quiz.id_quiz=repondre.id_quiz AND repondre.id_utilisateur= $utilisateur_id ORDER BY repondre.id_repondre DESC LIMIT 10");
   				 $resultats->execute([$utilisateur_id]);
 
  				 if($resultats->rowCount() > 0) {
@@ -190,6 +158,7 @@
   			</div>
   			<div class="col-md-5">		
   			<h2>Statistique</h2>
+  			<div class="graphique">
   			<p>Si les graphiques ne s'affichent pas, <strong>faites des quiz !</strong></p>
   			<br>
   			<?php
@@ -250,6 +219,7 @@
     		}
     		?>
 			</div>
+		</div>
 		</div>
 		</div>
 
