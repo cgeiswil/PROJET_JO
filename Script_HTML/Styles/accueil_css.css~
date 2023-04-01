@@ -42,7 +42,10 @@ p{
   width: 60%;
   margin: auto;
 }
-
+.container {
+  display: flex;
+  justify-content: center;
+}
 .card:last-child {
   margin-right: 0;
 }

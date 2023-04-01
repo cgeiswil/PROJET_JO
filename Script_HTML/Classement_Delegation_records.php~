@@ -113,7 +113,7 @@ if (isset($_SESSION['utilisateur'])) {
     }
 }
 
-echo ' <h1><img src="'.$pictogramme['pictogramme'].'" alt="Discipline ' . $discipline .'" class="img-thumbnail border-0" width="80px"> '.$discipline.' <img id="discipline" src="'.$image.'" alt="Coeur Discipline" height="30px; float ="/></h1>';
+echo ' <h1><img src="'.$pictogramme['pictogramme'].'" alt="Discipline ' . $discipline .'" class="img-thumbnail border-0" width="80px"> '.$discipline.'<p>    </p><img id="discipline" src="'.$image.'" alt="Coeur Discipline" height="30px; float ="/></h1>';
     
 
 echo '<script type="text/javascript">

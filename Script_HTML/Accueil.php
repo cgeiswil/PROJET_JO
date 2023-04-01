@@ -204,7 +204,7 @@ LIMIT 1');
 			
 						while ($olympiade_p = $olympiades_p->fetch()) {
 							echo '<p><a href="Edition_particuliere.php?id='.$olympiade["id_olympiade"].'" class="text-dark"><img src="'.$olympiade['logo'].'" class="img-thumbnail border-0" width="40px"></a> <a href="Edition_particuliere.php?id='.$olympiade["id_olympiade"].'" class="text-dark"><b>Olympiade ' . $olympiade['nom'] . ' ' . $olympiade['annee_o'] . '</a></b>'.
-							' <abbr title="Vous avez aimé la '.France.', alors pourquoi pas ces olympiades. (:" class="tooltip-hover text-info">&#x1F5B0;</abbr></p>';
+							' <abbr title="Vous avez aimé la '.France.', alors pourquoi pas ces olympiades. (:" class="tooltip-hover text-info"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr></p>';
 						}
 					}
 					else {

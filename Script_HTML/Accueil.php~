@@ -225,7 +225,7 @@ LIMIT 1');
 			?>		
 			</div>
 			<div class="card-footer bg-transparent">
-				<p class="card-text mb-2"><small class="text-muted">SSurvolez le curseur <abbr title="Et voilà, le message caché s'affiche. (:" class="tooltip-hover text-info"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr> pour avoir des détails sur les recommandations.</small></p>
+				<p class="card-text mb-2"><small class="text-muted">Survolez le curseur <abbr title="Et voilà, le message caché s'affiche. (:" class="tooltip-hover text-info"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr> pour avoir des détails sur les recommandations.</small></p>
 			</div>
 		</div>
 		

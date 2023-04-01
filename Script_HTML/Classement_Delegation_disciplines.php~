@@ -161,7 +161,7 @@ while ($i < 5) {
     $medailleBR = $Br->fetch();
     $pictogramme = $bdd->query("SELECT * FROM disciplines WHERE disciplines.nom_discipline = '" . $medailleOR['nom_discipline'] . "'")->fetch();
     echo "<tr>";
-    echo '<td><img src="'.$pictogramme['pictogramme'].'"  alt="Discipline ' . $medailleOR['nom_discipline'] .'" class="img-thumbnail border-0" width="80px"><br>' . $medailleOR['nom_discipline'] .'</td> ';
+    echo '<td><img src="'.$pictogramme['pictogramme'].'"  alt="Discipline ' . $medailleOR['nom_discipline'] .'" class="img-thumbnail border-0" width="80px"></td> ';
     echo "<td><strong><a href='Pays_particulier.php?id=".$medailleOR['id_pays']."'>".$medailleOR['nom_pays']."</a></strong></td>";
     echo "<td><a href='Pays_particulier.php?id=".$medailleOR['id_pays']."'><img class='drapeaufr' src=".$medailleOR['I_drapeau']." alt='erreur'></a></td>";
     echo "<td><img class='imageclassement' src='../Images/Boutons/medaille_or.png' alt='Médaille d'or' width='20px'> <span>" . $medailleOR['nb_medailles'] . "</span></td>";
