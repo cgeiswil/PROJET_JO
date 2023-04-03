@@ -46,7 +46,7 @@
 			</button>
 		</div>
 		<div class="col-md-4">
-			<button type="submit" class="btn btn-outline-dark" onclick="document.getElementById('records').style.display='block'"> <a href="Classement_Delegation_records.php#record" >
+			<button type="submit" class="btn btn-outline-dark" onclick="document.getElementById('records').style.display='block'"> <a href="Classement_Delegation_records.php?nom_discipline=Athletics#record" >
 				<img src="../Images/Boutons/record_(podium,couronne).png"></a>
 			</button>
 		</div>

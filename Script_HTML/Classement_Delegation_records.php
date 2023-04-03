@@ -71,14 +71,17 @@ $(document).ready(function() {
 		<h2>Choisissez la discipline des records que vous voulez afficher :</h2>
     
 		<table>
-			<td><a href="Classement_Delegation_records.php?nom_discipline=Athletics#record"><button type="button" class="btn btn-info">Athletics</button></a></td>
-			<td><a href="Classement_Delegation_records.php?nom_discipline=Swimming#record"><button type="button" class="btn btn-info">Swimming</button></a></td>
-			<td><a href="Classement_Delegation_records.php?nom_discipline=Cycling#record"><button type="button" class="btn btn-info">Cycling</button></a></td>
-			<td><a href="Classement_Delegation_records.php?nom_discipline=Weightlifting#record"><button type="button" class="btn btn-info">Weightlifting</button></a></td>
-			<td><a href="Classement_Delegation_records.php?nom_discipline=Speed Skating#record"><button type="button" class="btn btn-info">Speed Skating</button></a></td>
+			<td><a href="Classement_Delegation_records.php?nom_discipline=Athletics#record"><button type="button" class="btn btn-info">Athl&eacute;tisme</button></a></td>
+			<td><a href="Classement_Delegation_records.php?nom_discipline=Swimming#record"><button type="button" class="btn btn-info">Natation</button></a></td>
+			<td><a href="Classement_Delegation_records.php?nom_discipline=Cycling#record"><button type="button" class="btn btn-info">Cyclisme</button></a></td>
+			<td><a href="Classement_Delegation_records.php?nom_discipline=Weightlifting#record"><button type="button" class="btn btn-info">Halt&eacute;rophilie</button></a></td>
+			<td><a href="Classement_Delegation_records.php?nom_discipline=Speed Skating#record"><button type="button" class="btn btn-info">Patinage de vitesse</button></a></td>
 		</table>
-
-	
+		
+		<div class="centre">
+  		<a href="Graphique_record_<?php echo urlencode($_GET['nom_discipline']); ?>.php?sexe=H"><button type="button" class="btn btn-primary espace_button">Voir les graphiques des records de <?php echo ($_GET['nom_discipline'] != "" ? $_GET['nom_discipline'] : 'Athletics'); ?> : Homme</button></a>
+  		<a href="Graphique_record_<?php echo urlencode($_GET['nom_discipline']); ?>.php?sexe=F"><button type="button" class="btn btn-primary espace_button">Voir les graphiques des records de <?php echo ($_GET['nom_discipline'] != "" ? $_GET['nom_discipline'] : 'Athletics'); ?> : Femme</button></a>
+		</div>
 
 		<?php	
 			require("fonction.php");
