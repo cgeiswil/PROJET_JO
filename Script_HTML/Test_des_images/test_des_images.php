@@ -10,11 +10,11 @@
 	require("../fonction.php");
 	$bdd = getBDD();
 	
-	$images = $bdd->prepare('SELECT * FROM pays_participants');
+	$images = $bdd->prepare('SELECT * FROM pays_participants ORDER BY nationalite');
 	$images->execute();
 
 	while ($image = $images->fetch()) {
-		echo '<br><img src="'.$image['I_drapeau'].'" class="img-thumbnail border-0" width="40px"> '.($image['nom_pays']);
+		echo '<br><img src="'.$image['I_drapeau'].'" class="img-thumbnail border-0" width="40px"> '.$image['nom_pays']. ' - ' .$image['nationalite'];
 	}
 	
 	$pics = $bdd->prepare('SELECT * FROM disciplines');
