@@ -18,13 +18,17 @@
 
 		if(isset($_POST['pseudo']) and $_POST['pseudo'] != '' and isset($_POST['mdp']) and $_POST['mdp'] != '') {
 			
+
+			
+
 			$requete = $bdd->prepare('select * FROM utilisateurs WHERE pseudo= ? AND mot_de_passe = ?'); 
 			
-			$requete->execute(array($_POST['pseudo'], md5($_POST['mdp'])));
 			
+			$requete->execute(array($_POST['pseudo'], md5($_POST['mdp'])));
+				
 			
 			if($result = $requete->fetch()) {
-				echo 'deuxieme if';
+				
 				session_start();
 				echo 'session ouverte';
 				$_SESSION['utilisateur'] = array(
@@ -34,8 +38,12 @@
 					'email' => $result['email'],
 					'photo' => $result['photo'],
 					'nb_heures' => $result['nb_heures']);
-				echo 'avant redirection';
+				
 				header('Location: Profil.php');
+				exit();
+			}else{
+				$pseudo = isset($_POST['pseudo']) ? $_POST['pseudo'] : '';
+				header('Location: connection.php?pseudo='.urlencode($pseudo));
 				exit();
 			}
 		}else {
