@@ -19,6 +19,8 @@ foreach ($donnees as $element) {
     array_push($axeY, floatval($element['coût']));
 }
 
+
+
 // Création d'un graphique de taille 600x400 pixels
 $graph = new Graph(600, 400);
 
