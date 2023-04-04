@@ -61,8 +61,22 @@
 	</div>
 	<br>
 	<br>
-	
-			 <h2>Mes préférences</h2>
+			 <h2>Mes pr&eacute;f&eacute;rences</h2>
+			 		<h3> Athl&egrave;tes favoris</h3>
+	        <table>
+	          <tr>  
+	            <th> Intitul&eacute; &nbsp;</th> 
+	            <th> Source &nbsp;</th>
+	          </tr>
+	          <?php
+	          while ($ligneAn = $anecdotes ->fetch()) {
+	            echo "<tr>";
+	            echo "<td>".$ligneAn['anecdote']."</td>";
+	            echo "<td> <a href= ".$ligneAn['source'].">".$ligneAn['source']."</td>";
+	            echo "</tr>";
+	          }
+	          ?>
+
           <h3> Anecdotes favorites</h3>
           <table>
             <tr>  
@@ -138,12 +152,16 @@
 				<h2 class="centrer">Historique des quiz</h2>
 				<br>
 				<h4 class="centrer">Voici l'historique de vos 10 derniers quiz !</h4>
+			 	
 				<br>
+
 				
 				<?php
+				
 				 $utilisateur_id = $_SESSION['utilisateur']['utilisateur'];
-  				 $resultats = $BDD->query("SELECT quiz.difficulte, repondre.score FROM repondre, quiz WHERE quiz.id_quiz=repondre.id_quiz AND repondre.id_utilisateur= $utilisateur_id ORDER BY repondre.id_repondre DESC LIMIT 10");
-  				 $resultats->execute([$utilisateur_id]);
+  			 $resultats = $BDD->prepare("select quiz.difficulte, repondre.score FROM repondre, quiz WHERE quiz.id_quiz=repondre.id_quiz AND repondre.id_utilisateur= ? ORDER BY repondre.id_repondre DESC LIMIT 10");
+  			 $resultats->execute([$utilisateur_id]);
+  			 
 
  				 if($resultats->rowCount() > 0) {
       				echo "<table class='centrer'><tr><th>Niveau de difficult&eacute; &emsp;</th><th>Score</th></tr>";
@@ -202,6 +220,7 @@
 			
 			<div class="graph">
     		<?php
+
     		if(file_exists('./Graphique_moyenne_quiz.php')) {
         		echo "<img src='./Graphique_moyenne_quiz.php'/>";
     		} else {
