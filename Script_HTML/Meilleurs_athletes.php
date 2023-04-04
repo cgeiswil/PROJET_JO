@@ -126,7 +126,7 @@ ORDER BY nb_medailles_or DESC, nb_medailles_Ar DESC, nb_medailles_Br DESC limit 
         echo '<div class="card">
                 <div class="card-body">
 
-                    <h4 class="card-title mb-0"><center><b>'.$i.' '. $athlete['nom'] . '</b></center></h4>';
+                    <h4 class="card-title mb-0"><center><b><a href="Athletes.php?id='.$r_records['ID_athletes'].'">'.$i.' '. $athlete['nom'] . '</b></center></h4>';
                    //bouton coeur athletes 
                    echo' <h6 class="card-title mb-0 my-1"><a href="Pays_particulier.php?id='.$resultat_pays['Code_CIO'].'"style="color: black;"><img src="' . $resultat_pays['I_drapeau'] . '" alt="Drapeau ' . $resultat_pays['nom_pays'] . '" class="img-thumbnail border-0" width="40px"><strong>' . $resultat_pays['nom_pays'] . '</strong></a></h6>';
 
