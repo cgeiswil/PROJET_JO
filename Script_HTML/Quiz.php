@@ -97,6 +97,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Si l'utilisateur est connecté, enregistrez le score, l'id_utilisateur et l'id_quiz dans la table "répondre" de la base de données
     if (isset($_SESSION['utilisateur'])) {
+        
+
         $id_utilisateur = $_SESSION['utilisateur']['utilisateur'];
         $id_quiz = $niveau;
         $stmt = $bdd->prepare("INSERT INTO repondre (id_utilisateur, id_quiz, score) VALUES (?, ?, ?)");
