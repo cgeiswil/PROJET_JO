@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
-		<title>Comparer</title>
+		<title>Comparer des olympiades</title>
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="Styles/comparer.css" type="text/css">
 		
@@ -78,74 +78,18 @@
 						}
 						echo '</select></div><hr>
 			<div style="min-height: 190px;">';
-				// AJOUT DU COEUR PARTIE 1
-					session_start();
-					$image = "../Images/Boutons/Coeur_olympiades.jpg";
-					print_r(isset($_SESSION['utilisateur']) );
-					if (isset($_SESSION['utilisateur'])) {
-						$aimer = $bdd->prepare('SELECT * FROM apprecier_o WHERE id_olympiade = ? AND id_utilisateur = ?');
-						$aimer->execute(array($olympiade["id_olympiade"], $_SESSION['utilisateur']['utilisateur']));
-						if ($aimer->fetch()) {
-							$image = "../Images/Boutons/Coeur_olympiades_rempli.jpg";
-						}
-					}
-				// FIN AJOUT DU COEUR PARTIE 1
 							
 						echo '<a href="Edition_particuliere.php?id='.$olympiade["id_olympiade"].'"><img src="'.$olympiade["logo"].'" class="float-right mr-2" alt="Logo JO '.$olympiade["nom"]." ".$olympiade["annee_o"].'" style="max-width: 100px; max-height: 70px;"></a>';
 						echo '<h4 class="card-title mb-0"><a href="Edition_particuliere.php?id='.$olympiade["id_olympiade"].'" class="text-dark"><b>Olympiade ' . $olympiade['nom'] . ' ' . $olympiade['annee_o'] . '</a></b>
-											
-							<button type="button" class="btn btn-lg bg-white text-danger border-0">
-							<img id="coeur_' . $olympiade["id_olympiade"] . '" src="'.$image.'" alt="Coeur Olympiades" height="30px"/>
-							</button>
+						
+							<a href="Vision_par_editions.php?lat='.$olympiade['latitude'].'&lon='.$olympiade['longitude'].'#carte"><button type="button" class="btn btn-lg bg-white text-danger border-0">
+							<img src="../Images/Boutons/Carte.png" alt="Bouton carte des pays" onmouseover="this.src=\'../Images/Boutons/Carte_survol.png\'" onmouseout="this.src=\'../Images/Boutons/Carte.png\';" height="40px" />
+							</button><a>
 						
 						</h4>';
 					
 						echo'<h6 class="card-title mb-0 my-1"><a href="Pays_particulier.php?id='.$olympiade['Code_CIO'].'" class="text-dark"><img src="' . $olympiade['I_drapeau'] . '" alt="Drapeau ' . $olympiade['pays_hote'] . '" class="img-thumbnail border-0" width="30px">' . $olympiade['pays_hote'] . '</a> (' . $nb_pays['olymp'].($nb_pays['olymp'] > 1 ? ' &eacute;ditions organis&eacute;es' : ' &eacute;dition organis&eacute;e'). ')</h6>
-						  <p class="card-text">';					
-						
-										
-			
-			
-				// AJOUT DU COEUR
-					// session_start();
-					// $image = "../Images/Boutons/Coeur_olympiades.jpg";
-					// if (isset($_SESSION['utilisateur'])) {
-						// $aimer = $bdd->prepare('SELECT * FROM apprecier_o WHERE id_olympiade = ? AND id_utilisateur = ?');
-						// $aimer->execute(array($olympiade["id_olympiade"], $_SESSION['utilisateur']['utilisateur']));
-						// if ($aimer->fetch()) {
-							// $image = "../Images/Boutons/Coeur_olympiades_rempli.jpg";
-						// }
-					// }
-
-					// echo '<div class="float-right">
-							// <button type="button" class="btn btn-lg bg-white text-danger border-0">
-							// <img id="coeur_' . $olympiade["id_olympiade"] . '" src="' . $image . '" alt="Coeur Olympiades" height="40px"/>
-							// </button>
-					// </div>';
-
-					echo '<script type="text/javascript">
-					var coeur = document.getElementById("coeur_' . $olympiade["id_olympiade"] . '");
-					coeur.addEventListener("click", function() {
-						var xhr = new XMLHttpRequest();
-						xhr.open("POST", "Comparer.php?id=' . $olympiade["id_olympiade"] . '#Comparons");
-						xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-						xhr.onload = function() {
-							if (xhr.status === 200) {
-								coeur.src = "../Images/Boutons/Coeur_olympiades_rempli.jpg";
-							} else {
-								console.log("[ERREUR] Erreur de mise à jour des données !!!!");
-							}
-						};
-						xhr.send("id_olympiade=' . $olympiade["id_olympiade"] . '&utilisateur=' . $_SESSION['utilisateur']['utilisateur'] . '");
-					});
-					</script>';
-
-					if (isset($_POST['id_olympiade']) && isset($_POST['utilisateur']) && $_POST['id_olympiade'] == $olympiade["id_olympiade"]) {
-						$aimerBD = $bdd->prepare('INSERT INTO apprecier_o(id_olympiade, id_utilisateur) VALUES (?, ?)');
-						$aimerBD->execute(array($_POST['id_olympiade'], $_POST['utilisateur']));
-						unset($_POST['id_olympiade']);
-					}
-			// FIN AJOUT DU COEUR
+						  <p class="card-text">';
 					
 					
 					$pays = $bdd->query("SELECT * FROM pays_participants WHERE pays_participants.Code_CIO = '".$olympiade['Code_CIO']."'")->fetch();
@@ -263,7 +207,7 @@
 			</div>
 			</div>
 				<div class="card-footer bg-transparent">
-					<p class="card-text mb-2"><small class="text-muted">Survolez le curseur <abbr title="Les informations sur les recommandations s\'affichent ici !" class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr> pour avoir des détails sur les recommandations.</small></p>
+					<p class="card-text mb-2"><small class="text-muted">Survolez quelques secondes le curseur <abbr title="Les informations sur les recommandations s\'affichent ici !" class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr> pour avoir des détails sur les recommandations.</small></p>
 				</div>
 				
 				

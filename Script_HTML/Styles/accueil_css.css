@@ -56,3 +56,9 @@ p{
 a {
     text-decoration:none;
 }
+
+.bouton {
+  height: 120px;
+  margin-left: auto;
+  margin-right: auto;
+}

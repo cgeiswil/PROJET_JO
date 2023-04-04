@@ -19,7 +19,7 @@
 	$(document).ready(function() {
    	 $('.cycle-slideshow').cycle({
       	  fx: 'scrollVert', // effet de transition vertical
-      	  speed: 500, // durée de la transition en ms
+      	  speed: 500, // duree de la transition en ms
       	  timeout: 5000 // temps d'affichage de chaque élément en ms
    	 });
 	});
@@ -49,13 +49,13 @@ session_start();
 $anec = $bdd->query("SELECT * FROM anecdotes ORDER BY RAND() LIMIT 1");
 $ligne = $anec->fetch();
 $id_anecdote = $ligne['id_anecdote'];
-$image = "../Images/Boutons/Coeur_olympiades.jpg";
+$image = "../Images/Boutons/Coeur_olympiades.png";
 
 if (isset($_SESSION['utilisateur'])) {
     $aimer = $bdd->prepare('SELECT * FROM apprecier_an WHERE id_anecdote = ? AND id_utilisateur = ?');
     $aimer->execute(array($id_anecdote, $_SESSION['utilisateur']['utilisateur']));
     if ($aimer->fetch()) {
-        $image = "../Images/Boutons/Coeur_olympiades_rempli.jpg";
+        $image = "../Images/Boutons/Coeur_olympiades_rempli.png";
     }
 }
 echo '<div class="row">
@@ -78,7 +78,7 @@ echo '<script type="text/javascript">
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhr.onload = function() {
             if (xhr.status === 200) {
-                anecdote.src = "../Images/Boutons/Coeur_olympiades_rempli.jpg";
+                anecdote.src = "../Images/Boutons/Coeur_olympiades_rempli.png";
             } else {
                 console.log("[ERREUR] Erreur de mise à jour des données !!!!");
             }
@@ -99,67 +99,64 @@ if (isset($_POST['id_anecdote'], $_POST['utilisateur'])) {
   </div>
 </div>
 </div>
-	<div class="container mt-4" style="display: flex; justify-content: center;">
-	
-  <h2>Les classements et éditions de Jeux Olympiques</h2>
-</div>
 
-<div class="container justify-content-center mt-4">
-  <div class="row justify-content-center card-deck">
-    <div class="col-md-6 col-lg-5">
-      <div class="card border">
-        <div class="card-body">
-          <table class="rounded-4" style="width: 100%;">
-            <tr>
-              <td style="width: 50%;">
-                <a href="./Vision_par_delegations.php" target="_parent">
-                  <img alt="Survol" onmouseout="this.src='../Images/Boutons/podium_drapeau.png';" onmouseover="this.src='../Images/Boutons/podium_drapeau_survol.png';" src="../Images/Boutons/podium_drapeau.png" />
-                </a>
-                <br>
-                <small class="text-muted">Les meilleures délégations.</small>
-              </td>
+	<div class="container mt-5" style="display: flex; justify-content: center;">
+		<h2>Les classements et éditions de Jeux Olympiques</h2>
+	</div>
 
-              <td style="width: 50%;">
-                <a href="./Meilleurs_athletes.php" target="_parent">
-                  <img alt="Survol" onmouseout="this.src='../Images/Boutons/discipline_podium.png';" onmouseover="this.src='../Images/Boutons/discipline_podium_survol.png';" src="../Images/Boutons/discipline_podium.png" />
-                </a>
-                <br>
-                <small class="text-muted">Les meilleurs athlètes.</small>
-              </td>
-            </tr>
-          </table>
-        </div>
-      </div>
-    </div>
- <div class="col-md-6 col-lg-5">
-      <div class="card border">
-        <div class="card-body">
-          <table class="rounded-4" style="width: 100%;">
-            <tr>
-              <td style="width: 50%;">
-                <a href="./Vision_par_editions.php#carte" target="_parent">
-                  <img alt="Survol" onmouseout="this.src='../Images/Boutons/planisphere.png';" onmouseover="this.src='../Images/Boutons/planisphere_survol.png';" src="../Images/Boutons/planisphere.png" />
-                </a>
-                <br>
-                <small class="text-muted">La carte des éditions.</small>
-              </td>
-              <td style="width: 50%;">
-                <a href="./Vision_par_editions.php#frise" target="_parent">
-                  <img alt="Survol" onmouseout="this.src='../Images/Boutons/frise.png';" onmouseover="this.src='../Images/Boutons/frise_survol.png';" src="../Images/Boutons/frise.png" />
-                </a>
-                <br>
-                <small class="text-muted">La frise des éditions.</small>
-              </td>
-            </tr>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+	<div class="container justify-content-center mt-4">
+	  <div class="row justify-content-center">
+		<div class="col-md-4 col-lg-4 mb-4 mb-md-0">
+		  <a href="./Meilleurs_athletes.php" target="_parent" class="btn btn-link">
+			<img alt="Bouton page des meilleurs athletes" onmouseout="this.src='../Images/Boutons/athlete.png';" onmouseover="this.src='../Images/Boutons/athlete_survol.png';" src="../Images/Boutons/athlete.png" class="bouton"/>
+			<br>
+			<small class="text-muted">Les meilleurs athl&egrave;tes.</small>
+		  </a>		 
+		</div>
+		<div class="col-md-4 col-lg-4 mb-4 mb-md-0">
+		 <a href="./Vision_par_delegations.php" target="_parent" class="btn btn-link">
+			<img alt="Bouton meilleures delegations" onmouseout="this.src='../Images/Boutons/podium_drapeau.png';" onmouseover="this.src='../Images/Boutons/podium_drapeau_survol.png';" src="../Images/Boutons/podium_drapeau.png" class="bouton"/>
+			<br>
+			<small class="text-muted">Les meilleures d&eacute;l&eacute;gations.</small>
+		  </a>
+		</div>
+		<div class="col-md-4 col-lg-4 mb-4 mb-md-0">
+		  <a href="./Vision_par_editions.php#carte" target="_parent" class="btn btn-link">
+			<img alt="Bouton carte des editions" onmouseout="this.src='../Images/Boutons/carte.png';" onmouseover="this.src='../Images/Boutons/Carte_survol.png';" src="../Images/Boutons/carte.png" class="bouton"/>
+			<br>
+			<small class="text-muted">La carte des &eacute;ditions.</small>
+		  </a>
+		</div>
+	  </div>
+	  <div class="row justify-content-center">
+		<div class="col-md-4 col-lg-4 mb-4 mb-md-0">
+		  <a href="./Vision_par_editions.php#frise" target="_parent" class="btn btn-link">
+			<img alt="Bouton frise des editions" onmouseout="this.src='../Images/Boutons/frise_survol.png';" onmouseover="this.src='../Images/Boutons/frise.png';" src="../Images/Boutons/frise_survol.png" class="bouton"/>
+			<br>
+			<small class="text-muted">La frise des &eacute;ditions.</small>
+		  </a>
+		</div>
+		<div class="col-md-4 col-lg-4 mb-4 mb-md-0">
+		  <a href="./Comparer.php" target="_parent" class="btn btn-link">
+			<img alt="Bouton Comparer les editions" onmouseout="this.src='../Images/Boutons/Comparer_olympiades.jpg';" onmouseover="this.src='../Images/Boutons/Comparer_olympiades_survol.jpg';" src="../Images/Boutons/Comparer_olympiades.jpg" class="bouton"/>
+			<br>
+			<small class="text-muted">Comparer 2 &eacute;ditions.</small>
+		  </a>
+		</div>
 
-	<div class="container mt-4" style="display: flex; justify-content: center;">
-	<h2>Commençons par explorer par exemple...</h2>
+		<div class="col-md-4 col-lg-4 mb-4 mb-md-0">
+				<a href="./Bibliographie.php" target="_parent" class="btn btn-link ml-3">
+			<img alt="Bouton Bibiliographie" onmouseout="this.src='../Images/Boutons/b_survol.png';" onmouseover="this.src='../Images/Boutons/b.png';" src="../Images/Boutons/b_survol.png" class="bouton"/>
+			<br>
+			<small class="text-muted">Nos donn&eacute;es.</small>
+		  </a>
+		</div>
+	  </div>
+	</div>
+
+
+	<div class="container mt-5" style="display: flex; justify-content: center;">
+	<h2 class="mt-3">Commençons par explorer par exemple...</h2>
 	</div>
 	<div class="container mt-4">
 	
@@ -204,7 +201,7 @@ if (isset($_POST['id_anecdote'], $_POST['utilisateur'])) {
 			?>		
 			</div>
 			<div class="card-footer bg-transparent">
-				<p class="card-text mb-2"><small class="text-muted">Survolez le curseur <abbr title="Les informations sur les recommandations s'affichent ici !" class="tooltip-hover text-info"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr> pour avoir des détails sur les recommandations.</small></p>
+				<p class="card-text mb-2"><small class="text-muted">Survolez quelques secondes le curseur <abbr title="Les informations sur les recommandations s'affichent ici !" class="tooltip-hover text-info"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr> pour avoir des détails sur les recommandations.</small></p>
 			</div>
 		</div>
 		
@@ -251,7 +248,7 @@ if (isset($_POST['id_anecdote'], $_POST['utilisateur'])) {
 			?>		
 			</div>
 			<div class="card-footer bg-transparent">
-				<p class="card-text mb-2"><small class="text-muted">Survolez le curseur 	<abbr title="Les informations sur les recommandations s'affichent ici !" 
+				<p class="card-text mb-2"><small class="text-muted">Survolez quelques secondes le curseur 	<abbr title="Les informations sur les recommandations s'affichent ici !" 
 				class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr> pour avoir des détails sur les recommandations.</small></p>
 			</div>
 	</div>
@@ -287,7 +284,7 @@ if (isset($_POST['id_anecdote'], $_POST['utilisateur'])) {
 			?>	
 		</div>
 					<div class="card-footer bg-transparent">
-				<p class="card-text mb-2"><small class="text-muted">Survolez le curseur 	<abbr title="Les informations sur les recommandations s'affichent ici !" 
+				<p class="card-text mb-2"><small class="text-muted">Survolez quelques secondes le curseur 	<abbr title="Les informations sur les recommandations s'affichent ici !" 
 				class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr> pour avoir des détails sur les recommandations.</small></p>
 			</div>
 	</div>
