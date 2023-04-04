@@ -2,7 +2,19 @@
 <html>
 	<head>
 	  <meta charset="utf8">
-		<title> Pays </title>
+	  	<?php
+	  	require('fonction.php');
+	  	$bdd = getBDD();
+	  	$NomP = $bdd -> prepare('select pays_participants.nom_pays from pays_participants
+			where pays_participants.Code_CIO = ?');
+	  	
+	  	$NomP -> execute([$_GET['id']]);
+
+	  	$Pays = $NomP -> fetch();
+	  	echo '<title>'.$Pays['nom_pays'].'</title>';
+	  	?>
+
+		
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 		<link rel="shortcut icon" href="../Images/Anneaux/officiel.png" type="image/png">
 		<style type="text/css">
@@ -40,14 +52,14 @@
 	<body>
 
 		<?php
-		require('fonction.php');
+		
     session_start();
     $pays = $_GET['id'];
-    $bdd = getBDD();
+   
     $informationPP = $bdd->prepare("SELECT * FROM pays_participants WHERE Code_CIO = ?");
     $informationPP->execute([$pays]);
     $ligne = $informationPP->fetch();
-    $NbOl = $bdd->prepare('SELECT COUNT(DISTINCT olympiades.id_olympiade) as nb FROM olympiades, athletes, etre_nationalite, pays_participants
+    $NbOl = $bdd->prepare('select COUNT(DISTINCT olympiades.id_olympiade) as nb FROM olympiades, athletes, etre_nationalite, pays_participants
         WHERE etre_nationalite.ID_athletes = athletes.ID_athletes
         AND etre_nationalite.id_pays = pays_participants.Code_CIO
         AND olympiades.id_olympiade = etre_nationalite.id_olympiade
