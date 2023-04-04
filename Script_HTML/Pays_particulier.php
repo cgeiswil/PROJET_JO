@@ -407,7 +407,7 @@ from (
 
 			echo '<tr>';
 			echo '<td>'.$infos['annee_o'].'</td>';
-			echo '<td> <a href="Vision_par_editions.php?view=p&lat='.$infos['latitude'].'&lon='.$infos['longitude'].'#carte" class="text-primary">'.$infos['nom'].'</a> </td>';
+			echo '<td> <a href="Vision_par_editions.php?lat='.$infos['latitude'].'&lon='.$infos['longitude'].'#carte" class="text-primary">'.$infos['nom'].'</a> </td>';
 			echo '<td>'.$nbath['nbAth'].'</td>';
 			echo '<td>'.$infos['nb_discplines'].'</td>';
 			echo '<td>'.$infos['nb_sports'].'</td>';

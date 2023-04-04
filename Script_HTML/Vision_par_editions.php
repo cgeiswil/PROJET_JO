@@ -123,10 +123,15 @@
 				});
 
 				// Création du marqueur
-				  L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup(popupText);
+				if (latView !== 22 && lat === latView) {
+					L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup(popupText).openPopup();
 				}
+				else {
+					L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup(popupText);
+				}
+			}
 
-			  });
+		  });
 		  </script>
 	  <br>
 		<p>

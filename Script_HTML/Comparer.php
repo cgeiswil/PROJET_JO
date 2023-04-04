@@ -212,11 +212,14 @@
 						if($trouve) {
 							$place_relative = $i_classement-$j;
 							$couleur = ($place_relative >= 0 ? 'text-success' : 'text-danger');
-							$signeplus = ($place_relative >= 0 ? '+' : '');
+							
+							if ($place_relative == 0) {
+								$place_relative = '(=)';
+							} else {
+								$place_relative = '('.($place_relative >= 0 ? '+' : '').$place_relative.')';
+							}
 						}
 						else {
-							$couleur = 'text-info';
-							$signeplus = "";
 							// MESSAGE SI DEGATION EXISTE PAS
 								$id_du_pays = $ligne_classement_or['Code_CIO'];
 								$premiere_olympiade = $bdd->query("SELECT olympiades.n_edition, etre_nationalite.id_olympiade, olympiades.annee_o
@@ -239,12 +242,12 @@
 									$infos =' Derni&egrave;re participation en ' . $derniere_olympiade['annee_o'] . '.';
 								}
 						
-								$place_relative = '<abbr title="Cette d&eacute;l&eacute;gation n\'a pas participé à l\'olympiade de '.($i == 1 ? 'droite' : 'gauche').' - '.$olympiades[($i == 2 ? 0 : 1)]['nom'].' '. $olympiades[($i == 2 ? 0 : 1)]['annee_o'] . '.' . $infos .'" class="tooltip-hover">&#x1F5B0;</abbr>';
+								$place_relative = '<abbr title="Cette d&eacute;l&eacute;gation n\'a pas participé à l\'olympiade de '.($i == 1 ? 'droite' : 'gauche').' - '.$olympiades[($i == 2 ? 0 : 1)]['nom'].' '. $olympiades[($i == 2 ? 0 : 1)]['annee_o'] . '.' . $infos .'" class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr>';
 							// FIN MESSAGE	
 						}
 								
 						echo '<tr>
-							<td><b>'.$j.'</b><p class="'.$couleur.' mt-2">('. $signeplus . $place_relative .')</p></td>
+							<td><b>'.$j.'</b><p class="'.$couleur.' mt-2">'. $place_relative .'</p></td>
 							<th scope="row"><a href="Pays_particulier.php?id='.$ligne_classement_or['Code_CIO'].'" class="text-dark"><img src="'.$ligne_classement_or['I_drapeau'].'" alt="Drapeau '.$ligne_classement_or['nom_pays'].'" class="img-thumbnail border-0" width="40px"></a> <a href="Pays_particulier.php?id='.$ligne_classement_or['Code_CIO'].'" class="text-dark">'.$ligne_classement_or['nom_pays'].'</a></th>
 							<td><img src="../Images/Boutons/medaille_or.png" alt="M&eacute;daille d\'or" width="20px"> <span>'.$ligne_classement_or['nb'].'</span></td>
 							<td><img src="../Images/Boutons/medaille_argent.png" alt="M&eacute;daille d\'argent" width="20px"> <span>'.$argent['nb'].'</span></td>
@@ -256,9 +259,16 @@
 				echo'</tbody>
 			  </table>
 			</div>
-		  </div>
-		</div>
-		</div>
+			</div>	
+			</div>
+			</div>
+				<div class="card-footer bg-transparent">
+					<p class="card-text mb-2"><small class="text-muted">Survolez le curseur <abbr title="Les informations sur les recommandations s\'affichent ici !" class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr> pour avoir des détails sur les recommandations.</small></p>
+				</div>
+				
+				
+				
+				
 		</div>';
 		}	
 		?>

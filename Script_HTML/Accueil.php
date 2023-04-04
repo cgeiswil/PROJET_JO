@@ -170,62 +170,41 @@ if (isset($_POST['id_anecdote'], $_POST['utilisateur'])) {
 		  <div class="card-body">
 			<h5 class="card-title">Vous allez aimer</h5>
 			<?php
-
-				$olympiades_p = "";
-				if(isset($_SESSION['utilisateur'])){ 
+				session_start();
+				$olympiades = $bdd->prepare('SELECT * FROM olympiades, apprecier_o, villes_hotes WHERE annee_o < 2017 AND villes_hotes.id_ville = olympiades.id_ville_hote ORDER BY RAND() LIMIT 2');
+				$olympiades->execute();
+					
+				if(isset($_SESSION['utilisateur'])){
 					$test_olympiades = $bdd->prepare('SELECT * FROM apprecier_o WHERE apprecier_o.id_utilisateur = ? LIMIT 1');
 					$test_olympiades->execute([$_SESSION['utilisateur']['utilisateur']]);
+					
 					if($test_olympiades->fetch()) {
-						$olympiades = $bdd->prepare('SELECT * FROM olympiades, apprecier_o, villes_hotes WHERE  annee_o < 2017 AND apprecier_o.id_olympiade != olympiades.id_olympiade AND apprecier_o.id_utilisateur = ? AND villes_hotes.id_ville = olympiades.id_ville_hote ORDER BY RAND() LIMIT 1');
+						$olympiades = $bdd->prepare('SELECT olympiades.id_olympiade, olympiades.logo, olympiades.annee_o, villes_hotes.nom FROM olympiades, apprecier_o, villes_hotes WHERE  annee_o < 2017 AND apprecier_o.id_olympiade != olympiades.id_olympiade AND apprecier_o.id_utilisateur = ? AND villes_hotes.id_ville = olympiades.id_ville_hote ORDER BY RAND() LIMIT 1');
 						$olympiades->execute([$_SESSION['utilisateur']['utilisateur']]);
 						
-						$olympiades_p = $bdd->prepare('SELECT
-    *
-FROM
-    olympiades,
-    apprecier_o,
-    villes_hotes,
-    apprecier_p,
-    pays_participants,
-    utilisateurs
-WHERE
-    utilisateurs.id_utilisateur = apprecier_o.id_utilisateur 
-    AND pays_participants.Code_CIO = apprecier_p.Code_CIO 
-    AND apprecier_p.id_utilisateur = utilisateurs.id_utilisateur 
-    AND annee_o < 2017
-    AND apprecier_o.id_olympiade != olympiades.id_olympiade
-    AND apprecier_o.id_utilisateur = ?
-    AND villes_hotes.id_ville = olympiades.id_ville_hote 
-    AND olympiades.Code_CIO = "FRA"
-ORDER BY
-    RAND()
-LIMIT 1');
-						$olympiades_p ->execute([$_SESSION['utilisateur']['utilisateur']]);
+						// Pays Organisateur que vous avez aimé
+						$olympiades_p = $bdd->prepare('SELECT * FROM olympiades JOIN villes_hotes ON villes_hotes.id_ville = olympiades.id_ville_hote
+						JOIN pays_participants ON olympiades.Code_CIO = pays_participants.Code_CIO WHERE olympiades.annee_o < 2017
+						AND olympiades.id_olympiade NOT IN(SELECT a.id_olympiade FROM apprecier_o a WHERE a.id_utilisateur = ?) 
+						AND pays_participants.Code_CIO IN(SELECT pp.Code_CIO FROM apprecier_p ap JOIN pays_participants pp ON pp.Code_CIO = ap.Code_CIO WHERE ap.id_utilisateur = ?) ORDER BY RAND() LIMIT 1');
+						$olympiades_p ->execute(array($_SESSION['utilisateur']['utilisateur'],$_SESSION['utilisateur']['utilisateur']));
 			
-						while ($olympiade_p = $olympiades_p->fetch()) {
-							echo '<p><a href="Edition_particuliere.php?id='.$olympiade["id_olympiade"].'" class="text-dark"><img src="'.$olympiade['logo'].'" class="img-thumbnail border-0" width="40px"></a> <a href="Edition_particuliere.php?id='.$olympiade["id_olympiade"].'" class="text-dark"><b>Olympiade ' . $olympiade['nom'] . ' ' . $olympiade['annee_o'] . '</a></b>'.
-							' <abbr title="Vous avez aimé la '.France.', alors pourquoi pas ces olympiades. (:" class="tooltip-hover text-info"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr></p>';
+						while ($olympiade_pa = $olympiades_p->fetch()) {
+							echo '<p><a href="Edition_particuliere.php?id='.$olympiade_pa["id_olympiade"].'" class="text-dark"><img src="'.$olympiade_pa['logo'].'" class="img-thumbnail border-0" width="40px"></a> <a href="Edition_particuliere.php?id='.$olympiade_pa["id_olympiade"].'" class="text-dark"><b>Olympiade ' . $olympiade_pa['nom'] . ' ' . $olympiade_pa['annee_o'] . '</a></b>'.
+							' <abbr title="Vous avez aimé le pays organisateur ('.$olympiade_pa['nom_pays'].') de cette olympiade !" class="tooltip-hover text-info"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr></p>';
 						}
 					}
-					else {
-						$olympiades = $bdd->prepare('SELECT * FROM olympiades, villes_hotes WHERE annee_o < 2017 AND villes_hotes.id_ville = olympiades.id_ville_hote ORDER BY RAND() LIMIT 3');
-						$olympiades->execute();
-					}
-				}
-				else {
-					$olympiades = $bdd->prepare('SELECT * FROM olympiades, villes_hotes WHERE annee_o < 2017 AND villes_hotes.id_ville = olympiades.id_ville_hote ORDER BY RAND() LIMIT 3');
-					$olympiades->execute();
 				}
 
 				while ($olympiade = $olympiades->fetch()) {
 					echo '<p><a href="Edition_particuliere.php?id='.$olympiade["id_olympiade"].'" class="text-dark"><img src="'.$olympiade['logo'].'" class="img-thumbnail border-0" width="40px"></a> <a href="Edition_particuliere.php?id='.$olympiade["id_olympiade"].'" class="text-dark"><b>Olympiade ' . $olympiade['nom'] . ' ' . $olympiade['annee_o'] . '</a></b>'.
-					' <abbr title="Un peu de découverte, ça fait pas de mal. (:" class="tooltip-hover text-info"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr></p>';
+					' <abbr title="Un peu de d&eacute;couverte hors des chemins habituels." class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr></p>';
 				}
 
 			?>		
 			</div>
 			<div class="card-footer bg-transparent">
-				<p class="card-text mb-2"><small class="text-muted">Survolez le curseur <abbr title="Et voilà, le message caché s'affiche. (:" class="tooltip-hover text-info"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr> pour avoir des détails sur les recommandations.</small></p>
+				<p class="card-text mb-2"><small class="text-muted">Survolez le curseur <abbr title="Les informations sur les recommandations s'affichent ici !" class="tooltip-hover text-info"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr> pour avoir des détails sur les recommandations.</small></p>
 			</div>
 		</div>
 		
@@ -233,34 +212,47 @@ LIMIT 1');
 		<div class="card-header"><b>Les délégations...</b></div>
 		  <div class="card-body">
 			<h5 class="card-title">Vous allez aimer</h5>
-			<?php				
-				session_start();
+			<?php
+				$pays_r = $bdd->prepare('SELECT * FROM pays_participants ORDER BY RAND() LIMIT 3');
+				$pays_r->execute();
+				
 				if(isset($_SESSION['utilisateur'])){
 					$test_pays_r = $bdd->prepare('SELECT * FROM apprecier_p WHERE apprecier_p.id_utilisateur = ? LIMIT 1');
 					$test_pays_r->execute([$_SESSION['utilisateur']['utilisateur']]);
+					
 					if($test_pays_r->fetch()) {
-						$pays_r = $bdd->prepare('SELECT * FROM pays_participants, apprecier_p WHERE apprecier_p.Code_CIO != pays_participants.Code_CIO AND apprecier_p.id_utilisateur = ? ORDER BY RAND() LIMIT 2');
+						$pays_r = $bdd->prepare('SELECT pays_participants.Code_CIO, pays_participants.nom_pays, pays_participants.I_drapeau FROM pays_participants, apprecier_p WHERE apprecier_p.Code_CIO != pays_participants.Code_CIO AND apprecier_p.id_utilisateur = ? ORDER BY RAND() LIMIT 1');
 						$pays_r->execute([$_SESSION['utilisateur']['utilisateur']]);
+						
+						// Olympiade que vous avez aimée
+						$pays_r2 = $bdd->prepare('SELECT * FROM olympiades JOIN villes_hotes ON villes_hotes.id_ville = olympiades.id_ville_hote
+						JOIN pays_participants ON olympiades.Code_CIO = pays_participants.Code_CIO WHERE olympiades.annee_o < 2017
+						AND olympiades.id_olympiade IN(SELECT a.id_olympiade FROM apprecier_o a WHERE a.id_utilisateur = ?) 
+						AND pays_participants.Code_CIO NOT IN(SELECT pp.Code_CIO FROM apprecier_p ap JOIN pays_participants pp ON pp.Code_CIO = ap.Code_CIO WHERE ap.id_utilisateur = ?) ORDER BY RAND() LIMIT 1');
+						$pays_r2 ->execute(array($_SESSION['utilisateur']['utilisateur'],$_SESSION['utilisateur']['utilisateur']));
+						
+						while ($pays2 = $pays_r2->fetch()) {
+							echo '<p><a href="Pays_particulier.php?id='.$pays2["Code_CIO"].'" class="text-dark"><img src="'.$pays2['I_drapeau'].'" class="img-thumbnail border-0" width="40px"></a> <a href="Pays_particulier.php?id='.$pays2["Code_CIO"].'" class="text-dark"><b> ' . $pays2['nom_pays'] . '</a></b>'.' <abbr title="Pays organisateur de '.$pays2['nom'] . ' ' . $pays2['annee_o'].' que vous avez aim&eacute; !" class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr></p>';
+						}
+						
+						// Athlete que vous avez aimé
+						$pays_r2 = $bdd->prepare('SELECT * FROM pays_participants ORDER BY RAND() LIMIT 1');
+						$pays_r2 ->execute(array($_SESSION['utilisateur']['utilisateur'],$_SESSION['utilisateur']['utilisateur']));
+						
+						while ($pays2 = $pays_r2->fetch()) {
+							echo '<p><a href="Pays_particulier.php?id='.$pays2["Code_CIO"].'" class="text-dark"><img src="'.$pays2['I_drapeau'].'" class="img-thumbnail border-0" width="40px"></a> <a href="Pays_particulier.php?id='.$pays2["Code_CIO"].'" class="text-dark"><b> ' . $pays2['nom_pays'] . '</a></b>'.' <abbr title="Futur nationnalite de l\'athlete aimé !" class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr></p>';
+						}
 					}
-					else {
-						$pays_r = $bdd->prepare('SELECT * FROM pays_participants ORDER BY RAND() LIMIT 3');
-						$pays_r->execute();
-					}
-				}
-				else {
-					$pays_r = $bdd->prepare('SELECT * FROM pays_participants ORDER BY RAND() LIMIT 3');
-					$pays_r->execute();
 				}
 
 				while ($pays = $pays_r->fetch()) {
-					echo '<p><a href="Pays_particulier.php?id='.$pays["Code_CIO"].'" class="text-dark"><img src="'.$pays['I_drapeau'].'" class="img-thumbnail border-0" width="40px"></a> <a href="Pays_particulier.php?id='.$pays["Code_CIO"].'" class="text-dark"><b> ' . $pays['nom_pays'] . '</a></b>'.' <abbr title="Un peu de découverte, ça fait pas de mal. (:" 
-					class="tooltip-hover text-info"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr></p>';
+					echo '<p><a href="Pays_particulier.php?id='.$pays["Code_CIO"].'" class="text-dark"><img src="'.$pays['I_drapeau'].'" class="img-thumbnail border-0" width="40px"></a> <a href="Pays_particulier.php?id='.$pays["Code_CIO"].'" class="text-dark"><b> ' . $pays['nom_pays'] . '</a></b>'.' <abbr title="Un peu de d&eacute;couverte hors des chemins habituels." class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr></p>';
 				}
 			?>		
 			</div>
 			<div class="card-footer bg-transparent">
-				<p class="card-text mb-2"><small class="text-muted">Survolez le curseur 	<abbr title="Et voilà, le message caché s'affiche. (:" 
-				class="tooltip-hover text-info"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr> pour avoir des détails sur les recommandations.</small></p>
+				<p class="card-text mb-2"><small class="text-muted">Survolez le curseur 	<abbr title="Les informations sur les recommandations s'affichent ici !" 
+				class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr> pour avoir des détails sur les recommandations.</small></p>
 			</div>
 	</div>
 	
@@ -289,37 +281,20 @@ LIMIT 1');
 				}
 					
 				while ($discipline_r = $disciplines_r->fetch()) {
-					echo '<p><img src="'.$discipline_r['pictogramme'].'" class="img-thumbnail border-0" width="40px"> <b>' . $discipline_r['nom_discipline'] . '</b>'.' <abbr title="Un peu de découverte, ça fait pas de mal. (:" class="tooltip-hover text-info">
+					echo '<p><img src="'.$discipline_r['pictogramme'].'" class="img-thumbnail border-0" width="40px"> <b>' . $discipline_r['nom_discipline'] . '</b>'.' <abbr title="Un peu de d&eacute;couverte hors des chemins habituels." class="tooltip-hover">
 					<img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr></p>';
 				}
 			?>	
 		</div>
 					<div class="card-footer bg-transparent">
-				<p class="card-text mb-2"><small class="text-muted">Survolez le curseur 	<abbr title="Et voilà, le message caché s'affiche. (:" 
-				class="tooltip-hover text-info"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr> pour avoir des détails sur les recommandations.</small></p>
+				<p class="card-text mb-2"><small class="text-muted">Survolez le curseur 	<abbr title="Les informations sur les recommandations s'affichent ici !" 
+				class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr> pour avoir des détails sur les recommandations.</small></p>
 			</div>
 	</div>
 		
-	<!--<div class="card">
-		<div class="card-header">Les athletes...</div>
-		  <div class="card-body">
-			<h5 class="card-title">Light card title</h5>
-			<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			</div>
-	</div>
+		
 	
-				<div class="card-body">
-				<h5 class="card-title">Light card title</h5>
-				<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-				<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-			</div>
-			<div class="card-footer bg-transparent">
-				<h5 class="card-title mt-2">Light card title</h5>
-				<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-				<p class="card-text mb-2"><small class="text-muted">Last updated 3 mins ago</small></p>
-			</div>-->
-	
-</div>
+</div> <!-- Fin du tableau des recommandations -->
 	
 	
 	
