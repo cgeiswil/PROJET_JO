@@ -42,8 +42,10 @@
 		
 
 		<?php
-		require('fonction.php');
-		$bdd = getBDD();
+		require("fonction.php");
+	$bdd = getBDD();
+	session_start();
+
 		$req = $bdd -> prepare('select * FROM athletes, etre_nationalite, pays_participants, olympiades 
 			WHERE athletes.ID_athletes = ?
 			and etre_nationalite.ID_athletes = athletes.ID_athletes
@@ -65,7 +67,47 @@
 
 						echo '<h1><strong> Athl&egrave;te : '.$Ath['nom'].'</strong>';
 						echo '<button type="button" class="btn btn-lg bg-white text-danger border-0">';
-				 		echo '<img src="../Images/Boutons/coeur_plein.svg" alt="Coeur rempli" />';
+			// AJOUT DU COEUR
+
+$image = "../Images/Boutons/Coeur_olympiades.jpg";
+$id_athlete = $Ath['ID_athlete'];
+if (isset($_SESSION['utilisateur'])) {
+    $aimer = $bdd->prepare("SELECT * FROM apprecier_at WHERE id_athlete = ? AND id_utilisateur = ?");
+    $aimer->execute(array($id_athlete, $_SESSION['utilisateur']['utilisateur']));
+    if ($aimer->fetch()) {
+        $image = "../Images/Boutons/Coeur_olympiades_rempli.jpg";
+    }
+}
+ echo '<div class="row"><div class="col-md-1">
+                    <p><img id="athlete" src="'.$image.'" alt="Coeur Pays" height="60px"/></p></div></div>';
+            echo '<script type="text/javascript">
+                var athlete = document.getElementById("athlete");
+                athlete.addEventListener("click", function() {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "Athletes.php");
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xhr.onload = function() {
+                        if (xhr.status === 200) {
+                            athlete.src = "../Images/Boutons/Coeur_olympiades_rempli.jpg";
+                        } else {
+                            console.log("[ERREUR] Erreur de mise à jour des données !!!!");
+                        }
+                    };
+                    xhr.send("ID_athlete='.$id_athlete.'&utilisateur='.$_SESSION['utilisateur']['utilisateur'].'");
+                });
+            </script>';
+
+if (isset($_POST['ID_athlete'], $_POST['utilisateur'])) { 
+    $aimerBD = $bdd->prepare("INSERT INTO apprecier_at(id_athlete, id_utilisateur) VALUES (?, ?)");
+    $aimerBD->execute(array($_POST['id_athlete'], $_POST['utilisateur']));
+    unset($_POST['id_athlete'], $_POST['utilisateur']);
+}
+// FIN AJOUT DU COEUR
+
+
+
+
+
 			   		echo "</button></h1>";
 			   	echo '</div>';
 			   echo '</div>';
