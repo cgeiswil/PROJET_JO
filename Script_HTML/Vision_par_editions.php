@@ -67,12 +67,14 @@
 				  } 
 				  else { 
 					// Sinon, ajouter un nouvel élément à l'objet
-					popupTextByCoordinates[coordinates] = '<img src="' + olympiades[i].I_drapeau + '" alt="Drapeau ' + olympiades[i].pays_hote + '" class="img-thumbnail border-0" width="40px"><b>' + olympiades[i].nom + " (" + olympiades[i].pays_hote + ")</b><br>" + popupText;
+					let de = "de ";
+					if (["A", "I", "O"].includes(olympiades[i].nom.charAt(0).toUpperCase())) { de = "d'"; }
+					popupTextByCoordinates[coordinates] = '<img src="' + olympiades[i].I_drapeau + '" alt="Drapeau ' + olympiades[i].pays_hote + '" class="img-thumbnail border-0" width="40px"><b>' + olympiades[i].pays_hote + "</b><br>Dans la ville " + de + '<b>' + olympiades[i].nom + "</b> !<br>" + popupText;
 				  }
 				}
 			}
 			else { // Vision par Pays organisateurs
-			let summer_indication = 'Olympiades d\'&Eacutet&eacute; :<br>';
+			let summer_indication = 'Olympiades d\'<b>&Eacutet&eacute;</b> :<br>';
 			let pays = '';
 				for (let i = 0; i < olympiades.length; i++) {
 				  let lat = parseFloat(olympiades[i].latitude_pays);
@@ -81,12 +83,12 @@
 
 				  let popupText = "<a class='annee  pt-2' style='text-decoration:none;' href='Edition_particuliere.php?id=" + olympiades[i].id_olympiade + "'>" + olympiades[i].nom + ' ' + olympiades[i].annee_o + "</a>";
 				  
-				  if (saison == 'Hiver') { summer_indication = 'Olympiades d\'Hiver :<br>'; }
+				  if (saison == 'Hiver') { summer_indication = 'Olympiades d\'<b>Hiver</b> :<br>'; }
 
 				  let coordinates = lat + "," + lon;
 				  if (coordinates in popupTextByCoordinates) {
 				  // Si les coordonnées existent déjà, ajouter le nouveau popupText à la suite
-					if (popupTextByCoordinates[coordinates].includes("Olympiades d'Hiver") || summer_indication == 'Olympiades d\'&Eacutet&eacute; :<br>') {
+					if (popupTextByCoordinates[coordinates].includes('Olympiades d\'<b>Hiver</b> :<br>') || summer_indication == 'Olympiades d\'<b>&Eacutet&eacute;</b> :<br>') {
 						popupTextByCoordinates[coordinates] += "<br>" +  popupText;
 					} else {
 						popupTextByCoordinates[coordinates] += "<br>" + summer_indication + popupText;
@@ -121,7 +123,7 @@
 				  iconSize: [25, 41], // Taille de l'icône en pixels
 				  iconAnchor: [12, 41] // Point d'ancrage de l'icône en pixels
 				});
-
+				
 				// Création du marqueur
 				if (latView !== 22 && lat === latView) {
 					L.marker([lat, lon], { icon: customIcon }).addTo(map).bindPopup(popupText).openPopup();

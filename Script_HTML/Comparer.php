@@ -40,7 +40,7 @@
 			$id2 = isset($_GET['id2']) && $_GET['id2'] !== '' ? $_GET['id2'] : $id2_result['id_olympiade'];
 
 
-		// Récupération de toutes les olympiades
+		// R&eacute;cup&eacute;ration de toutes les olympiades
 			$olympiade1 = $bdd->prepare('SELECT * FROM olympiades, villes_hotes, pays_participants WHERE olympiades.Code_CIO = pays_participants.Code_CIO AND villes_hotes.id_ville = olympiades.id_ville_hote AND olympiades.id_olympiade = ?');
 			$olympiade1->execute(array($id));
 
@@ -100,7 +100,7 @@
 						$dateObj1 = DateTime::createFromFormat('m/d/Y', $olympiade['date_ouverture']);
 						$dateObj2 = DateTime::createFromFormat('m/d/Y', $olympiade['date_fermeture']);
 
-							// Soustraire les dates et obtenir la diff&eacute;rence en jours
+							// Soustraire les dates et obtenir la difference en jours
 							$diff = $dateObj2->diff($dateObj1)->format("%a");
 
 							// Configuration locale en français avec encodage UTF-8
@@ -130,7 +130,7 @@
 						$argent = $bdd->query('SELECT count(DISTINCT lier_m.id_epreuves) as nb FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade AND lier_m.id_medaille = 2 AND lier_m.id_olympiade = "'.$olympiade['id_olympiade'].'" AND etre_nationalite.id_pays = "'.$ligne_classement_or['id_pays'].'"')->fetch();
 						$bronze = $bdd->query('SELECT count(DISTINCT lier_m.id_epreuves) as nb, etre_nationalite.id_pays, pays_participants.nom_pays, pays_participants.I_drapeau FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade AND lier_m.id_medaille = 3 AND lier_m.id_olympiade = "'.$olympiade['id_olympiade'].'" AND etre_nationalite.id_pays = "'.$ligne_classement_or['id_pays'].'"')->fetch();
 
-					// Détermination des places relatives dans le classement (:
+					// D&eacute;termination des places relatives dans le classement (:
 						$trouve = false;
 						if($i == 1){
 							$autre_classement  = $bdd->query('SELECT count(DISTINCT lier_m.id_epreuves) as nb, etre_nationalite.id_pays, pays_participants.nom_pays, pays_participants.I_drapeau, Code_CIO FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade AND lier_m.id_medaille = 1 AND lier_m.id_olympiade = "'.$olympiades[1]['id_olympiade'].'" GROUP BY etre_nationalite.id_pays ORDER BY nb DESC');
@@ -186,7 +186,7 @@
 									$infos =' Derni&egrave;re participation en ' . $derniere_olympiade['annee_o'] . '.';
 								}
 						
-								$place_relative = '<abbr title="Cette d&eacute;l&eacute;gation n\'a pas participé à l\'olympiade de '.($i == 1 ? 'droite' : 'gauche').' - '.$olympiades[($i == 2 ? 0 : 1)]['nom'].' '. $olympiades[($i == 2 ? 0 : 1)]['annee_o'] . '.' . $infos .'" class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr>';
+								$place_relative = '<abbr title="Cette d&eacute;l&eacute;gation n\'a pas particip&eacute; à l\'olympiade de '.($i == 1 ? 'droite' : 'gauche').' - '.$olympiades[($i == 2 ? 0 : 1)]['nom'].' '. $olympiades[($i == 2 ? 0 : 1)]['annee_o'] . '.' . $infos .'" class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr>';
 							// FIN MESSAGE	
 						}
 								
@@ -207,7 +207,7 @@
 			</div>
 			</div>
 				<div class="card-footer bg-transparent">
-					<p class="card-text mb-2"><small class="text-muted">Survolez quelques secondes le curseur <abbr title="Les informations sur les recommandations s\'affichent ici !" class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr> pour avoir des détails sur les recommandations.</small></p>
+					<p class="card-text mb-2"><small class="text-muted">Survolez quelques secondes le curseur <abbr title="Les informations sur les recommandations s\'affichent ici !" class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr> pour avoir des d&eacute;tails sur les recommandations.</small></p>
 				</div>
 				
 				
