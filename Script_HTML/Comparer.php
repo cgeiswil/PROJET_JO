@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
-		<title>Comparer</title>
+		<title>Comparer des olympiades</title>
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="Styles/comparer.css" type="text/css">
 		
@@ -40,7 +40,7 @@
 			$id2 = isset($_GET['id2']) && $_GET['id2'] !== '' ? $_GET['id2'] : $id2_result['id_olympiade'];
 
 
-		// Récupération de toutes les olympiades
+		// R&eacute;cup&eacute;ration de toutes les olympiades
 			$olympiade1 = $bdd->prepare('SELECT * FROM olympiades, villes_hotes, pays_participants WHERE olympiades.Code_CIO = pays_participants.Code_CIO AND villes_hotes.id_ville = olympiades.id_ville_hote AND olympiades.id_olympiade = ?');
 			$olympiade1->execute(array($id));
 
@@ -78,74 +78,18 @@
 						}
 						echo '</select></div><hr>
 			<div style="min-height: 190px;">';
-				// AJOUT DU COEUR PARTIE 1
-					session_start();
-					$image = "../Images/Boutons/Coeur_olympiades.jpg";
-					print_r(isset($_SESSION['utilisateur']) );
-					if (isset($_SESSION['utilisateur'])) {
-						$aimer = $bdd->prepare('SELECT * FROM apprecier_o WHERE id_olympiade = ? AND id_utilisateur = ?');
-						$aimer->execute(array($olympiade["id_olympiade"], $_SESSION['utilisateur']['utilisateur']));
-						if ($aimer->fetch()) {
-							$image = "../Images/Boutons/Coeur_olympiades_rempli.jpg";
-						}
-					}
-				// FIN AJOUT DU COEUR PARTIE 1
 							
 						echo '<a href="Edition_particuliere.php?id='.$olympiade["id_olympiade"].'"><img src="'.$olympiade["logo"].'" class="float-right mr-2" alt="Logo JO '.$olympiade["nom"]." ".$olympiade["annee_o"].'" style="max-width: 100px; max-height: 70px;"></a>';
 						echo '<h4 class="card-title mb-0"><a href="Edition_particuliere.php?id='.$olympiade["id_olympiade"].'" class="text-dark"><b>Olympiade ' . $olympiade['nom'] . ' ' . $olympiade['annee_o'] . '</a></b>
-											
-							<button type="button" class="btn btn-lg bg-white text-danger border-0">
-							<img id="coeur_' . $olympiade["id_olympiade"] . '" src="'.$image.'" alt="Coeur Olympiades" height="30px"/>
-							</button>
+						
+							<a href="Vision_par_editions.php?lat='.$olympiade['latitude'].'&lon='.$olympiade['longitude'].'#carte"><button type="button" class="btn btn-lg bg-white text-danger border-0">
+							<img src="../Images/Boutons/Carte.png" alt="Bouton carte des pays" onmouseover="this.src=\'../Images/Boutons/Carte_survol.png\'" onmouseout="this.src=\'../Images/Boutons/Carte.png\';" height="40px" />
+							</button><a>
 						
 						</h4>';
 					
 						echo'<h6 class="card-title mb-0 my-1"><a href="Pays_particulier.php?id='.$olympiade['Code_CIO'].'" class="text-dark"><img src="' . $olympiade['I_drapeau'] . '" alt="Drapeau ' . $olympiade['pays_hote'] . '" class="img-thumbnail border-0" width="30px">' . $olympiade['pays_hote'] . '</a> (' . $nb_pays['olymp'].($nb_pays['olymp'] > 1 ? ' &eacute;ditions organis&eacute;es' : ' &eacute;dition organis&eacute;e'). ')</h6>
-						  <p class="card-text">';					
-						
-										
-			
-			
-				// AJOUT DU COEUR
-					// session_start();
-					// $image = "../Images/Boutons/Coeur_olympiades.jpg";
-					// if (isset($_SESSION['utilisateur'])) {
-						// $aimer = $bdd->prepare('SELECT * FROM apprecier_o WHERE id_olympiade = ? AND id_utilisateur = ?');
-						// $aimer->execute(array($olympiade["id_olympiade"], $_SESSION['utilisateur']['utilisateur']));
-						// if ($aimer->fetch()) {
-							// $image = "../Images/Boutons/Coeur_olympiades_rempli.jpg";
-						// }
-					// }
-
-					// echo '<div class="float-right">
-							// <button type="button" class="btn btn-lg bg-white text-danger border-0">
-							// <img id="coeur_' . $olympiade["id_olympiade"] . '" src="' . $image . '" alt="Coeur Olympiades" height="40px"/>
-							// </button>
-					// </div>';
-
-					echo '<script type="text/javascript">
-					var coeur = document.getElementById("coeur_' . $olympiade["id_olympiade"] . '");
-					coeur.addEventListener("click", function() {
-						var xhr = new XMLHttpRequest();
-						xhr.open("POST", "Comparer.php?id=' . $olympiade["id_olympiade"] . '#Comparons");
-						xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-						xhr.onload = function() {
-							if (xhr.status === 200) {
-								coeur.src = "../Images/Boutons/Coeur_olympiades_rempli.jpg";
-							} else {
-								console.log("[ERREUR] Erreur de mise à jour des données !!!!");
-							}
-						};
-						xhr.send("id_olympiade=' . $olympiade["id_olympiade"] . '&utilisateur=' . $_SESSION['utilisateur']['utilisateur'] . '");
-					});
-					</script>';
-
-					if (isset($_POST['id_olympiade']) && isset($_POST['utilisateur']) && $_POST['id_olympiade'] == $olympiade["id_olympiade"]) {
-						$aimerBD = $bdd->prepare('INSERT INTO apprecier_o(id_olympiade, id_utilisateur) VALUES (?, ?)');
-						$aimerBD->execute(array($_POST['id_olympiade'], $_POST['utilisateur']));
-						unset($_POST['id_olympiade']);
-					}
-			// FIN AJOUT DU COEUR
+						  <p class="card-text">';
 					
 					
 					$pays = $bdd->query("SELECT * FROM pays_participants WHERE pays_participants.Code_CIO = '".$olympiade['Code_CIO']."'")->fetch();
@@ -156,7 +100,7 @@
 						$dateObj1 = DateTime::createFromFormat('m/d/Y', $olympiade['date_ouverture']);
 						$dateObj2 = DateTime::createFromFormat('m/d/Y', $olympiade['date_fermeture']);
 
-							// Soustraire les dates et obtenir la diff&eacute;rence en jours
+							// Soustraire les dates et obtenir la difference en jours
 							$diff = $dateObj2->diff($dateObj1)->format("%a");
 
 							// Configuration locale en français avec encodage UTF-8
@@ -186,7 +130,7 @@
 						$argent = $bdd->query('SELECT count(DISTINCT lier_m.id_epreuves) as nb FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade AND lier_m.id_medaille = 2 AND lier_m.id_olympiade = "'.$olympiade['id_olympiade'].'" AND etre_nationalite.id_pays = "'.$ligne_classement_or['id_pays'].'"')->fetch();
 						$bronze = $bdd->query('SELECT count(DISTINCT lier_m.id_epreuves) as nb, etre_nationalite.id_pays, pays_participants.nom_pays, pays_participants.I_drapeau FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade AND lier_m.id_medaille = 3 AND lier_m.id_olympiade = "'.$olympiade['id_olympiade'].'" AND etre_nationalite.id_pays = "'.$ligne_classement_or['id_pays'].'"')->fetch();
 
-					// Détermination des places relatives dans le classement (:
+					// D&eacute;termination des places relatives dans le classement (:
 						$trouve = false;
 						if($i == 1){
 							$autre_classement  = $bdd->query('SELECT count(DISTINCT lier_m.id_epreuves) as nb, etre_nationalite.id_pays, pays_participants.nom_pays, pays_participants.I_drapeau, Code_CIO FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade AND lier_m.id_medaille = 1 AND lier_m.id_olympiade = "'.$olympiades[1]['id_olympiade'].'" GROUP BY etre_nationalite.id_pays ORDER BY nb DESC');
@@ -242,7 +186,7 @@
 									$infos =' Derni&egrave;re participation en ' . $derniere_olympiade['annee_o'] . '.';
 								}
 						
-								$place_relative = '<abbr title="Cette d&eacute;l&eacute;gation n\'a pas participé à l\'olympiade de '.($i == 1 ? 'droite' : 'gauche').' - '.$olympiades[($i == 2 ? 0 : 1)]['nom'].' '. $olympiades[($i == 2 ? 0 : 1)]['annee_o'] . '.' . $infos .'" class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr>';
+								$place_relative = '<abbr title="Cette d&eacute;l&eacute;gation n\'a pas particip&eacute; à l\'olympiade de '.($i == 1 ? 'droite' : 'gauche').' - '.$olympiades[($i == 2 ? 0 : 1)]['nom'].' '. $olympiades[($i == 2 ? 0 : 1)]['annee_o'] . '.' . $infos .'" class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr>';
 							// FIN MESSAGE	
 						}
 								
@@ -263,7 +207,7 @@
 			</div>
 			</div>
 				<div class="card-footer bg-transparent">
-					<p class="card-text mb-2"><small class="text-muted">Survolez le curseur <abbr title="Les informations sur les recommandations s\'affichent ici !" class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr> pour avoir des détails sur les recommandations.</small></p>
+					<p class="card-text mb-2"><small class="text-muted">Survolez quelques secondes le curseur <abbr title="Les informations sur les recommandations s\'affichent ici !" class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr> pour avoir des d&eacute;tails sur les recommandations.</small></p>
 				</div>
 				
 				

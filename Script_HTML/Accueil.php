@@ -19,7 +19,7 @@
 	$(document).ready(function() {
    	 $('.cycle-slideshow').cycle({
       	  fx: 'scrollVert', // effet de transition vertical
-      	  speed: 500, // durée de la transition en ms
+      	  speed: 500, // duree de la transition en ms
       	  timeout: 5000 // temps d'affichage de chaque élément en ms
    	 });
 	});
@@ -49,13 +49,13 @@ session_start();
 $anec = $bdd->query("SELECT * FROM anecdotes ORDER BY RAND() LIMIT 1");
 $ligne = $anec->fetch();
 $id_anecdote = $ligne['id_anecdote'];
-$image = "../Images/Boutons/Coeur_olympiades.jpg";
+$image = "../Images/Boutons/Coeur_olympiades.png";
 
 if (isset($_SESSION['utilisateur'])) {
     $aimer = $bdd->prepare('SELECT * FROM apprecier_an WHERE id_anecdote = ? AND id_utilisateur = ?');
     $aimer->execute(array($id_anecdote, $_SESSION['utilisateur']['utilisateur']));
     if ($aimer->fetch()) {
-        $image = "../Images/Boutons/Coeur_olympiades_rempli.jpg";
+        $image = "../Images/Boutons/Coeur_olympiades_rempli.png";
     }
 }
 echo '<div class="row">
@@ -78,7 +78,7 @@ echo '<script type="text/javascript">
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhr.onload = function() {
             if (xhr.status === 200) {
-                anecdote.src = "../Images/Boutons/Coeur_olympiades_rempli.jpg";
+                anecdote.src = "../Images/Boutons/Coeur_olympiades_rempli.png";
             } else {
                 console.log("[ERREUR] Erreur de mise à jour des données !!!!");
             }
@@ -99,67 +99,64 @@ if (isset($_POST['id_anecdote'], $_POST['utilisateur'])) {
   </div>
 </div>
 </div>
-	<div class="container mt-4" style="display: flex; justify-content: center;">
-	
-  <h2>Les classements et éditions de Jeux Olympiques</h2>
-</div>
 
-<div class="container justify-content-center mt-4">
-  <div class="row justify-content-center card-deck">
-    <div class="col-md-6 col-lg-5">
-      <div class="card border">
-        <div class="card-body">
-          <table class="rounded-4" style="width: 100%;">
-            <tr>
-              <td style="width: 50%;">
-                <a href="./Vision_par_delegations.php" target="_parent">
-                  <img alt="Survol" onmouseout="this.src='../Images/Boutons/podium_drapeau.png';" onmouseover="this.src='../Images/Boutons/podium_drapeau_survol.png';" src="../Images/Boutons/podium_drapeau.png" />
-                </a>
-                <br>
-                <small class="text-muted">Les meilleures délégations.</small>
-              </td>
+	<div class="container mt-5" style="display: flex; justify-content: center;">
+		<h2>Consultez les classements & &eacute;ditions des Jeux Olympiques</h2>
+	</div>
 
-              <td style="width: 50%;">
-                <a href="./Meilleurs_athletes.php" target="_parent">
-                  <img alt="Survol" onmouseout="this.src='../Images/Boutons/discipline_podium.png';" onmouseover="this.src='../Images/Boutons/discipline_podium_survol.png';" src="../Images/Boutons/discipline_podium.png" />
-                </a>
-                <br>
-                <small class="text-muted">Les meilleurs athlètes.</small>
-              </td>
-            </tr>
-          </table>
-        </div>
-      </div>
-    </div>
- <div class="col-md-6 col-lg-5">
-      <div class="card border">
-        <div class="card-body">
-          <table class="rounded-4" style="width: 100%;">
-            <tr>
-              <td style="width: 50%;">
-                <a href="./Vision_par_editions.php#carte" target="_parent">
-                  <img alt="Survol" onmouseout="this.src='../Images/Boutons/planisphere.png';" onmouseover="this.src='../Images/Boutons/planisphere_survol.png';" src="../Images/Boutons/planisphere.png" />
-                </a>
-                <br>
-                <small class="text-muted">La carte des éditions.</small>
-              </td>
-              <td style="width: 50%;">
-                <a href="./Vision_par_editions.php#frise" target="_parent">
-                  <img alt="Survol" onmouseout="this.src='../Images/Boutons/frise.png';" onmouseover="this.src='../Images/Boutons/frise_survol.png';" src="../Images/Boutons/frise.png" />
-                </a>
-                <br>
-                <small class="text-muted">La frise des éditions.</small>
-              </td>
-            </tr>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+	<div class="container justify-content-center mt-4">
+	  <div class="row justify-content-center">
+		<div class="col-md-4 col-lg-4 mb-4 mb-md-0">
+		  <a href="./Meilleurs_athletes.php" target="_parent" class="btn btn-link">
+			<img alt="Bouton page des meilleurs athletes" onmouseout="this.src='../Images/Boutons/athlete.png';" onmouseover="this.src='../Images/Boutons/athlete_survol.png';" src="../Images/Boutons/athlete.png" class="bouton"/>
+			<br>
+			<small class="text-muted">Les meilleurs athl&egrave;tes.</small>
+		  </a>		 
+		</div>
+		<div class="col-md-4 col-lg-4 mb-4 mb-md-0">
+		 <a href="./Vision_par_delegations.php" target="_parent" class="btn btn-link">
+			<img alt="Bouton meilleures delegations" onmouseout="this.src='../Images/Boutons/podium_drapeau.png';" onmouseover="this.src='../Images/Boutons/podium_drapeau_survol.png';" src="../Images/Boutons/podium_drapeau.png" class="bouton"/>
+			<br>
+			<small class="text-muted">Les meilleures d&eacute;l&eacute;gations.</small>
+		  </a>
+		</div>
+		<div class="col-md-4 col-lg-4 mb-4 mb-md-0">
+		  <a href="./Vision_par_editions.php#carte" target="_parent" class="btn btn-link">
+			<img alt="Bouton carte des editions" onmouseout="this.src='../Images/Boutons/carte.png';" onmouseover="this.src='../Images/Boutons/Carte_survol.png';" src="../Images/Boutons/carte.png" class="bouton"/>
+			<br>
+			<small class="text-muted">La carte des &eacute;ditions.</small>
+		  </a>
+		</div>
+	  </div>
+	  <div class="row justify-content-center">
+		<div class="col-md-4 col-lg-4 mb-4 mb-md-0">
+		  <a href="./Vision_par_editions.php#frise" target="_parent" class="btn btn-link">
+			<img alt="Bouton frise des editions" onmouseout="this.src='../Images/Boutons/frise_survol.png';" onmouseover="this.src='../Images/Boutons/frise.png';" src="../Images/Boutons/frise_survol.png" class="bouton"/>
+			<br>
+			<small class="text-muted">La frise des &eacute;ditions.</small>
+		  </a>
+		</div>
+		<div class="col-md-4 col-lg-4 mb-4 mb-md-0">
+		  <a href="./Comparer.php" target="_parent" class="btn btn-link">
+			<img alt="Bouton Comparer les editions" onmouseout="this.src='../Images/Boutons/Comparer_olympiades.jpg';" onmouseover="this.src='../Images/Boutons/Comparer_olympiades_survol.jpg';" src="../Images/Boutons/Comparer_olympiades.jpg" class="bouton"/>
+			<br>
+			<small class="text-muted">Comparer 2 &eacute;ditions.</small>
+		  </a>
+		</div>
 
-	<div class="container mt-4" style="display: flex; justify-content: center;">
-	<h2>Commençons par explorer par exemple...</h2>
+		<div class="col-md-4 col-lg-4 mb-4 mb-md-0">
+				<a href="./Bibliographie.php" target="_parent" class="btn btn-link ml-3">
+			<img alt="Bouton Bibiliographie" onmouseout="this.src='../Images/Boutons/b_survol.png';" onmouseover="this.src='../Images/Boutons/b.png';" src="../Images/Boutons/b_survol.png" class="bouton"/>
+			<br>
+			<small class="text-muted">Les donn&eacute;es utilis&eacute;es.</small>
+		  </a>
+		</div>
+	  </div>
+	</div>
+
+
+	<div class="container mt-5" style="display: flex; justify-content: center;">
+	<h2 class="mt-3">Ou commencez &agrave; explorer avec un th&egrave;me pr&eacute;cis !</h2>
 	</div>
 	<div class="container mt-4">
 	
@@ -204,12 +201,12 @@ if (isset($_POST['id_anecdote'], $_POST['utilisateur'])) {
 			?>		
 			</div>
 			<div class="card-footer bg-transparent">
-				<p class="card-text mb-2"><small class="text-muted">Survolez le curseur <abbr title="Les informations sur les recommandations s'affichent ici !" class="tooltip-hover text-info"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr> pour avoir des détails sur les recommandations.</small></p>
+				<p class="card-text mb-2"><small class="text-muted">Survolez quelques secondes le curseur <abbr title="Les informations sur les recommandations s'affichent ici !" class="tooltip-hover text-info"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr> pour avoir des d&eacute;tails sur les recommandations.</small></p>
 			</div>
 		</div>
 		
 	<div class="card">
-		<div class="card-header"><b>Les délégations...</b></div>
+		<div class="card-header"><b>Les d&eacute;légations...</b></div>
 		  <div class="card-body">
 			<h5 class="card-title">Vous allez aimer</h5>
 			<?php
@@ -232,15 +229,15 @@ if (isset($_POST['id_anecdote'], $_POST['utilisateur'])) {
 						$pays_r2 ->execute(array($_SESSION['utilisateur']['utilisateur'],$_SESSION['utilisateur']['utilisateur']));
 						
 						while ($pays2 = $pays_r2->fetch()) {
-							echo '<p><a href="Pays_particulier.php?id='.$pays2["Code_CIO"].'" class="text-dark"><img src="'.$pays2['I_drapeau'].'" class="img-thumbnail border-0" width="40px"></a> <a href="Pays_particulier.php?id='.$pays2["Code_CIO"].'" class="text-dark"><b> ' . $pays2['nom_pays'] . '</a></b>'.' <abbr title="Pays organisateur de '.$pays2['nom'] . ' ' . $pays2['annee_o'].' que vous avez aim&eacute; !" class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr></p>';
+							echo '<p><a href="Pays_particulier.php?id='.$pays2["Code_CIO"].'" class="text-dark"><img src="'.$pays2['I_drapeau'].'" class="img-thumbnail border-0" width="40px"></a> <a href="Pays_particulier.php?id='.$pays2["Code_CIO"].'" class="text-dark"><b> ' . $pays2['nom_pays'] . '</a></b>'.' <abbr title="Pays organisateur de '.$pays2['nom'] . ' ' . $pays2['annee_o'].', olympiade que vous avez aim&eacute;e !" class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr></p>';
 						}
 						
 						// Athlete que vous avez aimé
-						$pays_r2 = $bdd->prepare('SELECT * FROM pays_participants ORDER BY RAND() LIMIT 1');
+						$pays_r2 = $bdd->prepare('SELECT athletes.nom, pays_participants.Code_CIO, pays_participants.I_drapeau, pays_participants.nom_pays FROM pays_participants JOIN etre_nationalite ON pays_participants.Code_CIO = etre_nationalite.id_pays JOIN athletes ON athletes.ID_athletes = etre_nationalite.ID_athletes WHERE pays_participants.Code_CIO NOT IN(SELECT ppa.Code_CIO FROM apprecier_p p JOIN pays_participants ppa ON ppa.Code_CIO = p.Code_CIO WHERE p.id_utilisateur = ?) AND pays_participants.Code_CIO IN(SELECT pp.Code_CIO FROM apprecier_at ath JOIN athletes at_ ON at_.ID_athletes = ath.id_athlete JOIN etre_nationalite en ON en.ID_athletes = ath.id_athlete JOIN pays_participants pp ON pp.Code_CIO = en.id_pays WHERE ath.id_utilisateur = ?) ORDER BY RAND() LIMIT 1');
 						$pays_r2 ->execute(array($_SESSION['utilisateur']['utilisateur'],$_SESSION['utilisateur']['utilisateur']));
 						
 						while ($pays2 = $pays_r2->fetch()) {
-							echo '<p><a href="Pays_particulier.php?id='.$pays2["Code_CIO"].'" class="text-dark"><img src="'.$pays2['I_drapeau'].'" class="img-thumbnail border-0" width="40px"></a> <a href="Pays_particulier.php?id='.$pays2["Code_CIO"].'" class="text-dark"><b> ' . $pays2['nom_pays'] . '</a></b>'.' <abbr title="Futur nationnalite de l\'athlete aimé !" class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr></p>';
+							echo '<p><a href="Pays_particulier.php?id='.$pays2["Code_CIO"].'" class="text-dark"><img src="'.$pays2['I_drapeau'].'" class="img-thumbnail border-0" width="40px"></a> <a href="Pays_particulier.php?id='.$pays2["Code_CIO"].'" class="text-dark"><b> ' . $pays2['nom_pays'] . '</a></b>'.' <abbr title="Vous aimez l\'athl&egrave;te '.$pays2['nom'].' de ce pays !" class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr></p>';
 						}
 					}
 				}
@@ -251,47 +248,82 @@ if (isset($_POST['id_anecdote'], $_POST['utilisateur'])) {
 			?>		
 			</div>
 			<div class="card-footer bg-transparent">
-				<p class="card-text mb-2"><small class="text-muted">Survolez le curseur 	<abbr title="Les informations sur les recommandations s'affichent ici !" 
-				class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr> pour avoir des détails sur les recommandations.</small></p>
+				<p class="card-text mb-2"><small class="text-muted">Survolez quelques secondes le curseur 	<abbr title="Les informations sur les recommandations s'affichent ici !" 
+				class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr> pour avoir des d&eacute;tails sur les recommandations.</small></p>
 			</div>
 	</div>
 	
 	<div class="card">
-		<div class="card-header"><b>Les disciplines...</b></div>
+		<div class="card-header"><b>Les athl&egrave;tes...</b></div>
 		<div class="card-body">
 			<h5 class="card-title">Vous allez aimer</h5>		
-			<?php				
-				session_start();
+			<?php			
+				$athletes = $bdd->prepare('SELECT * FROM athletes ORDER BY RAND() LIMIT 3');
+				$athletes->execute();
+				
 				if(isset($_SESSION['utilisateur'])){
-					$test_disciplines_r = $bdd->prepare('SELECT * FROM apprecier_d WHERE apprecier_d.id_utilisateur = ? LIMIT 1');
-					$test_disciplines_r ->execute([$_SESSION['utilisateur']['utilisateur']]);
-					if($test_disciplines_r->fetch()) {
-						$disciplines_r = $bdd->prepare('SELECT * FROM disciplines, apprecier_d WHERE apprecier_d.id_discipline != disciplines.id_discipline	
-						AND apprecier_d.id_utilisateur = ? ORDER BY RAND() LIMIT 2');
-						$disciplines_r->execute([$_SESSION['utilisateur']['utilisateur']]);
+					$test_athletes = $bdd->prepare('SELECT * FROM apprecier_at WHERE apprecier_at.id_utilisateur = ? ORDER BY RAND() LIMIT 1');
+					$test_athletes ->execute([$_SESSION['utilisateur']['utilisateur']]);
+					if($test_athletes->fetch()) {
+						$athletes = $bdd->prepare('SELECT * FROM athletes, apprecier_at WHERE apprecier_at.id_athlete != athletes.ID_athletes	
+						AND apprecier_at.id_utilisateur = ? ORDER BY RAND() LIMIT 2');
+						$athletes->execute([$_SESSION['utilisateur']['utilisateur']]);
+						// $athletes2='';
+						// while ($athlete2 = $athletes2->fetch()) {
+							// echo '<p><img src="../Images/Boutons/athlete.png" class="img-thumbnail border-0" width="40px"> <b>' . $athlete2['nom'] . '</b>'.' <abbr title="Un peu de d&eacute;couverte hors des chemins habituels." class="tooltip-hover">
+							// <img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr></p>';
+						// }
 					}
-					else {
-						$disciplines_r = $bdd->prepare('SELECT * FROM disciplines ORDER BY RAND() LIMIT 3');
-						$disciplines_r->execute();
-					}
-				}
-				else {
-					$disciplines_r = $bdd->prepare('SELECT * FROM disciplines ORDER BY RAND() LIMIT 3');
-					$disciplines_r->execute();
 				}
 					
-				while ($discipline_r = $disciplines_r->fetch()) {
-					echo '<p><img src="'.$discipline_r['pictogramme'].'" class="img-thumbnail border-0" width="40px"> <b>' . $discipline_r['nom_discipline'] . '</b>'.' <abbr title="Un peu de d&eacute;couverte hors des chemins habituels." class="tooltip-hover">
+				while ($athlete = $athletes->fetch()) {
+					echo '<p><img src="../Images/Boutons/athlete.png" class="img-thumbnail border-0" width="40px"> <b><a href="Athletes.php?id='.$athlete["ID_athletes"].'" class="text-dark">' . $athlete['nom'] . '</a></b>'.' <abbr title="Un peu de d&eacute;couverte hors des chemins habituels." class="tooltip-hover">
 					<img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr></p>';
 				}
 			?>	
 		</div>
 					<div class="card-footer bg-transparent">
-				<p class="card-text mb-2"><small class="text-muted">Survolez le curseur 	<abbr title="Les informations sur les recommandations s'affichent ici !" 
-				class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr> pour avoir des détails sur les recommandations.</small></p>
+				<p class="card-text mb-2"><small class="text-muted">Survolez quelques secondes le curseur 	<abbr title="Les informations sur les recommandations s'affichent ici !" 
+				class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr> pour avoir des d&eacute;tails sur les recommandations.</small></p>
 			</div>
 	</div>
 		
+		
+		
+<!--	<div class="card">
+		<div class="card-header"><b>Les disciplines...</b></div>
+		<div class="card-body">
+			<h5 class="card-title">Vous allez aimer</h5>		
+			 <?php				
+				// if(isset($_SESSION['utilisateur'])){
+					// $test_disciplines_r = $bdd->prepare('SELECT * FROM apprecier_d WHERE apprecier_d.id_utilisateur = ? LIMIT 1');
+					// $test_disciplines_r ->execute([$_SESSION['utilisateur']['utilisateur']]);
+					// if($test_disciplines_r->fetch()) {
+						// $disciplines_r = $bdd->prepare('SELECT * FROM disciplines, apprecier_d WHERE apprecier_d.id_discipline != disciplines.id_discipline	
+						// AND apprecier_d.id_utilisateur = ? ORDER BY RAND() LIMIT 2');
+						// $disciplines_r->execute([$_SESSION['utilisateur']['utilisateur']]);
+					// }
+					// else {
+						// $disciplines_r = $bdd->prepare('SELECT * FROM disciplines ORDER BY RAND() LIMIT 3');
+						// $disciplines_r->execute();
+					// }
+				// }
+				// else {
+					// $disciplines_r = $bdd->prepare('SELECT * FROM disciplines ORDER BY RAND() LIMIT 3');
+					// $disciplines_r->execute();
+				// }
+					
+				// while ($discipline_r = $disciplines_r->fetch()) {
+					// echo '<p><img src="'.$discipline_r['pictogramme'].'" class="img-thumbnail border-0" width="40px"> <b>' . $discipline_r['nom_discipline'] . '</b>'.' <abbr title="Un peu de d&eacute;couverte hors des chemins habituels." class="tooltip-hover">
+					// <img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr></p>';
+				// }
+			// ?>	
+		</div>
+					<div class="card-footer bg-transparent">
+				<p class="card-text mb-2"><small class="text-muted">Survolez quelques secondes le curseur 	<abbr title="Les informations sur les recommandations s'affichent ici !" 
+				class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr> pour avoir des d&eacute;tails sur les recommandations.</small></p>
+			</div>
+	</div>-->
 		
 	
 </div> <!-- Fin du tableau des recommandations -->

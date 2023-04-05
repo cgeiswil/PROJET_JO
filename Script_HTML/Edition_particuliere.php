@@ -43,12 +43,12 @@
 					
 				// AJOUT DU COEUR
 					session_start();
-					$image = "../Images/Boutons/Coeur_olympiades.jpg";
+					$image = "../Images/Boutons/Coeur_olympiades.png";
 					if (isset($_SESSION['utilisateur'])) {
 						$aimer = $bdd->prepare('SELECT * FROM apprecier_o WHERE id_olympiade = ? AND id_utilisateur = ?');
 						$aimer->execute(array($id_olympiade, $_SESSION['utilisateur']['utilisateur']));
 						if ($aimer->fetch()) {
-							$image = "../Images/Boutons/Coeur_olympiades_rempli.jpg";
+							$image = "../Images/Boutons/Coeur_olympiades_rempli.png";
 						}
 					}
 
@@ -64,7 +64,7 @@
 							xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 							xhr.onload = function() {
 								if (xhr.status === 200) {
-									coeur.src = "../Images/Boutons/Coeur_olympiades_rempli.jpg";
+									coeur.src = "../Images/Boutons/Coeur_olympiades_rempli.png";
 								} else {
 									console.log("[ERREUR] Erreur de mise à jour des données !!!!");
 								}
@@ -80,11 +80,20 @@
 					}
 				// FIN AJOUT DU COEUR
 				
+				// AJOUT BOUTON CARTE				
+				echo '<a href="Vision_par_editions.php?lat='.$olympiade['latitude'].'&lon='.$olympiade['longitude'].'#carte"><button type="button" class="btn btn-lg bg-white text-danger border-0  ml-2">';
+				echo '<img src="../Images/Boutons/Carte.png" alt="Bouton carte des pays" onmouseover="this.src=\'../Images/Boutons/Carte_survol.png\'" onmouseout="this.src=\'../Images/Boutons/Carte.png\';" height="60px" />
+				</button><a>';
+				
 				// AJOUT BOUTON COMPARER				
-				   echo '<a href="Comparer.php?id='.$olympiade["id_olympiade"].'#Comparons"><button type="button" class="btn btn-lg bg-white text-danger border-0  ml-2">';
-					 echo '<img src="../Images/Boutons/Comparer_olympiades.jpg" alt="Balance de comparaison de pays" height="60px" />';
-				   echo "</button><a>";
-				 echo "</h1>";
+				echo '<a href="Comparer.php?id='.$olympiade["id_olympiade"].'#Comparons"><button type="button" class="btn btn-lg bg-white text-danger border-0  ml-2">';
+				echo '<img src="../Images/Boutons/Comparer_olympiades.jpg" alt="Bouton balance de comparaison olympiade" onmouseover="this.src=\'../Images/Boutons/Comparer_olympiades_survol.jpg\'" onmouseout="this.src=\'../Images/Boutons/Comparer_olympiades.jpg\';" height="60px" />
+				</button></a>';
+
+				   
+				
+				   
+				echo "</h1>";
 			
 		# Boutons JO AVANT < > JO APRES			
 			$olympiade_avant = $bdd->query('SELECT * FROM olympiades, villes_hotes WHERE n_edition = (SELECT MAX(n_edition) FROM olympiades WHERE n_edition < '.$olympiade["n_edition"].') AND villes_hotes.id_ville = olympiades.id_ville_hote')->fetch();

@@ -11,7 +11,12 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">      
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link rel="shortcut icon" href="../Images/Anneaux/officiel.png" type="image/png">
-
+    <style>
+    h3{
+	margin-right:10px;    
+    }
+    </style>
+    
 </head>
 
 <body>
@@ -22,13 +27,11 @@
     
 
     <?php 
+    session_start();
+    	require('fonction.php');
+	  	$bdd = getBDD();
 	echo "<div class='container'>
 	<h1><center> Les meilleurs athl&egrave;tes de tous les temps </center></h1>";
-		
-		
-    // Connexion à votre base de données
-    require("fonction.php");
-    $bdd = getBDD();
 
          // Récupération de toutes les disciplines
     $req = $bdd->prepare("select disciplines.nom_discipline, disciplines.id_discipline from disciplines; "); // Peut etre changer pour ajouter des disciplines 
@@ -36,11 +39,14 @@
 
     echo "<h2> <center>TOP 6 </center> </h2>";
 
-    $sport = ($_GET['sport'] != '' ? $_GET['sport'] : 'Toutes disciplines confondues');
+$sport = (isset($_GET['sport']) && $_GET['sport'] != '') ? $_GET['sport'] : 'Toutes disciplines confondues';
 
-    echo "<form method='get' id='myForm'>";
+echo "<form method=get id='myForm'>";
 echo "<div class='form-group'>";
-echo "<label for='sport'><h3><center>Choisir une discipline :</center></h3></label>";
+echo "<div style='display: inline-block'>";
+echo "<label for='sport'><h3>Choisir une discipline :</h3></label>";
+echo "</div>";
+echo "<div style='display: inline-block'>";
 echo "<select class='form-control' id='sport' name='sport' onchange='submitForm()'>";
 echo "<option value='".$sport."'>".$sport." </option>";
 while ($dis = $req->fetch()){
@@ -49,8 +55,45 @@ while ($dis = $req->fetch()){
 echo "<option value='Toutes disciplines confondues'>Toutes disciplines confondues </option>";
 echo "</select>";
 echo "</div>";
+echo "</div>";
 echo "</form>";
-//bouton comparer et coeur de la discipline
+
+ // AJOUT DU COEUR
+			  $discipline_sport =  $dis['id_discipline'];
+            $image = "../Images/Boutons/Coeur_olympiades.jpg";
+            if (isset($_SESSION['utilisateur'])) {
+                $aimer = $bdd->prepare("SELECT * FROM apprecier_d WHERE id_discipline = ? AND id_utilisateur = ?");
+					$aimer->execute([$discipline_sport, $_SESSION['utilisateur']['utilisateur']]);
+                if ($aimer->fetch()) {
+                    $image = "../Images/Boutons/Coeur_olympiades_rempli.jpg";
+                }
+            }
+            echo '<div class="row"><div class="col-md-1">
+                    <p><img id="sport" src="'.$image.'" alt="Coeur Pays" height="60px"/></p></div></div>';
+            echo '<script type="text/javascript">
+                var sport = document.getElementById("sport");
+                sport.addEventListener("click", function() {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "Meilleurs_athletes.php");
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xhr.onload = function() {
+                        if (xhr.status === 200) {
+                            sport.src = "../Images/Boutons/Coeur_olympiades_rempli.jpg";
+                        } else {
+                            console.log("[ERREUR] Erreur de mise à jour des données !!!!");
+                        }
+                    };
+								xhr.send("id_disicpline='.$discipline_sport.'&utilisateur='.$_SESSION['utilisateur']['utilisateur'].'");
+                });
+            </script>';
+
+if (isset($_POST['id_discipline'], $_POST['utilisateur'])) {
+    $aimerBD = $bdd->prepare("INSERT INTO apprecier_d(id_discipline, id_utilisateur) VALUES (?, ?)");
+    $aimerBD->execute(array($_POST['id_discipline'], $_POST['utilisateur']));
+    unset($_POST['id_discipline'], $_POST['utilisateur']);
+   
+}
+// FIN AJOUT DU COEUR
 
 echo "<script>";
 echo "function submitForm() {";
@@ -59,7 +102,7 @@ echo "}";
 echo "</script>";
 
 
-
+           
     
 if(isset($sport)){
 
@@ -171,20 +214,20 @@ ORDER BY nb_medailles_or DESC, nb_medailles_Ar DESC, nb_medailles_Br DESC limit 
               echo '<div class="card">
                 <div class="card-body">';
                  if($r_records['nb_records'] != NULL) {
-                    echo '<p><strong>'.$athlete['nom'].'</strong> a déja battus <strong> '.$r_records['nb_records'].'</strong> records !<br>
+                    echo '<p><strong>'.$athlete['nom'].'</strong> a déja battu <strong> '.$r_records['nb_records'].'</strong> records !<br>
                     <br><u>Dernier record en date :</u> ';
                     echo "<table><tr>";
                     echo "<td>".$last_r['epreuves']."</td><td>".$last_r['annee_o']."</td></tr>";
                     echo "<td><strong>".$last_r['record olympique']."</strong> (".$last_r['unite'].")</td><td>".$last_r['stade de la compétition']."</td></tr>";
                     echo "</table>";
                 }else{
-                    echo'<p><strong>'.$athlete['nom'].'</strong> n\'a jamais battus de records.';
+                    echo'<p><strong>'.$athlete['nom'].'</strong> n\'a jamais battu de record.';
                 }
 
                 echo'</div>
 		  </div>';
             }else{
-                echo "Pas de records enregistrées pour cette discipline.";
+                echo "Pas de record enregistré pour cette discipline.";
             }
 
             // Récupération des olympades auquels l'athlete à participés
@@ -326,20 +369,20 @@ ORDER BY nb_medailles_or DESC, nb_medailles_Ar DESC, nb_medailles_Br DESC limit 
               echo '<div class="card">
                 <div class="card-body">';
                  if($r_records['nb_records'] != NULL) {
-                    echo '<p><strong>'.$athlete['nom'].'</strong> a déja battus <strong> '.$r_records['nb_records'].'</strong> records !<br>
+                    echo '<p><strong>'.$athlete['nom'].'</strong> a déja battu <strong> '.$r_records['nb_records'].'</strong> records !<br>
                     <br><u>Dernier record en date :</u> ';
                     echo "<table><tr>";
                     echo "<td>".$last_r['epreuves']."</td><td>".$last_r['annee_o']."</td></tr>";
                     echo "<td><strong>".$last_r['record olympique']."</strong> (".$last_r['unite'].")</td><td>".$last_r['stade de la compétition']."</td></tr>";
                     echo "</table>";
                 }else{
-                    echo'<p><strong>'.$athlete['nom'].'</strong> n\'a jamais battus de records.';
+                    echo'<p><strong>'.$athlete['nom'].'</strong> n\'a jamais battu de record.';
                 }
 
                 echo'</div>
 		  </div>';
             }else{
-                echo "Pas de records enregistrées pour cette discipline.";
+                echo "Pas de record enregistré pour cette discipline.";
             }
             // Récupération des olympades auquels l'athlete à participés
             $olympiades = $bdd->prepare("select olympiades.id_olympiade, olympiades.annee_o, olympiades.logo, villes_hotes.nom from olympiades, etre_nationalite, villes_hotes WHERE villes_hotes.id_ville = olympiades.id_ville_hote and olympiades.id_olympiade = etre_nationalite.id_olympiade and etre_nationalite.ID_athletes =".$athlete['ID_athletes']);

@@ -110,7 +110,6 @@
             </script>';
 
 if (isset($_POST['Code_CIO'], $_POST['utilisateur'])) { 
-	echo "Bonjour";
     $aimerBD = $bdd->prepare("INSERT INTO apprecier_p(Code_CIO, id_utilisateur) VALUES (?, ?)");
     $aimerBD->execute(array($_POST['Code_CIO'], $_POST['utilisateur']));
     unset($_POST['Code_CIO'], $_POST['utilisateur']);
