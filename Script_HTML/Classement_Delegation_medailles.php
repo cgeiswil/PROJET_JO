@@ -197,7 +197,7 @@ $lignes[$i]  =  $requete -> fetchall();
 
      <div class="card-body">
                   <h5 class="card-title">Classement alternatif </h5>
-                  <p class="card-text">Classement des médailles pondérées par leurs valeurs.    <img class = 'petit' src ='../Images/Boutons/medaille_bronze.png' >*1  <img class = 'petit' src ='../Images/Boutons/medaille_argent.png' >*2 <img class = 'petit' src ='../Images/Boutons/medaille_or.png' >*3 </p>
+                  <p class="card-text">Classement des médailles pondérées par leurs valeurs.    <img class = 'petit' src ='../Images/Boutons/medaille_bronze.png' >*1  <img class = 'petit' src ='../Images/Boutons/medaille_argent.png' >*3 <img class = 'petit' src ='../Images/Boutons/medaille_or.png' >*5 </p>
       <div class="row">
         <div class="col-12">
 
@@ -210,32 +210,31 @@ $lignes[$i]  =  $requete -> fetchall();
 <?php
 // Classements alternatifs
 
-
-
 $couleur_medaille = array("Gold","Silver","Bronze");
 $lignes = array();
 $taille_classement = "5";
+$points_medailles = array(5, 3, 1); // Ajout de l'array pour les points des médailles
 for ( $i = 0  ; $i < 3; $i++){
-$requete = $bd -> query("select requete_imbriquee.id_pays, count(requete_imbriquee.nb) as nb_medailles, requete_imbriquee.nom_pays, requete_imbriquee.I_drapeau as drapeau, requete_imbriquee.population as pop
-from (
-        select etre_nationalite.id_olympiade, etre_nationalite.id_pays, count(DISTINCT lier_m.id_epreuves) as nb, pays_participants.nom_pays, pays_participants.I_drapeau, pays_participants.population
+    $requete = $bd -> query("select requete_imbriquee.id_pays, sum(requete_imbriquee.nb * ".$points_medailles[$i].") as nb_medailles, requete_imbriquee.nom_pays, requete_imbriquee.I_drapeau as drapeau
+    from (
+        select etre_nationalite.id_olympiade, etre_nationalite.id_pays, count(DISTINCT lier_m.id_epreuves) as nb, pays_participants.nom_pays, pays_participants.I_drapeau
         from athletes,lier_m,medailles,pays_participants,etre_nationalite,olympiades,epreuves
-                where athletes.ID_athletes = lier_m.ID_athletes
-                and lier_m.id_medaille = medailles.id_medaille
-                and athletes.ID_athletes = etre_nationalite.ID_athletes and
-                etre_nationalite.id_pays = pays_participants.Code_CIO
-                and lier_m.id_olympiade = olympiades.id_olympiade
-                and epreuves.id_epreuves = lier_m.id_epreuves 
-                  and medailles.type =  '".$couleur_medaille[$i]."'
-         and lier_m.id_olympiade = etre_nationalite.id_olympiade
-                group by etre_nationalite.id_olympiade, etre_nationalite.id_pays, lier_m.id_epreuves
+        where athletes.ID_athletes = lier_m.ID_athletes
+            and lier_m.id_medaille = medailles.id_medaille
+            and athletes.ID_athletes = etre_nationalite.ID_athletes and
+            etre_nationalite.id_pays = pays_participants.Code_CIO
+            and lier_m.id_olympiade = olympiades.id_olympiade
+            and epreuves.id_epreuves = lier_m.id_epreuves 
+            and medailles.type = '".$couleur_medaille[$i]."'
+            and lier_m.id_olympiade = etre_nationalite.id_olympiade
+        group by etre_nationalite.id_olympiade, etre_nationalite.id_pays, lier_m.id_epreuves
         ORDER BY etre_nationalite.id_pays ASC
-) as requete_imbriquee
- group by requete_imbriquee.id_pays 
-order by  nb_medailles  DESC
-limit ".$taille_classement);
-$lignes[$i]  =  $requete -> fetchall(); 
-}       
+    ) as requete_imbriquee
+    group by requete_imbriquee.id_pays 
+    order by nb_medailles DESC 
+    limit ".$taille_classement);
+    $lignes[$i]  =  $requete -> fetchAll(); 
+}  
 
 ?>
 
@@ -243,16 +242,6 @@ $lignes[$i]  =  $requete -> fetchall();
 
 <?php
 
-$i = 0;
-$medailles_par_pop = array(); 
-
-while ($i < $taille_classement) {
-      $nb_medailles_tot = $lignes[0][$i]["nb_medailles"] + $lignes[1][$i]["nb_medailles"] + $lignes[2][$i]["nb_medailles"];
-      $medailles_par_pop[$i] = ($nb_medailles_tot / $lignes[0][$i]["pop"])*1000000;
-      $i += 1;
-}
-
-array_multisort($medailles_par_pop, SORT_DESC, $lignes[0]);
 
 // afficher le classement trié
 $i = 0;
