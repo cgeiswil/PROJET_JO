@@ -67,7 +67,7 @@ echo "}";
 echo "</script>";
 // AJOUT DU COEUR
 $image = "../Images/Boutons/Coeur_olympiades.png";
-$id_dis = $dis['id_discipline'];
+$id_dis = $req['id_discipline'];
 if (isset($_SESSION['utilisateur'])) {
     $aimer = $bdd->prepare("SELECT * FROM apprecier_d WHERE id_discipline = ? AND id_utilisateur = ?");
     $aimer->execute(array($id_dis, $_SESSION['utilisateur']['utilisateur']));
