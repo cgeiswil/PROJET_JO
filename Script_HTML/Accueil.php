@@ -15,6 +15,15 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.cycle2/2.1.6/jquery.cycle2.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<style>
+		spanblue{
+			text-align:center;
+			color: #194aa5;
+		}
+		span {
+			 color:#00968D;	
+		}
+	</style>
    <script>
 	$(document).ready(function() {
    	 $('.cycle-slideshow').cycle({
@@ -100,7 +109,7 @@ if (isset($_POST['id_anecdote'], $_POST['utilisateur'])) {
 </div>
 
 	<div class="container mt-5" style="display: flex; justify-content: center;">
-		<h2>Consultez les classements & &eacute;ditions des Jeux Olympiques</h2>
+		<h2>Consultez les <spanblue>classements</spanblue> & <spanblue>&eacute;ditions</spanblue> des Jeux Olympiques</h2>
 	</div>
 
 	<div class="container justify-content-center mt-4">
@@ -155,7 +164,7 @@ if (isset($_POST['id_anecdote'], $_POST['utilisateur'])) {
 
 
 	<div class="container mt-5" style="display: flex; justify-content: center;">
-	<h2 class="mt-3">Ou commencez &agrave; explorer avec un th&egrave;me pr&eacute;cis !</h2>
+	<h2 class="mt-3">Ou commencez &agrave; explorer avec un <spanblue>th&egrave;me pr&eacute;cis</spanblue> !</h2>
 	</div>
 	<div class="container mt-4">
 	
@@ -330,9 +339,11 @@ if (isset($_POST['id_anecdote'], $_POST['utilisateur'])) {
 	
 	
 </div>
+<footer class='mt-5'>
 <?php
         include "pied_de_page.php";
     ?>
+</footer>
 
-    </body>
+</body>
 </html>

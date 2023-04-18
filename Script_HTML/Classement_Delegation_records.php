@@ -43,11 +43,9 @@ $(document).ready(function() {
 
 <body class="d-flex flex-column">
 	<object data="Barre_de_navigation.html" width="100%" height="100%"></object>
-	<h1>Comparons par <span>délégations</span></h1>
-	<br>
-	<br>
-	<br>
-	<br>
+
+	<h1 style='font-size: 50px;'><strong>Comparons par <span>d&eacute;l&eacute;gations</span></strong></h1>
+	<h2 class='mt-1 mb-5'>Par disciplines, m&eacute;dailles ou records.</h2>
 
 
 	<div class="containe">
@@ -62,12 +60,13 @@ $(document).ready(function() {
 			</button>
 		</div>
 		<div class="col-md-4">
-			<button type="submit" class="btn btn-outline-dark" onclick="document.getElementById('records').style.display='block'"> <a href="Classement_Delegation_records.php#record" >
+			<button type="submit" class="btn btn-outline-dark" onclick="document.getElementById('records').style.display='block'"> <a href="Classement_Delegation_records.php?nom_discipline=Athletics#record" >
 				<img src="../Images/Boutons/record_(podium,couronne).png"></a>
 			</button>
 		</div>
 	</div>
 </div>
+
   </div>
  </div>
 	

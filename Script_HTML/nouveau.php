@@ -11,7 +11,7 @@
     	width: 300px;
     	height: 300px;
     }
-    p{
+    #exp{
     	color: #247ffb;
     	font-size: 120%;
     }
@@ -24,13 +24,13 @@
     ?>
   </header> 
 		
-		<div class="container">
+		<div class="container mt-4">
 		<h3>&Ecirc;tes-vous pr&ecirc;t &agrave; d&eacute;couvrir le monde des Jeux Olympiques ?</h3>
 		<h4 class="mb-3">Entrez quelques informations, et c&#039;est parti pour explorer les donn&eacute;es !</h4>
-		<h4>Likez vos pr&eacute;f&eacute;rences et r&eacute;pondez aux quiz pour vivre une exp&eacute;rience plus immersive</h4>
-		<p><strong>N'hesitez pas &agrave; survoler notre mascotte pour d&eacute;couvrir l'ensemble des fonctionnalit&eacute;s</strong></p>
 		
-		
+		<div class="table-responsive">
+			<table class="table table-borderless">
+			<tr><td>
 			<ol>
 			  <form method="post" action="enregistrement.php" autocomplete="on">
 				<li class="form-group">
@@ -53,6 +53,12 @@
 				<button type="submit" class="btn btn-success">C'est parti !</button>
 			  </form>
 			</ol>
+			</td><td class='mb-4'>
+			<h4 class='text-right mt-4'>Likez vos pr&eacute;f&eacute;rences et r&eacute;pondez aux quiz <br>pour vivre une exp&eacute;rience plus immersive</h4>
+			<p class='text-right' id="exp"><strong>N'hesitez pas &agrave; survoler notre mascotte <br>pour d&eacute;couvrir l'ensemble des fonctionnalit&eacute;s</strong></p>
+			</td></tr>
+			</table>
+		</div>
 			
 			 <img class="mascotte" onmouseout="this.src='../Images/Mascotte/mascotte2d.png';" onmouseover="this.src='../Images/Mascotte/mascotted_nouveau.png';" src="../Images/Mascotte/mascotte2d.png"  alt="mascotte" />
 			

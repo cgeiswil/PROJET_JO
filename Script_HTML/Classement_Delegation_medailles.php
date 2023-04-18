@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 	<meta charset="utf-8">
-	<title>Médailles/délégation</title>
+	<title>M&eacute;dailles/d&eacute;l&eacute;gation</title>
 	<link rel="shortcut icon" href="../Images/Anneaux/officiel.png" type="image/png">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 	<link href="./Styles/Vision_par_delegations.css" rel="stylesheet" type="text/css">
@@ -24,11 +24,10 @@
 <body  class="d-flex flex-column">
 	<object data="Barre_de_navigation.html" width="100%" height="100%">
     </object>
-<h1>  Comparons par <span> délégations </span>  </h1> 
-<br>
-<br>
-<br>
-<br>
+	
+	<h1 style='font-size: 50px;'><strong>Comparons par <span>d&eacute;l&eacute;gations</span></strong></h1>
+	<h2 class='mt-1 mb-5'>Par disciplines, m&eacute;dailles ou records.</h2>
+
 
 	<div class="containe">
 	<div class="row">
@@ -37,17 +36,18 @@
 			</button>
 		</div>
 		<div class="col-md-4">
-			<button type="submit" class="btn btn-outline-dark" onclick="document.getElementById('médailleCIO').style.display='block'"><a href="Classement_Delegation_medailles.php#medailleCIO" >
+			<button type="submit" class="btn btn-outline-dark" onclick="document.getElementById('m&eacute;dailleCIO').style.display='block'"><a href="Classement_Delegation_medailles.php#medailleCIO" >
 				<img src="../Images/Boutons/medaille_or.png"></a>
 			</button>
 		</div>
 		<div class="col-md-4">
-			<button type="submit" class="btn btn-outline-dark" onclick="document.getElementById('records').style.display='block'"> <a href="Classement_Delegation_records.php#record" >
+			<button type="submit" class="btn btn-outline-dark" onclick="document.getElementById('records').style.display='block'"> <a href="Classement_Delegation_records.php?nom_discipline=Athletics#record" >
 				<img src="../Images/Boutons/record_(podium,couronne).png"></a>
 			</button>
 		</div>
 	</div>
 </div>
+
   </div>
  </div>
 
@@ -104,7 +104,7 @@ $lignes[$i]  =  $requete -> fetchall();
         
     <br><br>
    
-     <center><h2><strong>Classement des médailles CIO</strong></h2></center>
+     <center><h2><strong>Classement des m&eacute;dailles CIO</strong></h2></center>
      <br>
      <style>
       #vision
@@ -131,8 +131,8 @@ $lignes[$i]  =  $requete -> fetchall();
      <br>
      <div class="container card">
      <div class="card-body">
-                  <h5 class="card-title">Classement officiel du Comité International Olympique</h5>
-                  <p class="card-text">Classement en fonction du nombre de médailles d'or gagnées par les délégations.</p>
+                  <h5 class="card-title">Classement officiel du Comit&eacute; International Olympique</h5>
+                  <p class="card-text">M&eacute;dailles d'or gagn&eacute;es par les d&eacute;l&eacute;gations par ordre croissant.</p>
       <div class="row">
         <div class="col-12">
 
@@ -152,9 +152,9 @@ $lignes[$i]  =  $requete -> fetchall();
         echo "<tr>
                   <td>".strval($i + 1)."</td>
                    <th scope='row'><a href='Pays_particulier.php?id=".$lignes[0][$i]["id_pays"]."'><img class='drapeaufr' src='" . $lignes[0][$i]["drapeau"] . "' alt='Drapeau France' class='img-thumbnail border-0' width='40px'> " . $lignes[0][$i]["nom_pays"] . "</a></th>
-                  <td><img class='imageclassement' src='../Images/Boutons/medaille_or.png' alt='Médaille d'or' width='20px'> <span>" . $lignes[0][$i]["nb_medailles"] . "</span></td>
-                  <td><img class='imageclassement' src='../Images/Boutons/medaille_argent.png' alt='Médaille d'argent' width='20px'> <span>" . $lignes[1][$i]["nb_medailles"] . "</span></td>
-                  <td><img class='imageclassement' src='../Images/Boutons/medaille_bronze.png' alt='Médaille de bronze' width='20px'> <span>" . $lignes[2][$i]["nb_medailles"] . "</span></td>
+                  <td><img class='imageclassement' src='../Images/Boutons/medaille_or.png' alt='M&eacute;daille d'or' width='20px'> <span>" . $lignes[0][$i]["nb_medailles"] . "</span></td>
+                  <td><img class='imageclassement' src='../Images/Boutons/medaille_argent.png' alt='M&eacute;daille d'argent' width='20px'> <span>" . $lignes[1][$i]["nb_medailles"] . "</span></td>
+                  <td><img class='imageclassement' src='../Images/Boutons/medaille_bronze.png' alt='M&eacute;daille de bronze' width='20px'> <span>" . $lignes[2][$i]["nb_medailles"] . "</span></td>
                   <td>= " . ($lignes[0][$i]["nb_medailles"] + $lignes[1][$i]["nb_medailles"] + $lignes[2][$i]["nb_medailles"]) . "</td>
               </tr>";
         $i += 1;
@@ -197,7 +197,7 @@ $lignes[$i]  =  $requete -> fetchall();
 
      <div class="card-body">
                   <h5 class="card-title">Classement alternatif </h5>
-                  <p class="card-text">Classement des médailles pondérées par leurs valeurs.    <img class = 'petit' src ='../Images/Boutons/medaille_bronze.png' >*1  <img class = 'petit' src ='../Images/Boutons/medaille_argent.png' >*3 <img class = 'petit' src ='../Images/Boutons/medaille_or.png' >*5 </p>
+                  <p class="card-text">M&eacute;dailles pond&eacute;r&eacute;es par des valeurs.    <img class = 'petit' src ='../Images/Boutons/medaille_bronze.png' >*1  <img class = 'petit' src ='../Images/Boutons/medaille_argent.png' >*3 <img class = 'petit' src ='../Images/Boutons/medaille_or.png' >*5 </p>
       <div class="row">
         <div class="col-12">
 
@@ -213,7 +213,7 @@ $lignes[$i]  =  $requete -> fetchall();
 $couleur_medaille = array("Gold","Silver","Bronze");
 $lignes = array();
 $taille_classement = "5";
-$points_medailles = array(5, 3, 1); // Ajout de l'array pour les points des médailles
+$points_medailles = array(5, 3, 1); // Ajout de l'array pour les points des m&eacute;dailles
 for ( $i = 0  ; $i < 3; $i++){
     $requete = $bd -> query("select requete_imbriquee.id_pays, sum(requete_imbriquee.nb * ".$points_medailles[$i].") as nb_medailles, requete_imbriquee.nom_pays, requete_imbriquee.I_drapeau as drapeau
     from (
@@ -243,15 +243,15 @@ for ( $i = 0  ; $i < 3; $i++){
 <?php
 
 
-// afficher le classement trié
+// afficher le classement tri&eacute;
 $i = 0;
 while ($i < $taille_classement) {
       echo "<tr>
               <td>".strval($i + 1)."</td>
               <th scope='row'><a href='Pays_particulier.php?id=".$lignes[0][$i]["id_pays"]."'><img class='drapeaufr' src='" . $lignes[0][$i]["drapeau"] . "' alt='Drapeau France' class='img-thumbnail border-0' width='40px'> " . $lignes[0][$i]["nom_pays"] . "</a></th>
-              <td><img class='imageclassement' src='../Images/Boutons/medaille_or.png' alt='Médaille d'or' width='20px'> <span>" . $lignes[0][$i]["nb_medailles"] . "</span></td>
-              <td><img class='imageclassement' src='../Images/Boutons/medaille_argent.png' alt='Médaille d'argent' width='20px'> <span>" . $lignes[1][$i]["nb_medailles"] . "</span></td>
-              <td><img class='imageclassement' src='../Images/Boutons/medaille_bronze.png' alt='Médaille de bronze' width='20px'> <span>" . $lignes[2][$i]["nb_medailles"] . "</span></td>
+              <td><img class='imageclassement' src='../Images/Boutons/medaille_or.png' alt='M&eacute;daille d'or' width='20px'> <span>" . $lignes[0][$i]["nb_medailles"] . "</span></td>
+              <td><img class='imageclassement' src='../Images/Boutons/medaille_argent.png' alt='M&eacute;daille d'argent' width='20px'> <span>" . $lignes[1][$i]["nb_medailles"] . "</span></td>
+              <td><img class='imageclassement' src='../Images/Boutons/medaille_bronze.png' alt='M&eacute;daille de bronze' width='20px'> <span>" . $lignes[2][$i]["nb_medailles"] . "</span></td>
               <td>= " . ($lignes[0][$i]["nb_medailles"] + $lignes[1][$i]["nb_medailles"] + $lignes[2][$i]["nb_medailles"]) . "</td>
           </tr>";
       $i += 1;

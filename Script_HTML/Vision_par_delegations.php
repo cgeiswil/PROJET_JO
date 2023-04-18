@@ -11,7 +11,7 @@
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
   <link rel="shortcut icon" href="../Images/Anneaux/officiel.png" type="image/png">
 
-<title>  Médailles/délégation  </title>
+<title>  Médailles/délégations  </title>
 <style type="text/css">
 .containe{
 	display: flex;
@@ -28,11 +28,10 @@
 
 	<object data="Barre_de_navigation.html" width="100%" height="100%">
     </object>
-<h1>  Comparons par <span> délégations </span>  </h1> 
-<br>
-<br>
-<br>
-<br>
+	
+	
+	<h1 style='font-size: 50px;'><strong>Comparons par <span>d&eacute;l&eacute;gations</span></strong></h1>
+	<h2 class='mt-1 mb-5'>Par disciplines, m&eacute;dailles ou records.</h2>
 
 
 	<div class="containe">

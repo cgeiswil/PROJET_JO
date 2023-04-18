@@ -5,18 +5,23 @@
 		<title> Qu'est ce que les JO </title>
 		<link rel="shortcut icon" href="../Images/Anneaux/officiel.png" type="image/png">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-		<link rel="stylesheet" href="Styles/Bibliographie.css" type="text/css">
+		<style>
+		h1{
+			font-weight: bold;
+			color: #194aa5;
+		}
+		</style>		
 	</head>
 	<body>
 
-		 <header>
+	<header>
   <?php
     include "Barre_de_navigation.html";
     ?>
   </header> 
 
-		<div class="container">
-		<h1> Au fait. C'est quoi les JO ?</h1>
+		<div class="container mt-5">
+		<h1><strong>Au fait. C'est quoi les JO ?</strong></h1>
 		<h2>Le retour des JO modernes après 1500 ans d'absence</h2>
 
  
@@ -59,7 +64,7 @@
 	</div>
 
 
-<footer>	
+<footer class='mt-3'>	
     <?php
         include "pied_de_page.php";
     ?>

@@ -5,6 +5,11 @@
 	
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<link rel="shortcut icon" href="../Images/Anneaux/officiel.png" type="image/png">
+	<style>
+	.petit{
+      height : 30px;
+    }
+	</style>
 	<?php	
 	require("fonction.php");
 	$bdd = getBDD();
@@ -183,7 +188,7 @@ if ($nb_ath['nb']!=0) {
 	echo '<div class="container card">';
 	echo '<div class="card-body">';
 		echo '<h5 class="card-title">Classement officiel du Comit&eacute; International Olympique</h5>';
-		echo '<p class="card-text">Description du classement.</p>';
+		echo '<p class="card-text">M&eacute;dailles d\'or gagn&eacute;es par les d&eacute;l&eacute;gations par ordre croissant.</p>';
 
 		  echo '<div class="row">';
 			echo '<div class="col-12">';
@@ -219,30 +224,8 @@ if ($nb_ath['nb']!=0) {
 			 <div class="card-deck">
 			  <div class="card">
 				<div class="card-body">
-				  <h5 class="card-title">Par athlètes (m&eacute;dailles d\'or)</h5>
-				  <p class="card-text">Description du classement.</p>
-				  <p class="card-text">
-				  
-					
-					 <div class="row">
-						<div class="col-12">
-						  <table class="table">
-							<tbody>
-							 
-							</tbody>
-						  </table>
-						</div>
-					  </div>
-				  
-				  
-				  </p>
-				  
-				</div>
-			  </div>
-			  <div class="card">
-				<div class="card-body">
 				  <h5 class="card-title">Par population des d&eacute;l&eacute;gations</h5>
-				  <p class="card-text">Description du classement.</p>
+				  <p class="card-text">Prise en compte de la population dans le classement.</p>
 							  <p class="card-text">';
 					
 					$classement_or_pop = $bdd->query('SELECT (count(DISTINCT lier_m.id_epreuves) / (pays_participants.population)) as nb, etre_nationalite.id_pays, pays_participants.nom_pays, pays_participants.I_drapeau, Code_CIO FROM lier_m, etre_nationalite, athletes, pays_participants WHERE pays_participants.Code_CIO = etre_nationalite.id_pays AND lier_m.ID_athletes = athletes.ID_athletes AND athletes.ID_athletes = etre_nationalite.ID_athletes AND lier_m.id_olympiade = etre_nationalite.id_olympiade and pays_participants.population != -1 AND lier_m.id_medaille = 1 AND lier_m.id_olympiade = "'.$olympiade['id_olympiade'].'" GROUP BY etre_nationalite.id_pays ORDER BY `nb`  ASC LIMIT 3');	
@@ -278,7 +261,7 @@ if ($nb_ath['nb']!=0) {
 			  <div class="card">
 				<div class="card-body">
 				  <h5 class="card-title">Par m&eacute;dailles pond&eacute;r&eacute;es</h5>
-				  <p class="card-text">Description du classement.</p>
+				  <p class="card-text">M&eacute;dailles pond&eacute;r&eacute;es par des valeurs.    <img class = "petit" src = "../Images/Boutons/medaille_bronze.png">*1  <img class = "petit" src = "../Images/Boutons/medaille_argent.png">*3 <img class = "petit" src = "../Images/Boutons/medaille_or.png">*5 </p>
 				  
 							  <p class="card-text">
 				  

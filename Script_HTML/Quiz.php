@@ -24,19 +24,20 @@
     ?>
   </header> 
 
-		<div class="container">
+		<div class="container mt-4">
 		
-		<h1>Quiz</h1>
+		
+		<h1 class='mt-1 mb-4'><strong>Testez vos connaissances <span>olympiques</span></strong></h1>
+		
 		<h2>Choisissez le niveau de difficulté :</h2>
 		
-		<table>
-			<td><a href="Quiz.php?niveau=facile"><button type="button" class="btn btn-success">Facile</button></a></td>
-			<td><a href="Quiz.php?niveau=moyen"><button type="button" class="btn btn-warning">Moyen</button></a></td>
-			<td><a href="Quiz.php?niveau=difficile"><button type="button" class="btn btn-danger">Difficile</button></a></td>
-		</table>
+		<h2 class='mt-1 mb-5'><a href="Quiz.php?niveau=facile"><button type="button" class="btn btn-success">Facile</button></a>
+		<a href="Quiz.php?niveau=moyen"><button type="button" class="btn btn-warning">Moyen</button></a>
+		<a href="Quiz.php?niveau=difficile"><button type="button" class="btn btn-danger">Difficile</button></a></h2>
 		
 		
-		<h4 class="center">Quiz niveau <?php echo ($_GET['niveau'] != "" ? $_GET['niveau'] : 'Facile'); ?></h4>
+		
+		<h4 class="center"><img class='mr-2' src='../Images/Mascotte/mascotte2d.png' height='35px'>Quiz de niveau <?php echo ($_GET['niveau'] != "" ? $_GET['niveau'] : 'Facile'); ?> :</h4>
 		<br>
 
 	
@@ -55,7 +56,7 @@ $resultat = $bdd->query($requete);
 if ($resultat->rowCount() > 0) {
     echo "<form method='post'>";
     while($ligne = $resultat->fetch()) {
-        echo '<h5 class="center"><strong>'.$ligne['question'].'</strong></h5>';
+        echo '<h5 class="center mb-2"><strong>'.$ligne['question'].'</strong></h5>';
         echo "<ul>";
         $requete_reponses = "SELECT reponse, vraie_fausse FROM `reponses` WHERE id_question = '".$ligne['id_question']."' ORDER BY RAND()";
         $resultat_reponses = $bdd->query($requete_reponses);
@@ -79,7 +80,7 @@ if ($resultat->rowCount() > 0) {
         }
         echo "</ul>";
     }
-    echo "<button type='submit' class='btn btn-success center' >Valider les réponses</button>";
+    echo "<center><button type='submit' class='btn btn-success center' >Valider les réponses</button></center>";
     echo "</form>";
 } else {
     echo "Aucune question trouvée.";

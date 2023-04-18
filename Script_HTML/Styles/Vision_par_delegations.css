@@ -1,16 +1,19 @@
 h1{
-	font-size : 65px;
 	text-align:center;
 	font-family:helvetica-w01-roman,helvetica-w02-roman,helvetica-lt-w10-roman,sans-serif;
 	padding-top : 100px;
-	
+	color: #194aa5;
 }
 h2{
-	font-size : 45px;
 	text-align:center;
 }
 h3{
-text-align: center;}
+text-align: center;
+}
+
+h4{
+text-align: center;
+}
 
 span {
 	 color:#00968D;	
@@ -50,6 +53,9 @@ width : 30px;
 height : 50px;
 }
 
+.imagemascotte{
+height : 40px;
+}
 
 .drapeaufr{
 	width : 60px;

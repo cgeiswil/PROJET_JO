@@ -11,8 +11,15 @@
 		
 		<link rel="shortcut icon" href="../Images/Anneaux/officiel.png" type="image/png">
 	   <style>
-		h1.olympiade-title {
-		  font-weight: bold;
+		h1{
+			text-align:center;
+			color: #194aa5;
+		}
+		h2{
+			text-align:center;
+		}
+		span {
+			 color:#00968D;	
 		}
 	   </style>
 	</head>
@@ -23,7 +30,8 @@
 		?>
 	</header>
 	<div class="container  mt-5">
-    <h2 class='mb-5'>Comparons les Olympiades</h2>		
+	<h1><strong>Comparons par <span>olympiades</span></strong></h1>	
+	<h2 class='mb-5'>de 1896 &agrave; 2016 !</h2>	
 		
 		<?php 
 			// Connexion à la BD

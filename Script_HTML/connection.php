@@ -18,13 +18,18 @@
     ?>
   </header> 
 		
-		<div class="container">
+		<div class="container mt-4">
 		<h3>Bienvenue, on esp&egrave;re que vous allez bien !</h3>
 		<h4 class="mb-3">Entrez vos informations pour vous connecter &agrave; votre compte.</h4>
 
+
 			<form class="form-horizontal" action="enConnection.php" method="post" autocomplete="on">
 			  <div class="form-group">
-				<label for="pseudo" class="col-sm-2 control-label">Nom d'utilisateur</label>
+				<label for="pseudo" class="col-sm-2 control-label">Nom d'utilisateur</label> 
+				
+				<img src='../Images/Mascotte/mascotte.png' class='float-right' alt='Mascotte du site'>
+				
+				
 				<div class="col-sm-10">
 				  <input type="text" class="form-control" id="pseudo" name="pseudo" value="<?php echo $_GET['pseudo']; ?>" style="max-width: 400px;">
 				</div>
@@ -41,6 +46,7 @@
 				</div>
 			  </div>
 			</form>
+
 
 		<div class="container">
 			<?php

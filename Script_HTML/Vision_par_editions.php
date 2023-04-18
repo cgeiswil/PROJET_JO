@@ -14,8 +14,12 @@
 	  height: 400px;
 	}
 	.info{
-	color:#247ffb;
-    	font-size: 120%;}
+		color:#247ffb;
+    	font-size: 120%;
+	}
+	span {
+	 color:#00968D;	
+	}
 	</style>
   
 	<!-- FRISE -->
@@ -33,9 +37,8 @@
     include "Barre_de_navigation.html";
     ?>
   </header> 
-	<div class="container">
-	  <h1>Comparons par<div class="edition">&eacute;ditions</div></h1>
-	  <p class="tiret">_______</p>
+	<div class="container mt-3">
+	  <h1><strong>Comparons les olympiades par <span>&eacute;ditions</span></strong></h1>
 	  <h2 id='carte'>54 Jeux Olympiques se sont d&eacute;roul&eacute;s depuis 1896 !</h2>
 	  <br>
 	  <div id="map"></div>
@@ -76,7 +79,7 @@
 					// Sinon, ajouter un nouvel élément à l'objet
 					let de = "de ";
 					if (["A", "I", "O"].includes(olympiades[i].nom.charAt(0).toUpperCase())) { de = "d'"; }
-					popupTextByCoordinates[coordinates] = '<a href="Pays_particulier.php?id=' + olympiades[i].Code_CIO + '"><img src="' + olympiades[i].I_drapeau + '" alt="Drapeau ' + olympiades[i].pays_hote + '" class="img-thumbnail border-0" width="40px"><b>' + olympiades[i].pays_hote + "</b><br>Dans la ville " + de + '<b>' + olympiades[i].nom + "</b> !<br>" + popupText;
+					popupTextByCoordinates[coordinates] = '<a href="Pays_particulier.php?id=' + olympiades[i].Code_CIO + '"><img src="' + olympiades[i].I_drapeau + '" alt="Drapeau ' + olympiades[i].pays_hote + '" class="img-thumbnail border-0" width="40px"><b>' + olympiades[i].pays_hote + "</a></b><br>Dans la ville " + de + '<b>' + olympiades[i].nom + "</b> !<br>" + popupText;
 				  }
 				}
 			}
@@ -102,7 +105,7 @@
 					}
 				  } else { 
 					// Sinon, ajouter un nouvel élément à l'objet
-					popupTextByCoordinates[coordinates] = '<a href="Pays_particulier.php?id=' + olympiades[i].Code_CIO + '"><img src="' + olympiades[i].I_drapeau + '" alt="Drapeau ' + olympiades[i].pays_hote + '" class="img-thumbnail border-0" width="40px"><b>' + olympiades[i].pays_hote + "</b><br>" + summer_indication + popupText;
+					popupTextByCoordinates[coordinates] = '<a href="Pays_particulier.php?id=' + olympiades[i].Code_CIO + '"><img src="' + olympiades[i].I_drapeau + '" alt="Drapeau ' + olympiades[i].pays_hote + '" class="img-thumbnail border-0" width="40px"><b>' + olympiades[i].pays_hote + "</a></b><br>" + summer_indication + popupText;
 				  }
 				  pays = olympiades[i].pays_hote;
 				}
@@ -143,10 +146,10 @@
 		  });
 		  </script>
 	  <br>
+	  <p class="info" align="center"><img class='mr-3' src='../Images/Mascotte/mascotte2d.png' height='70px'><strong>Parcourez les différentes villes et pays organisateurs en cliquant sur les pointeurs de la carte !</strong></p>
 		<p>
 			<div class="d-flex justify-content-between">
 					<p><img src='https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png' alt='Marqueur rouge' height='25px' class="mx-3">Olympiades d'&Eacutet&eacute;</p>
-					<p class="info" align="center"><strong>Parcourez les différentes villes et pays organisateurs en cliquant sur la carte !</strong></p>
 				<a href="Vision_par_editions.php#carte"><button class="btn btn-outline-info float-right">&#128269; Villes Organisatrices</button></a>
 			</div>
 			<div class="d-flex justify-content-between">
@@ -306,10 +309,12 @@
 		});
 	});
 	</script>
+	<p class="info" align="center"><img src='../Images/Mascotte/mascotte.png' height='70px'><strong>Parcourez les &eacute;ditions avec les fl&egrave;ches de gauche et de droite !</strong></p>
 
 
 	</div>
 	<iframe class="mt-5" src="Pied_de_page.php" width="100%" height="50%" frameborder="0"></iframe>
+	
 </body>
 </html>
 

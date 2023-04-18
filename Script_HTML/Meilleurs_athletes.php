@@ -20,6 +20,20 @@
     	width: 300px;
     	height: 300px;
     }
+	h1{
+		text-align: center;
+		font-size: 50px;
+		font-weight: bold;
+		color: #194aa5;
+	}
+
+	h2{
+		text-align: center;
+		font-size: 35px;
+	}
+	span {
+	 color:#00968D;	
+	}
     </style>
     
 </head>
@@ -38,21 +52,30 @@
     session_start();
     	require('fonction.php');
 	  	$bdd = getBDD();
-	echo "<div class='container'>
-	<h1><center> Les meilleurs athl&egrave;tes de tous les temps </center></h1>";
-
+	echo "<div class='container mt-5'>
+	<h1><strong>Les meilleurs <span>athl&egrave;tes</span> de tous les temps</strong></h1>
+	<h2 class='mt-1 mb-5'>";
+	
+// AJOUT DU COEUR
+$image = "../Images/Boutons/Coeur_olympiades.png";
+$id_dis = $dis['id_discipline'];
+if (isset($_SESSION['utilisateur'])) {
+    $aimer = $bdd->prepare("SELECT * FROM apprecier_d WHERE id_discipline = ? AND id_utilisateur = ?");
+    $aimer->execute(array($id_dis, $_SESSION['utilisateur']['utilisateur']));
+    if ($aimer->fetch()) {
+        $image = "../Images/Boutons/Coeur_olympiades_rempli.png";
+    }
+}
          // Récupération de toutes les disciplines
     $req = $bdd->prepare("select disciplines.nom_discipline, disciplines.id_discipline from disciplines; "); // Peut etre changer pour ajouter des disciplines 
     $req->execute();
-
-    echo "<h2> <center>TOP 6 </center> </h2>";
 
 $sport = (isset($_GET['sport']) && $_GET['sport'] != '') ? $_GET['sport'] : 'Toutes disciplines confondues';
 
 echo "<form method=get id='myForm'>";
 echo "<div class='form-group'>";
 echo "<div style='display: inline-block'>";
-echo "<label for='sport'><h3>Choisir une discipline :</h3></label>";
+echo "<label for='sport'>Classement des 6 premiers &nbsp;<img id='dis' src='".$image."' alt='Coeur disciplines' height='60px'/>&nbsp;&nbsp;</label>";
 echo "</div>";
 echo "<div style='display: inline-block'>";
 echo "<select class='form-control' id='sport' name='sport' onchange='submitForm()'>";
@@ -64,7 +87,7 @@ echo "<option value='Toutes disciplines confondues'>Toutes disciplines confondue
 echo "</select>";
 echo "</div>";
 echo "</div>";
-echo "</form>";
+echo "</form></h2>";
 
  
 
@@ -73,19 +96,6 @@ echo "function submitForm() {";
 echo "  document.getElementById('myForm').submit();";
 echo "}";
 echo "</script>";
-// AJOUT DU COEUR
-$image = "../Images/Boutons/Coeur_olympiades.png";
-$id_dis = $dis['id_discipline'];
-if (isset($_SESSION['utilisateur'])) {
-    $aimer = $bdd->prepare("SELECT * FROM apprecier_d WHERE id_discipline = ? AND id_utilisateur = ?");
-    $aimer->execute(array($id_dis, $_SESSION['utilisateur']['utilisateur']));
-    if ($aimer->fetch()) {
-        $image = "../Images/Boutons/Coeur_olympiades_rempli.png";
-    }
-}
-echo '<div class="row"><div class="col-md-1">
-        <p><img id="dis" src="'.$image.'" alt="Coeur disciplines" height="60px"/></p>
-    </div></div>';
 
 echo '<script type="text/javascript">
         var dis = document.getElementById("dis");
@@ -179,7 +189,7 @@ ORDER BY nb_medailles_or DESC, nb_medailles_Ar DESC, nb_medailles_Br DESC limit 
         echo '<div class="card">
                 <div class="card-body">
 
-                    <h4 class="card-title mb-0"><center><b><a href="Athletes.php?id='.$r_records['ID_athletes'].'">'.$i.' '. $athlete['nom'] . '</b></center></h4>';
+                    <h4 class="card-title mb-0"><center><b><a href="Athletes.php?id='.$athlete['ID_athletes'].'">'.$i.' '. $athlete['nom'] . '</a></b></center></h4>';
                    //bouton coeur athletes 
                    echo' <h6 class="card-title mb-0 my-1"><a href="Pays_particulier.php?id='.$resultat_pays['Code_CIO'].'"style="color: black;"><img src="' . $resultat_pays['I_drapeau'] . '" alt="Drapeau ' . $resultat_pays['nom_pays'] . '" class="img-thumbnail border-0" width="40px"><strong>' . $resultat_pays['nom_pays'] . '</strong></a></h6>';
 
@@ -303,12 +313,12 @@ ORDER BY nb_medailles_or DESC, nb_medailles_Ar DESC, nb_medailles_Br DESC limit 
 
 
     
-    echo '<div class="card-deck">';
+    echo '<div class="card-deck mt-5">';
     $i = 4;
     while ($i <= 6 && $athlete = $athletes2->fetch()) {
 
          // Récupération du pays de l'athlète
-    $pays = $bdd->prepare("SELECT pays_participants.nom_pays, pays_participants.I_drapeau FROM pays_participants, etre_nationalite where etre_nationalite.id_pays=pays_participants.Code_CIO and etre_nationalite.ID_athletes=".$athlete['ID_athletes'].' Limit 3');
+    $pays = $bdd->prepare("SELECT pays_participants.nom_pays, pays_participants.I_drapeau, Code_CIO FROM pays_participants, etre_nationalite where etre_nationalite.id_pays=pays_participants.Code_CIO and etre_nationalite.ID_athletes=".$athlete['ID_athletes'].' Limit 3');
         // Exécution de la requête pour récupérer le pays de l'athlète
         $pays->execute();
         $resultat_pays = $pays->fetch();
@@ -334,8 +344,8 @@ ORDER BY nb_medailles_or DESC, nb_medailles_Ar DESC, nb_medailles_Br DESC limit 
         echo '<div class="card">
                 <div class="card-body">
 
-                    <h4 class="card-title mb-0"><center><b>'.$i.' '. $athlete['nom'] . '</b></center></h4>
-                    <h6 class="card-title mb-0 my-1"><img src="' . $resultat_pays['I_drapeau'] . '" alt="Drapeau ' . $resultat_pays['nom_pays'] . '" class="img-thumbnail border-0" width="40px">' . $resultat_pays['nom_pays'] . '</h6>';
+                    <h4 class="card-title mb-0"><center><b><a href="Athletes.php?id='.$athlete['ID_athletes'].'">'.$i.' '. $athlete['nom'] . '</a></b></center></h4>
+                    <h6 class="card-title mb-0 my-1"><a href="Pays_particulier.php?id='.$resultat_pays['Code_CIO'].'"style="color: black;"><img src="' . $resultat_pays['I_drapeau'] . '" alt="Drapeau ' . $resultat_pays['nom_pays'] . '" class="img-thumbnail border-0" width="40px"><strong>' . $resultat_pays['nom_pays'] . '</strong></a></h6>';
 
 
         echo '<div class="row">';        
