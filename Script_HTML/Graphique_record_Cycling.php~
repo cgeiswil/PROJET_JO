@@ -10,7 +10,11 @@
 </head>
 
 <body>
-    <object data="Barre_de_navigation.html" width="100%" height="100%"></object>
+<header>
+		<?php
+		include "Barre_de_navigation.html";
+		?>
+	</header>
     
     <h1>Graphiques des records de Cyclisme</h1>
      <h3>Choisissez l'&eacute;preuve dans la liste ci-dessous afin d'afficher le graphique !</h3>

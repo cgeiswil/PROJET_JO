@@ -330,9 +330,11 @@ if (isset($_POST['id_anecdote'], $_POST['utilisateur'])) {
 	
 	
 </div>
-<?php
-        include "pied_de_page.php";
-    ?>
+<footer class='mt-5'>
+	<?php
+		include "pied_de_page.php";
+	?>
+	</footer>
 
     </body>
 </html>

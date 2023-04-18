@@ -15,16 +15,24 @@
     h3{
 	margin-right:10px;    
     }
+    .mascotte{
+		position: absolute; top: 543px; left: 0px;
+    	width: 300px;
+    	height: 300px;
+    }
     </style>
     
 </head>
 
 <body>
 
-		<object data="Barre_de_navigation.html" width="100%" height="100%">
-	</object>
+	<header>
+		<?php
+		include "Barre_de_navigation.html";
+		?>
+	</header>
 
-    
+    <img class="mascotte" onmouseout="this.src='../Images/Mascotte/mascotte2d.png';" onmouseover="this.src='../Images/Mascotte/mascotte_athlete.png';" src="../Images/Mascotte/mascotte2d.png"  alt="mascotte" />
 
     <?php 
     session_start();
@@ -424,6 +432,10 @@ ORDER BY nb_medailles_or DESC, nb_medailles_Ar DESC, nb_medailles_Br DESC limit 
     
     ?>
 </div>
- <iframe class="mt-5" src="Pied_de_page.php" width="100%" height="50%" frameborder="0"></iframe>
+<footer class='mt-5'>
+	<?php
+		include "pied_de_page.php";
+	?>
+	</footer>
 </body>
 </html>

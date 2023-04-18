@@ -435,11 +435,6 @@ from (
 
 
 		?>
-		<footer class='mt-5'>
-	<?php
-		include "pied_de_page.php";
-	?>
-	</footer>
 
 
 

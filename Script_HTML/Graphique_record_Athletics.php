@@ -7,13 +7,24 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link href="./Styles/Vision_par_delegations.css" rel="stylesheet" type="text/css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <style>
+    .mascotte{
+    	position: absolute ;top: 500px;
+    	margin-left: -150px;
+    	float: left;
+    	width: 35%;
+    	height: 35%;
+    }
+    .liste{font-size: 180%;}
+    </style>
 </head>
 
 <body>
     <object data="Barre_de_navigation.html" width="100%" height="100%"></object>
     
-    <h1>Graphiques des records d'Athl&eacute;tique</h1>
+    <h1>Graphiques des records d'Athl&eacute;tisme</h1>
      <h3>Choisissez l'&eacute;preuve dans la liste ci-dessous afin d'afficher le graphique !</h3>
+     
      
      <?php
      $sexe = $_GET['sexe'];
@@ -32,13 +43,13 @@
        $nom_discipline = "Athletics";
        $sexe = $_GET['sexe'];
        if ($sexe == "H") {
-       	echo "<a href='Graphique_record_Athletics.php?sexe=H'>Liste des &eacute;preuves</a>";
+       	echo "<a class='liste' href='Graphique_record_Athletics.php?sexe=H'>Liste des &eacute;preuves</a>";
         	$requete = "SELECT nom_discipline, epreuves.id_epreuves, epreuves.epreuves FROM disciplines, lier_r, records, epreuves 
         	WHERE records.id_record=lier_r.id_record AND lier_r.id_epreuve=epreuves.id_epreuves AND 
         	epreuves.id_disciplines=disciplines.id_discipline AND disciplines.nom_discipline='$nom_discipline' AND epreuves.epreuves LIKE '__________men%' GROUP BY epreuves.id_epreuves";
         	$resultat = $bdd->query($requete);
         } else if ($sexe == "F") {
-          echo "<a href='Graphique_record_Athletics.php?sexe=F'>Liste des &eacute;preuves</a>";
+          echo "<a class='liste' href='Graphique_record_Athletics.php?sexe=F'>Liste des &eacute;preuves</a>";
         	$requete = "SELECT nom_discipline, epreuves.id_epreuves, epreuves.epreuves FROM disciplines, lier_r, records, epreuves 
         	WHERE records.id_record=lier_r.id_record AND lier_r.id_epreuve=epreuves.id_epreuves AND 
         	epreuves.id_disciplines=disciplines.id_discipline AND disciplines.nom_discipline='$nom_discipline' AND epreuves.epreuves LIKE '%women%' GROUP BY epreuves.id_epreuves";
@@ -99,6 +110,10 @@ $_SESSION['epreuve'] = $epreuve;
     <a href="Classement_Delegation_records.php?nom_discipline=Athletics#record"><button type="button" class="btn btn-primary">Retour vers la page pr&eacute;c&eacute;dente</button></a>
     </div>
 
-    <iframe class="mt-5" src="Pied_de_page.php" width="100%" height="50%" frameborder="0"></iframe>
+<footer class='mt-5'>
+	<?php
+		include "pied_de_page.php";
+	?>
+	</footer>
 </body>
 </html>

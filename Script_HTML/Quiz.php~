@@ -18,11 +18,11 @@
 	<body>
 	<?php session_start(); ?>
 
-		<header>
-  <?php
-    include "Barre_de_navigation.html";
-    ?>
-  </header> 
+		<footer class='mt-5'>
+	<?php
+		include "pied_de_page.php";
+	?>
+	</footer>
 
 		<div class="container">
 		

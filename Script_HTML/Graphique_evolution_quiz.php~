@@ -20,7 +20,7 @@ $datay3 = 	$difficile;
 // Create the graph. These two calls are always required
 $graph = new Graph(400,300);
 $graph->clearTheme();
-$graph->SetScale("intlin",0,10);
+$graph->SetScale("intlin",0, 10);
 $graph->SetShadow();
 $graph->img->SetMargin(40,30,20,40);
 

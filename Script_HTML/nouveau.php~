@@ -18,11 +18,7 @@
     </style>
 	</head>
 	<body>
-<header>
-  <?php
-    include "Barre_de_navigation.html";
-    ?>
-  </header> 
+		<object data='Barre_de_navigation.html' width='100%'' height='100%''></object>
 		
 		<div class="container">
 		<h3>&Ecirc;tes-vous pr&ecirc;t &agrave; d&eacute;couvrir le monde des Jeux Olympiques ?</h3>

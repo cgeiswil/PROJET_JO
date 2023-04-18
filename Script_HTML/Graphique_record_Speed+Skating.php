@@ -100,6 +100,10 @@ $_SESSION['epreuve'] = $epreuve;
     <a href="Classement_Delegation_records.php?nom_discipline=Athletics#record"><button type="button" class="btn btn-primary">Retour vers la page pr&eacute;c&eacute;dente</button></a>
     </div>
 
-    <iframe class="mt-5" src="Pied_de_page.php" width="100%" height="50%" frameborder="0"></iframe>
+<footer class='mt-5'>
+	<?php
+		include "pied_de_page.php";
+	?>
+	</footer>
 </body>
 </html>

@@ -10,9 +10,13 @@
 </head>
 
 <body>
-    <object data="Barre_de_navigation.html" width="100%" height="100%"></object>
-    
-    <h1>Graphiques des records de Cyclisme</h1>
+<header>
+		<?php
+		include "Barre_de_navigation.html";
+		?>
+	</header>
+     
+    <h1>Graphiques des records de Natation</h1>
      <h3>Choisissez l'&eacute;preuve dans la liste ci-dessous afin d'afficher le graphique !</h3>
      
      <?php
@@ -30,16 +34,16 @@
       <?php
       require("fonction.php");
        $bdd = getBDD();
-       $nom_discipline = "Cycling";
+       $nom_discipline = "Swimming";
        $sexe = $_GET['sexe'];
        if ($sexe == "H") {
-       	echo "<a href='Graphique_record_Cycling.php?sexe=H'>Liste des &eacute;preuves</a>";
+       	echo "<a href='Graphique_record_Swimming.php?sexe=H'>Liste des &eacute;preuves</a>";
         	$requete = "SELECT nom_discipline, epreuves.id_epreuves, epreuves.epreuves FROM disciplines, lier_r, records, epreuves 
         	WHERE records.id_record=lier_r.id_record AND lier_r.id_epreuve=epreuves.id_epreuves AND 
-        	epreuves.id_disciplines=disciplines.id_discipline AND disciplines.nom_discipline='$nom_discipline' AND epreuves.epreuves LIKE '________men%' GROUP BY epreuves.id_epreuves";
+        	epreuves.id_disciplines=disciplines.id_discipline AND disciplines.nom_discipline='$nom_discipline' AND epreuves.epreuves LIKE '_________men%' GROUP BY epreuves.id_epreuves";
         	$resultat = $bdd->query($requete);
         } else if ($sexe == "F") {
-          echo "<a href='Graphique_record_Cycling.php?sexe=F'>Liste des &eacute;preuves</a>";
+          echo "<a href='Graphique_record_Swimming.php?sexe=F'>Liste des &eacute;preuves</a>";
         	$requete = "SELECT nom_discipline, epreuves.id_epreuves, epreuves.epreuves FROM disciplines, lier_r, records, epreuves 
         	WHERE records.id_record=lier_r.id_record AND lier_r.id_epreuve=epreuves.id_epreuves AND 
         	epreuves.id_disciplines=disciplines.id_discipline AND disciplines.nom_discipline='$nom_discipline' AND epreuves.epreuves LIKE '%women%' GROUP BY epreuves.id_epreuves";
@@ -51,13 +55,14 @@
           while ($ligne = $resultat->fetch()) {
             $epreuve = $ligne['epreuves'];
             $id_epreuve =$ligne['id_epreuves'];
-            echo "<li><a href='Graphique_record_Cycling.php?nom_discipline=$nom_discipline&id_epreuve=$id_epreuve&sexe=$sexe'>$epreuve</a></li>";
+            echo "<li><a href='Graphique_record_Swimming.php?nom_discipline=$nom_discipline&id_epreuve=$id_epreuve&sexe=$sexe'>$epreuve</a></li>";
           }
         ?>
       </ul>
     </li>
   </ul>
 </nav>
+
 
 <?php
 $id_epreuve = $_GET['id_epreuve'];
@@ -96,7 +101,7 @@ $_SESSION['epreuve'] = $epreuve;
 		?>
 	</div>
 	
-	<div class="centre">
+	 <div class="centre">
     <a href="Classement_Delegation_records.php?nom_discipline=Athletics#record"><button type="button" class="btn btn-primary">Retour vers la page pr&eacute;c&eacute;dente</button></a>
     </div>
 

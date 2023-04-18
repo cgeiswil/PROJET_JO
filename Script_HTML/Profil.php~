@@ -255,11 +255,11 @@
 
   			
   			
-  		<footer>	
+  			
     <?php
         include "pied_de_page.php";
     ?>
-    </footer>
+    
 
 
     <?php 
