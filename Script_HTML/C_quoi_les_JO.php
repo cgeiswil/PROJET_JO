@@ -10,6 +10,32 @@
 			font-weight: bold;
 			color: #194aa5;
 		}
+
+		p{
+		text-align: center;		
+		}
+		a{
+		display: flex;
+		justify-content: center;
+		margin: auto;		
+		}
+		td{
+		text-align: center;		
+		}
+		th{
+		padding: 20px;
+		text-align: center;
+		color : red;
+		}
+		.tableau{
+		display: flex;
+		justify-content: center;
+		margin: auto;
+		}
+		.titre{
+		color:black;
+		}
+
 		</style>		
 	</head>
 	<body>
@@ -60,6 +86,92 @@
 		    Depuis, la participation des athlètes f&eacute;minines ne cesse d'augmenter avec une parit&eacute; 
 		    (50/50) pr&eacute;vue pour les Jeux-Olympiques de Paris en 2022 et une augmentation s'&eacute;tant acc&eacute;l&eacute;r&eacute;e &agrave;
 		     partir des ann&eacute;es 80 (x2 entre 84 et 2020). </p>
+
+		   <h2> Les Jeux Olympiques en quelques chiffres </h2>
+
+		   <?php 
+		   require("fonction.php");
+		   $bdd = getBDD();
+		   $NbAthTotS = $bdd -> query("select Count(DISTINCT  athletes.ID_athletes) as NB
+				FROM athletes, olympiades, etre_nationalite, pays_participants
+				Where athletes.ID_athletes = etre_nationalite.ID_athletes
+				AND olympiades.id_olympiade = etre_nationalite.id_olympiade
+				AND etre_nationalite.id_pays = pays_participants.Code_CIO
+				and olympiades.saison = 'summer'");
+		   $NbAthTotW = $bdd -> query("select Count(DISTINCT  athletes.ID_athletes) as NB
+			   FROM athletes, olympiades, etre_nationalite, pays_participants
+				Where athletes.ID_athletes = etre_nationalite.ID_athletes
+				AND olympiades.id_olympiade = etre_nationalite.id_olympiade
+				AND etre_nationalite.id_pays = pays_participants.Code_CIO
+				and olympiades.saison = 'winter'");
+
+		   $ligneS = $NbAthTotS -> fetch();
+		   $ligneW = $NbAthTotW -> fetch();
+		   $EdS = $bdd -> query("select Count(DISTINCT olympiades.id_olympiade) as NB From olympiades
+				Where olympiades.saison = 'summer'
+				and olympiades.annee_o < 2018
+				");
+		   $nbEDS = $EdS -> fetch();
+		   $EdW = $bdd -> query("select Count(DISTINCT olympiades.id_olympiade) as NB From olympiades
+				Where olympiades.saison = 'winter'
+				and olympiades.annee_o < 2018
+				");
+		   $nbEDW = $EdW -> fetch();
+
+
+		   $NbAthEdS = $bdd -> query("select olympiades.id_olympiade, Count(DISTINCT  athletes.ID_athletes) as NB , olympiades.annee_o FROM athletes, olympiades, etre_nationalite, pays_participants
+				Where athletes.ID_athletes = etre_nationalite.ID_athletes
+				AND olympiades.id_olympiade = etre_nationalite.id_olympiade
+				AND etre_nationalite.id_pays = pays_participants.Code_CIO
+				and olympiades.saison = 'summer'
+				GROUP by etre_nationalite.id_olympiade
+				order by NB");
+		   $i = 0;
+		   while ($i < 15){
+		   		$mediane = $NbAthEdS -> fetch();
+		   		$i = $i+1;
+		   }
+
+		   $NbAthEdW = $bdd -> query("select olympiades.id_olympiade, Count(DISTINCT  athletes.ID_athletes) as NB , olympiades.annee_o FROM athletes, olympiades, etre_nationalite, pays_participants
+				Where athletes.ID_athletes = etre_nationalite.ID_athletes
+				AND olympiades.id_olympiade = etre_nationalite.id_olympiade
+				AND etre_nationalite.id_pays = pays_participants.Code_CIO
+				and olympiades.saison = 'winter'
+				GROUP by etre_nationalite.id_olympiade
+				order by NB");
+		    $j = 0;
+		    while ($j < 10){
+		   		$medianeW = $NbAthEdW -> fetch();
+		   		$j = $j+1;
+		   }
+		   $tmp = $medianeW['NB'];
+		   
+		   $medianeW = $NbAthEdW -> fetch();
+		   
+		   $Mediane = round(($tmp + $medianeW['NB'])/2, 0);
+
+		   ?>
+
+
+		   <table class='tableau'> 
+		   	<tr>
+		   		<th> Nombre total d'Athl&egrave;tes </th>
+			   	<th> Nombre moyen d'Athl&egrave;tes par &eacute;dition &eacute;t&eacute;</th>
+			   	<th> Nombre m&eacute;dian d'Athl&egrave;tes par &eacute;dition &eacute;t&eacute; </th>
+			   	<th> Nombre moyen d'Athl&egrave;tes par &eacute;dition hiver </th>
+			   	<th> Nombre m&eacute;dian d'Athl&egrave;tes par &eacute;dition hiver </th>
+			</tr>
+			<tr>
+				<td> <?php echo $ligneS['NB']+$ligneW['NB'] ?> </td>
+				<td> <?php echo round($ligneS['NB']/$nbEDS['NB'], 2) ?> </td>
+				<td> <?php echo $mediane['NB']?> </td>
+				<td> <?php echo round($ligneW['NB']/$nbEDW['NB'], 2) ?> </td>
+				<td> <?php echo $Mediane ?> </td>
+
+			</td>
+		   </table>
+
+
 
 	</div>
 
