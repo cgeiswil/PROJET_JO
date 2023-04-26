@@ -176,7 +176,7 @@ if (isset($_POST['id_anecdote'], $_POST['utilisateur'])) {
 			<h5 class="card-title">Vous allez aimer</h5>
 			<?php
 				session_start();
-				$olympiades = $bdd->prepare('SELECT * FROM olympiades, apprecier_o, villes_hotes WHERE annee_o < 2017 AND villes_hotes.id_ville = olympiades.id_ville_hote ORDER BY RAND() LIMIT 2');
+				$olympiades = $bdd->prepare('SELECT olympiades.id_olympiade, olympiades.logo, olympiades.annee_o, villes_hotes.nom FROM olympiades, apprecier_o, villes_hotes WHERE annee_o < 2017 AND villes_hotes.id_ville = olympiades.id_ville_hote ORDER BY RAND() LIMIT 2');
 				$olympiades->execute();
 					
 				if(isset($_SESSION['utilisateur'])){
@@ -188,10 +188,7 @@ if (isset($_POST['id_anecdote'], $_POST['utilisateur'])) {
 						$olympiades->execute([$_SESSION['utilisateur']['utilisateur']]);
 						
 						// Pays Organisateur que vous avez aimé
-						$olympiades_p = $bdd->prepare('SELECT * FROM olympiades JOIN villes_hotes ON villes_hotes.id_ville = olympiades.id_ville_hote
-						JOIN pays_participants ON olympiades.Code_CIO = pays_participants.Code_CIO WHERE olympiades.annee_o < 2017
-						AND olympiades.id_olympiade NOT IN(SELECT a.id_olympiade FROM apprecier_o a WHERE a.id_utilisateur = ?) 
-						AND pays_participants.Code_CIO IN(SELECT pp.Code_CIO FROM apprecier_p ap JOIN pays_participants pp ON pp.Code_CIO = ap.Code_CIO WHERE ap.id_utilisateur = ?) ORDER BY RAND() LIMIT 1');
+						$olympiades_p = $bdd->prepare('SELECT olympiades.id_olympiade, olympiades.logo, olympiades.annee_o, villes_hotes.nom FROM olympiades JOIN villes_hotes ON villes_hotes.id_ville = olympiades.id_ville_hote JOIN pays_participants ON olympiades.Code_CIO = pays_participants.Code_CIO WHERE olympiades.annee_o < 2017 AND olympiades.id_olympiade NOT IN(SELECT a.id_olympiade FROM apprecier_o a WHERE a.id_utilisateur = ?) AND pays_participants.Code_CIO IN(SELECT pp.Code_CIO FROM apprecier_p ap JOIN pays_participants pp ON pp.Code_CIO = ap.Code_CIO WHERE ap.id_utilisateur = ?) ORDER BY RAND() LIMIT 1');
 						$olympiades_p ->execute(array($_SESSION['utilisateur']['utilisateur'],$_SESSION['utilisateur']['utilisateur']));
 			
 						while ($olympiade_pa = $olympiades_p->fetch()) {
@@ -241,11 +238,11 @@ if (isset($_POST['id_anecdote'], $_POST['utilisateur'])) {
 						}
 						
 						// Athlete que vous avez aimé
-						$pays_r2 = $bdd->prepare('SELECT athletes.nom, pays_participants.Code_CIO, pays_participants.I_drapeau, pays_participants.nom_pays FROM pays_participants JOIN etre_nationalite ON pays_participants.Code_CIO = etre_nationalite.id_pays JOIN athletes ON athletes.ID_athletes = etre_nationalite.ID_athletes WHERE pays_participants.Code_CIO NOT IN(SELECT ppa.Code_CIO FROM apprecier_p p JOIN pays_participants ppa ON ppa.Code_CIO = p.Code_CIO WHERE p.id_utilisateur = ?) AND pays_participants.Code_CIO IN(SELECT pp.Code_CIO FROM apprecier_at ath JOIN athletes at_ ON at_.ID_athletes = ath.id_athlete JOIN etre_nationalite en ON en.ID_athletes = ath.id_athlete JOIN pays_participants pp ON pp.Code_CIO = en.id_pays WHERE ath.id_utilisateur = ?) ORDER BY RAND() LIMIT 1');
-						$pays_r2 ->execute(array($_SESSION['utilisateur']['utilisateur'],$_SESSION['utilisateur']['utilisateur']));
+						$pays_r3 = $bdd->prepare('SELECT athletes.nom, pays_participants.Code_CIO, pays_participants.I_drapeau, pays_participants.nom_pays FROM pays_participants JOIN etre_nationalite ON pays_participants.Code_CIO = etre_nationalite.id_pays JOIN athletes ON athletes.ID_athletes = etre_nationalite.ID_athletes WHERE pays_participants.Code_CIO NOT IN(SELECT ppa.Code_CIO FROM apprecier_p p JOIN pays_participants ppa ON ppa.Code_CIO = p.Code_CIO WHERE p.id_utilisateur = ?) AND pays_participants.Code_CIO IN(SELECT pp.Code_CIO FROM apprecier_at ath JOIN athletes at_ ON at_.ID_athletes = ath.id_athlete JOIN etre_nationalite en ON en.ID_athletes = ath.id_athlete JOIN pays_participants pp ON pp.Code_CIO = en.id_pays WHERE ath.id_utilisateur = ?) ORDER BY RAND() LIMIT 1');
+						$pays_r3 ->execute(array($_SESSION['utilisateur']['utilisateur'],$_SESSION['utilisateur']['utilisateur']));
 						
-						while ($pays2 = $pays_r2->fetch()) {
-							echo '<p><a href="Pays_particulier.php?id='.$pays2["Code_CIO"].'" class="text-dark"><img src="'.$pays2['I_drapeau'].'" class="img-thumbnail border-0" width="40px"></a> <a href="Pays_particulier.php?id='.$pays2["Code_CIO"].'" class="text-dark"><b> ' . $pays2['nom_pays'] . '</a></b>'.' <abbr title="Vous aimez l\'athl&egrave;te '.$pays2['nom'].' de ce pays !" class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr></p>';
+						while ($pays3 = $pays_r3->fetch()) {
+							echo '<p><a href="Pays_particulier.php?id='.$pays3["Code_CIO"].'" class="text-dark"><img src="'.$pays3['I_drapeau'].'" class="img-thumbnail border-0" width="40px"></a> <a href="Pays_particulier.php?id='.$pays3["Code_CIO"].'" class="text-dark"><b> ' . $pays3['nom_pays'] . '</a></b>'.' <abbr title="Vous aimez l\'athl&egrave;te '.$pays3['nom'].' de ce pays !" class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr></p>';
 						}
 					}
 				}
