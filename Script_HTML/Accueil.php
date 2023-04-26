@@ -37,7 +37,7 @@
     <body>
 <?php
 	include "Barre_de_navigation.html";
-	?>
+?>
     <h1>Explorons les jeux olympiques <br> différemment !</h1>
     
     <div class="gif">
@@ -331,15 +331,14 @@ if (isset($_POST['id_anecdote'], $_POST['utilisateur'])) {
 	</div>-->
 		
 	
+	
 </div> <!-- Fin du tableau des recommandations -->
 	
 	
 	
 </div>
 <footer class='mt-5'>
-<?php
-        include "pied_de_page.php";
-    ?>
+	<iframe class="mt-5" src="Pied_de_page.php" width="100%" height="50%" frameborder="0"></iframe>
 </footer>
 
 </body>

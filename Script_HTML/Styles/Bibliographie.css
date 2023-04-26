@@ -3,19 +3,17 @@ img.logo{
 	display : flex;
 }
 
-a{
-text-decoration:none;
-color: black;
-}
-
 h1{
-	font-weight: bold;
+	text-align: center;
+	font-size: 50px;
 	color: #194aa5;
 }
-div{
-margin-left: 20%;
-margin-right: 20%;
-font-style: normal;
+
+span {
+ color:#00968D;	
 }
 
-.footer {position: relative; bottom: 0; left: 0; right: 0}
+h2{
+	text-align: center;
+}
+ 

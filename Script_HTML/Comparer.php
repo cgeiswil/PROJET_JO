@@ -227,11 +227,8 @@
 		</div>
 	</div>
 
-	<footer class='mt-5'>
-	<?php
-		include "pied_de_page.php";
-	?>
+	<footer class='mt-2'>
+		<iframe class="mt-5" src="Pied_de_page.php" width="100%" height="50%" frameborder="0"></iframe>
 	</footer>
-		
-	</body>
+    </body>
 </html>

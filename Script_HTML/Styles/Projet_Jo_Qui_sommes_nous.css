@@ -17,32 +17,31 @@ td{
 
 }
 .nom_dev{
-		font-style: italic;
-		font-size: 18px;
-		font-family: serif;
+	color: #194aa5;
+	font-weight: bold;
+	font-size: 18px;
+	font-family: system-ui;
 }
 .description_role{
-	font-family: serif;
-}
-
-div{
-margin-left: 20%;
-margin-right: 20%;
-font-style: normal;
+	font-family: system-ui;
 }
 
 body{
 	margin-top :100 px;
    margin-left :100 px;
-   font-style: italic;
    font-family: serif;}
    
- h2{
-	text-align: center; 
- }
- h1{
- 	text-align: center;
- }
- 
- .footer {position: relative; bottom: 0; left: 0; right: 0}
+h1{
+	text-align: center;
+	font-size: 50px;
+	color: #194aa5;
+}
+
+span {
+ color:#00968D;		
+}
+
+h2{
+	text-align: center;
+}
  

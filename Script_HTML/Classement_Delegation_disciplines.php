@@ -163,12 +163,12 @@ while ($i < 5) {
     echo '<td><img src="'.$pictogramme['pictogramme'].'"  alt="Discipline ' . $medailleOR['nom_discipline'] .'" class="img-thumbnail border-0" width="80px"><br>' . $medailleOR['nom_discipline'] .'</td> ';
     echo "<td><strong><a href='Pays_particulier.php?id=".$medailleOR['id_pays']."'>".$medailleOR['nom_pays']."</a></strong></td>";
     echo "<td><a href='Pays_particulier.php?id=".$medailleOR['id_pays']."'><img class='drapeaufr' src=".$medailleOR['I_drapeau']." alt='erreur'></a></td>";
-    echo "<td><img class='imageclassement' src='../Images/Boutons/medaille_or.png' alt='Médaille d'or' width='20px'> <span>" . $medailleOR['nb_medailles'] . "</span></td>";
-    echo "<td><strong>".$medailleOR['nb_medailles']."</strong></td>";
-        echo "<td><img class='imageclassement' src='../Images/Boutons/medaille_argent.png' alt='Médaille d'argent' width='20px'> <span>" . $medailleAR['nb_medailles'] . "</span></td>";
-        echo "<td><strong>".$medailleAR['nb_medailles']."</strong></td>";
-        echo "<td><img class='imageclassement' src='../Images/Boutons/medaille_bronze.png' alt='Médaille de bronze' width='20px'> <span>" . $medailleBR['nb_medailles'] . "</span></td>";
-        echo "<td><strong>".$medailleBR['nb_medailles']."</strong></td>";
+    echo "<td><img class='imageclassement' src='../Images/Boutons/medaille_or.png' alt='Médaille d'or' width='20px'></td>";
+    echo "<td><span>".$medailleOR['nb_medailles']."</span></td>";
+        echo "<td><img class='imageclassement' src='../Images/Boutons/medaille_argent.png' alt='Médaille d'argent' width='20px'></td>";
+        echo "<td><span>".$medailleAR['nb_medailles']."</span></td>";
+        echo "<td><img class='imageclassement' src='../Images/Boutons/medaille_bronze.png' alt='Médaille de bronze' width='20px'></td>";
+        echo "<td><span>".$medailleBR['nb_medailles']."</span></td>";
         echo "<td><strong>= ".($medailleBR['nb_medailles']+$medailleOR['nb_medailles']+$medailleAR['nb_medailles'])."</strong></td>";
         echo "</tr>";
         $i = $i + 1;

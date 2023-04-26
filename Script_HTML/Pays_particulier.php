@@ -42,19 +42,14 @@
 		.titre{
 		color:black;
 		}
-
 		</style> 
-
-
 	</head>
-
 
 	<body>
 	<header>
-  <?php
-    include "Barre_de_navigation.html";
-    ?>
-  </header> 
+	<header>
+      <iframe src="Barre_de_navigation.html" width="100%" height="50%" frameborder="0"></iframe>
+  </header>
 
 		<?php
 		
@@ -103,7 +98,7 @@
                         if (xhr.status === 200) {
                             pays.src = "../Images/Boutons/Coeur_olympiades_rempli.jpg";
                         } else {
-                            console.log("[ERREUR] Erreur de mise à jour des données !!!!");
+                            console.log("[ERREUR] Erreur de mise à jour des donn&eacute;es !!!!");
                         }
                     };
                     xhr.send("Code_CIO='.$Code_CIO.'&utilisateur='.$_SESSION['utilisateur']['utilisateur'].'");
@@ -229,7 +224,7 @@ from (
 
 
 
-	//Ajout de l'évolution des médailles en fonction du temps. 
+	//Ajout de l'&eacute;volution des m&eacute;dailles en fonction du temps. 
 
 
 
@@ -396,53 +391,52 @@ from (
 
 
 		echo '<h2 class="tableau"> Olympiades Organis&eacute;es </h2>';
-		echo '<table>';
-		echo '<tr>';
-		echo '<th> Ann&eacute;e</th>';
-		echo '<th> Ville h&ocirc;te </th>';
-		echo "<th> Nombre d'athletes</th>";
-		echo "<th> Nombre de discplines</th>";
-		echo "<th> Nombre d'&eacute;preuves</th>";
-		echo "<th> Nombre de d&eacute;l&eacute;gations</th>";
-		echo "<th> Logo de l'olympiade </th>";
-		echo '</tr>';
-
-
-		foreach ($OlympOrg as $infos ) {
-			$NbAthEd = $bdd -> prepare("select count(DISTINCT athletes.ID_athletes) as nbAth from athletes, etre_nationalite, pays_participants, olympiades
-				where athletes.ID_athletes = etre_nationalite.ID_athletes
-				and olympiades.id_olympiade = etre_nationalite.id_olympiade
-				and pays_participants.Code_CIO = pays_participants.Code_CIO
-				and olympiades.id_olympiade = ?");
-			$NbAthEd -> execute([$infos['id_olympiade']]);
-			$nbath = $NbAthEd -> fetch();
-
+		if($OlympOrg == '') {
+			echo '<table>';
 			echo '<tr>';
-			echo '<td>'.$infos['annee_o'].'</td>';
-			echo '<td> <a href="Vision_par_editions.php?lat='.$infos['latitude'].'&lon='.$infos['longitude'].'#carte" class="text-primary">'.$infos['nom'].'</a> </td>';
-			echo '<td>'.$nbath['nbAth'].'</td>';
-			echo '<td>'.$infos['nb_discplines'].'</td>';
-			echo '<td>'.$infos['nb_sports'].'</td>';
-			echo '<td>'.$infos['nb_delegations'].'</td>';
-			echo '<td><img src="'.$infos['logo'].'" class="img-thumbnail border-0" width="150px"></td>';
-
+			echo '<th> Ann&eacute;e</th>';
+			echo '<th> Ville h&ocirc;te </th>';
+			echo "<th> Nombre d'athletes</th>";
+			echo "<th> Nombre de discplines</th>";
+			echo "<th> Nombre d'&eacute;preuves</th>";
+			echo "<th> Nombre de d&eacute;l&eacute;gations</th>";
+			echo "<th> Logo de l'olympiade </th>";
 			echo '</tr>';
-		}
-		echo '</table>';
 
+
+			foreach ($OlympOrg as $infos ) {
+				$NbAthEd = $bdd -> prepare("select count(DISTINCT athletes.ID_athletes) as nbAth from athletes, etre_nationalite, pays_participants, olympiades
+					where athletes.ID_athletes = etre_nationalite.ID_athletes
+					and olympiades.id_olympiade = etre_nationalite.id_olympiade
+					and pays_participants.Code_CIO = pays_participants.Code_CIO
+					and olympiades.id_olympiade = ?");
+				$NbAthEd -> execute([$infos['id_olympiade']]);
+				$nbath = $NbAthEd -> fetch();
+
+				echo '<tr>';
+				echo '<td>'.$infos['annee_o'].'</td>';
+				echo '<td> <a href="Vision_par_editions.php?lat='.$infos['latitude'].'&lon='.$infos['longitude'].'#carte" class="text-primary">'.$infos['nom'].'</a> </td>';
+				echo '<td>'.$nbath['nbAth'].'</td>';
+				echo '<td>'.$infos['nb_discplines'].'</td>';
+				echo '<td>'.$infos['nb_sports'].'</td>';
+				echo '<td>'.$infos['nb_delegations'].'</td>';
+				echo '<td><img src="'.$infos['logo'].'" class="img-thumbnail border-0" width="150px"></td>';
+
+				echo '</tr>';
+			}
+			echo '</table>';
+		}
+		else {
+			echo '<p class="mt-2">Aucune olympiade n\'a &eacute;t&eacute; organis&eacute;e.</p>';
+		}
 		
 
 
 
 		?>
-		<footer class='mt-5'>
-	<?php
-		include "pied_de_page.php";
-	?>
+	</div>
+	<footer class='mt-2'>
+		<iframe class="mt-5" src="Pied_de_page.php" width="100%" height="50%" frameborder="0"></iframe>
 	</footer>
-
-
-
-
 	</body>
 </html>
