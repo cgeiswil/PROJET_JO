@@ -7,16 +7,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link href="./Styles/Vision_par_delegations.css" rel="stylesheet" type="text/css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-    <style>
-    .mascotte{
-    	position: absolute ;top: 500px;
-    	margin-left: -150px;
-    	float: left;
-    	width: 35%;
-    	height: 35%;
-    }
-    .liste{font-size: 180%;}
-    </style>
 </head>
 
 <body>
