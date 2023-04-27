@@ -40,7 +40,7 @@
 
 		session_start();
 		if(isset($_SESSION['utilisateur'])){ 
-      $anecdotes = $BDD->query("select * from apprecier_an as AA, anecdotes where AA.id_anecdote = anecdotes.id_anecdote and AA.id_utilisateur=".$_SESSION['utilisateur']['utilisateur']);
+      $anecdotes = $BDD->query("select * from anecdotes, apprecier_an as AA where AA.id_anecdote = anecdotes.id_anecdote and AA.id_utilisateur=".$_SESSION['utilisateur']['utilisateur']);
       
       $pays = $BDD->query("select * from pays_participants as pays, apprecier_p as Ap where Ap.CODE_CIO = pays.Code_CIO and Ap.id_utilisateur=".$_SESSION['utilisateur']['utilisateur']);
 

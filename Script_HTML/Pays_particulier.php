@@ -32,7 +32,7 @@
 		th{
 		padding: 20px;
 		text-align: center;
-		color : red;
+		color : #194aa5;
 		}
 		.tableau{
 		display: flex;
@@ -41,6 +41,9 @@
 		}
 		.titre{
 		color:black;
+		}
+		span {
+			color:#194aa5;	
 		}
 		</style> 
 	</head>
@@ -72,7 +75,7 @@
             <div class="col-md-12">';
             echo '<img src="'.$ligne['I_drapeau'].'" class="float-right" alt="Logo JO '.$ligne['nom_pays'].'" style="max-width: 200px; max-height: 150px;">';
 
-            echo '<h1><strong> Pays : '.$ligne['nom_pays'].'</strong>';
+            echo '<h1><strong>Pays : '.$ligne['nom_pays'].'</strong>';
             echo '<button type="button" class="btn btn-lg bg-white text-danger border-0">';
 
             // AJOUT DU COEUR
@@ -249,7 +252,7 @@ from (
 
 	echo '<table class="tableau">';
 	echo '<tr>';
-	echo '<th> classement </th>';
+	echo '<th> Classement </th>';
 	echo '<th> Nom </th>';
 	echo '<th> <img src=../Images/Boutons/medaille_or.png alt= oups width="25px"></th>';
 	echo '<th> <img src=../Images/Boutons/medaille_argent.png alt= oups width="25px"></th>';

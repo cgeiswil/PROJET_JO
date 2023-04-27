@@ -2,7 +2,7 @@
 <html>
 	<head>
 	  <meta charset="utf8">
-		<title> Pays </title>
+		<title> Ath&egrave;te </title>
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 		<link rel="shortcut icon" href="../Images/Anneaux/officiel.png" type="image/png">
 		<style type="text/css">
@@ -20,7 +20,7 @@
 		th{
 		padding: 20px;
 		text-align: center;
-		color : red;
+		color : #194aa5;
 		}
 		.tableau{
 		display: flex;
@@ -208,9 +208,10 @@ if (isset($_POST['ID_athlete'], $_POST['utilisateur'])) {
 			  }
 
 			  echo '</table>';
-
-		
-
 		?>
+	</div>
+	<footer class='mt-2'>
+		<iframe class="mt-5" src="Pied_de_page.php" width="100%" height="50%" frameborder="0"></iframe>
+	</footer>
 	</body>
 </html>

@@ -35,9 +35,8 @@
 	</script>
 	</head>
     <body>
-<?php
-	include "Barre_de_navigation.html";
-?>
+<object data="Barre_de_navigation.html" width="100%" height="100%">
+	</object>
     <h1>Explorons les jeux olympiques <br> différemment !</h1>
     
     <div class="gif">
@@ -175,7 +174,6 @@ if (isset($_POST['id_anecdote'], $_POST['utilisateur'])) {
 		  <div class="card-body">
 			<h5 class="card-title">Vous allez aimer</h5>
 			<?php
-				session_start();
 				$olympiades = $bdd->prepare('SELECT olympiades.id_olympiade, olympiades.logo, olympiades.annee_o, villes_hotes.nom FROM olympiades, apprecier_o, villes_hotes WHERE annee_o < 2017 AND villes_hotes.id_ville = olympiades.id_ville_hote ORDER BY RAND() LIMIT 2');
 				$olympiades->execute();
 					
@@ -188,7 +186,7 @@ if (isset($_POST['id_anecdote'], $_POST['utilisateur'])) {
 						$olympiades->execute([$_SESSION['utilisateur']['utilisateur']]);
 						
 						// Pays Organisateur que vous avez aimé
-						$olympiades_p = $bdd->prepare('SELECT olympiades.id_olympiade, olympiades.logo, olympiades.annee_o, villes_hotes.nom FROM olympiades JOIN villes_hotes ON villes_hotes.id_ville = olympiades.id_ville_hote JOIN pays_participants ON olympiades.Code_CIO = pays_participants.Code_CIO WHERE olympiades.annee_o < 2017 AND olympiades.id_olympiade NOT IN(SELECT a.id_olympiade FROM apprecier_o a WHERE a.id_utilisateur = ?) AND pays_participants.Code_CIO IN(SELECT pp.Code_CIO FROM apprecier_p ap JOIN pays_participants pp ON pp.Code_CIO = ap.Code_CIO WHERE ap.id_utilisateur = ?) ORDER BY RAND() LIMIT 1');
+						$olympiades_p = $bdd->prepare('SELECT olympiades.id_olympiade, olympiades.logo, olympiades.annee_o, villes_hotes.nom, nom_pays FROM olympiades JOIN villes_hotes ON villes_hotes.id_ville = olympiades.id_ville_hote JOIN pays_participants ON olympiades.Code_CIO = pays_participants.Code_CIO WHERE olympiades.annee_o < 2017 AND olympiades.id_olympiade NOT IN(SELECT a.id_olympiade FROM apprecier_o a WHERE a.id_utilisateur = ?) AND pays_participants.Code_CIO IN(SELECT pp.Code_CIO FROM apprecier_p ap JOIN pays_participants pp ON pp.Code_CIO = ap.Code_CIO WHERE ap.id_utilisateur = ?) ORDER BY RAND() LIMIT 1');
 						$olympiades_p ->execute(array($_SESSION['utilisateur']['utilisateur'],$_SESSION['utilisateur']['utilisateur']));
 			
 						while ($olympiade_pa = $olympiades_p->fetch()) {
@@ -273,11 +271,6 @@ if (isset($_POST['id_anecdote'], $_POST['utilisateur'])) {
 						$athletes = $bdd->prepare('SELECT * FROM athletes, apprecier_at WHERE apprecier_at.id_athlete != athletes.ID_athletes	
 						AND apprecier_at.id_utilisateur = ? ORDER BY RAND() LIMIT 2');
 						$athletes->execute([$_SESSION['utilisateur']['utilisateur']]);
-						// $athletes2='';
-						// while ($athlete2 = $athletes2->fetch()) {
-							// echo '<p><img src="../Images/Boutons/athlete.png" class="img-thumbnail border-0" width="40px"> <b>' . $athlete2['nom'] . '</b>'.' <abbr title="Un peu de d&eacute;couverte hors des chemins habituels." class="tooltip-hover">
-							// <img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr></p>';
-						// }
 					}
 				}
 					
@@ -292,54 +285,16 @@ if (isset($_POST['id_anecdote'], $_POST['utilisateur'])) {
 				class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr> pour avoir des d&eacute;tails sur les recommandations.</small></p>
 			</div>
 	</div>
-		
-		
-		
-<!--	<div class="card">
-		<div class="card-header"><b>Les disciplines...</b></div>
-		<div class="card-body">
-			<h5 class="card-title">Vous allez aimer</h5>		
-			 <?php				
-				// if(isset($_SESSION['utilisateur'])){
-					// $test_disciplines_r = $bdd->prepare('SELECT * FROM apprecier_d WHERE apprecier_d.id_utilisateur = ? LIMIT 1');
-					// $test_disciplines_r ->execute([$_SESSION['utilisateur']['utilisateur']]);
-					// if($test_disciplines_r->fetch()) {
-						// $disciplines_r = $bdd->prepare('SELECT * FROM disciplines, apprecier_d WHERE apprecier_d.id_discipline != disciplines.id_discipline	
-						// AND apprecier_d.id_utilisateur = ? ORDER BY RAND() LIMIT 2');
-						// $disciplines_r->execute([$_SESSION['utilisateur']['utilisateur']]);
-					// }
-					// else {
-						// $disciplines_r = $bdd->prepare('SELECT * FROM disciplines ORDER BY RAND() LIMIT 3');
-						// $disciplines_r->execute();
-					// }
-				// }
-				// else {
-					// $disciplines_r = $bdd->prepare('SELECT * FROM disciplines ORDER BY RAND() LIMIT 3');
-					// $disciplines_r->execute();
-				// }
-					
-				// while ($discipline_r = $disciplines_r->fetch()) {
-					// echo '<p><img src="'.$discipline_r['pictogramme'].'" class="img-thumbnail border-0" width="40px"> <b>' . $discipline_r['nom_discipline'] . '</b>'.' <abbr title="Un peu de d&eacute;couverte hors des chemins habituels." class="tooltip-hover">
-					// <img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr></p>';
-				// }
-			// ?>	
-		</div>
-					<div class="card-footer bg-transparent">
-				<p class="card-text mb-2"><small class="text-muted">Survolez quelques secondes le curseur 	<abbr title="Les informations sur les recommandations s'affichent ici !" 
-				class="tooltip-hover"><img style="width: 20px;" src="../Images/Boutons/interface_utilisateur.png" alt="Image de survol"></abbr> pour avoir des d&eacute;tails sur les recommandations.</small></p>
-			</div>
-	</div>-->
-		
-	
-	
 </div> <!-- Fin du tableau des recommandations -->
 	
 	
 	
 </div>
-<footer class='mt-5'>
-	<iframe class="mt-5" src="Pied_de_page.php" width="100%" height="50%" frameborder="0"></iframe>
-</footer>
+	<footer class='mt-5'>
+	<?php
+		include "pied_de_page.php";
+	?>
+	</footer>
 
 </body>
 </html>
