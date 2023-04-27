@@ -82,7 +82,7 @@
             <?php
             while ($ligneAn = $anecdotes ->fetch()) {
               echo "<tr>";
-              echo "<td>".$ligneAn['anecdote']."</td>";
+              echo "<td>".$anecdotes['anecdote']."</td>";
               echo "<td> <a href= ".$ligneAn['source'].">".$ligneAn['source']."</td>";
               echo "</tr>";
             }
